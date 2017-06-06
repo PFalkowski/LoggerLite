@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerLite", "LoggerLite\LoggerLite.csproj", "{5E8C9006-06D0-45D5-9FEE-F32F9CA376C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerLite.xTest", "LoggerLite.xTest\LoggerLite.xTest.csproj", "{02F55669-31B5-4C10-AA27-FEB7C000007F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5E8C9006-06D0-45D5-9FEE-F32F9CA376C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E8C9006-06D0-45D5-9FEE-F32F9CA376C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E8C9006-06D0-45D5-9FEE-F32F9CA376C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F55669-31B5-4C10-AA27-FEB7C000007F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F55669-31B5-4C10-AA27-FEB7C000007F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F55669-31B5-4C10-AA27-FEB7C000007F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F55669-31B5-4C10-AA27-FEB7C000007F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
