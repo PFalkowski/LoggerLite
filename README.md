@@ -5,4 +5,4 @@ Most of the programming tasks are reducible or somehow related to logging inform
 - Xml Logger
 - Yaml Logger
 
-Contributions are welcome
+Contributions are welcomed
