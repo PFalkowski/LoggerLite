@@ -1,7 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <Description>The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations: 
+Console Logger
+Debug Trace Logger
+File Logger
+Xml Logger
+Yaml Logger
+Aggreagated Logger</Description>
+    <Copyright>Piotr Falkowski © 2017</Copyright>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>logging,Xml Logger,Yaml Logger,File Logger,Xml Logger</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatSpecificWarningsAsErrors />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.1.306" />
+  </ItemGroup>
 
 </Project>
