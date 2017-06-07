@@ -14,9 +14,9 @@ Aggreagated Logger</Description>
     <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>logging,Xml Logger,Yaml Logger,File Logger,Xml Logger</PackageTags>
+    <PackageTags>logging,Xml,Yaml,File, Logger,Xml Logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
