@@ -28,7 +28,7 @@ namespace ConsoleApp1
     }
 }
 ```
-The example for yaml logger or any file logger:
+The example for yaml logger or any file logger based on FileLoggerBase:
 ```c#
 using System;
 using LoggerLite;
