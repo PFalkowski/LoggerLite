@@ -24,8 +24,4 @@ Aggreagated Logger</Description>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.1.306" />
-  </ItemGroup>
-
 </Project>
