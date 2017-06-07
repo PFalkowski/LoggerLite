@@ -8,7 +8,7 @@ Most of the programming tasks are reducible or somehow related to logging inform
 Contributions are welcomed
 
 
-The example:
+The example for console logger:
 ```c#
 using System;
 using LoggerLite;
@@ -23,6 +23,26 @@ namespace ConsoleApp1
             logger.LogInfo("info!");
             logger.LogWarning("warning");
             logger.LogError("error :(");
+            Console.ReadKey();
+        }
+    }
+}
+```
+The example for yaml logger or any file logger:
+```c#
+using System;
+using LoggerLite;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var logger = new YamlFileLogger("yamlLog.yaml");
+            logger.LogInfo("info");
+            logger.LogWarning("warning");
+            logger.LogError("error");//the logger automatically flushes messages to the yamlLog.yaml file, no need to call any save
             Console.ReadKey();
         }
     }
