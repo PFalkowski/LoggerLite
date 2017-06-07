@@ -6,3 +6,25 @@ Most of the programming tasks are reducible or somehow related to logging inform
 - Yaml Logger
 
 Contributions are welcomed
+
+
+The example:
+```<c#>
+using System;
+using LoggerLite;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var logger = new ConsoleLogger();
+            logger.LogInfo("info!");
+            logger.LogWarning("warning");
+            logger.LogError("error :(");
+            Console.ReadKey();
+        }
+    }
+}
+```
