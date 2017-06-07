@@ -9,7 +9,7 @@ Contributions are welcomed
 
 
 The example:
-```<c#>
+```c#
 using System;
 using LoggerLite;
 
