@@ -30,6 +30,5 @@ namespace LoggerLite
         {
             Log(Formatter(ErrorName, TrimExcess(exception.ToString())));
         }
-
     }
 }
