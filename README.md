@@ -7,6 +7,9 @@ Most of the programming tasks are reducible or somehow related to logging inform
 
 Contributions are welcomed
 
+LoggerLite is a nuget named.. LoggerLite
+
+https://www.nuget.org/packages/LoggerLite/
 
 The example for console logger:
 ```c#
