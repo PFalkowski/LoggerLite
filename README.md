@@ -6,3 +6,48 @@ Most of the programming tasks are reducible or somehow related to logging inform
 - Yaml Logger
 
 Contributions are welcomed
+
+LoggerLite is a nuget named.. LoggerLite
+
+https://www.nuget.org/packages/LoggerLite/
+
+The example for console logger:
+```c#
+using System;
+using LoggerLite;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var logger = new ConsoleLogger();
+            logger.LogInfo("info!");
+            logger.LogWarning("warning");
+            logger.LogError("error :(");
+            Console.ReadKey();
+        }
+    }
+}
+```
+The example for yaml logger or any file logger based on FileLoggerBase:
+```c#
+using System;
+using LoggerLite;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var logger = new YamlFileLogger("yamlLog.yaml");
+            logger.LogInfo("info");
+            logger.LogWarning("warning");
+            logger.LogError("error");//the logger automatically flushes messages to the yamlLog.yaml file, no need to call any save
+            Console.ReadKey();
+        }
+    }
+}
+```
