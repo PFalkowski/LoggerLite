@@ -14,7 +14,7 @@ namespace LoggerLite.xTest
             var myLogger = new FileLoggerBase(myPath);
             myLogger.LogInfo(expected);
             var actual = File.ReadAllText(myPath);
-            Assert.True(actual.Contains(expected));
+            Assert.Contains(expected, actual);
         }
 
         [Fact]
@@ -35,8 +35,8 @@ namespace LoggerLite.xTest
             testedFileLogger.LogInfo(expected);
             var received = File.ReadAllText(myPath);
             Assert.True(File.Exists(myPath));
-            Assert.True(received.Contains(expected));
-            Assert.True(received.Contains(LoggerBase.InfoName));
+            Assert.Contains(expected, received);
+            Assert.Contains(LoggerBase.InfoName, received);
         }
 
         [Fact]
@@ -48,8 +48,8 @@ namespace LoggerLite.xTest
             testedFileLogger.LogWarning(expected);
             var received = File.ReadAllText(myPath);
             Assert.True(File.Exists(myPath));
-            Assert.True(received.Contains(expected));
-            Assert.True(received.Contains(LoggerBase.WarningName));
+            Assert.Contains(expected, received);
+            Assert.Contains(LoggerBase.WarningName, received);
         }
 
         [Fact]
@@ -61,8 +61,8 @@ namespace LoggerLite.xTest
             testedFileLogger.LogError(expected);
             var received = File.ReadAllText(myPath);
             Assert.True(File.Exists(myPath));
-            Assert.True(received.Contains(expected));
-            Assert.True(received.Contains(LoggerBase.ErrorName));
+            Assert.Contains(expected, received);
+            Assert.Contains(LoggerBase.ErrorName, received);
         }
 
         [Fact]
@@ -74,8 +74,8 @@ namespace LoggerLite.xTest
             testedFileLogger.LogError(expected);
             var received = File.ReadAllText(myPath);
             Assert.True(File.Exists(myPath));
-            Assert.True(received.Contains(expected.Message));
-            Assert.True(received.Contains(LoggerBase.ErrorName));
+            Assert.Contains(expected.Message, received);
+            Assert.Contains(LoggerBase.ErrorName, received);
         }
 
         [Fact]
@@ -93,13 +93,13 @@ namespace LoggerLite.xTest
             testedFileLogger.LogInfo(expectedinfo);
             var received = File.ReadAllText(myPath);
             Assert.True(File.Exists(myPath));
-            Assert.True(received.Contains(expectedError1.Message));
-            Assert.True(received.Contains(expectedError2));
-            Assert.True(received.Contains(expectedWarning));
-            Assert.True(received.Contains(expectedinfo));
-            Assert.True(received.Contains(LoggerBase.ErrorName));
-            Assert.True(received.Contains(LoggerBase.InfoName));
-            Assert.True(received.Contains(LoggerBase.WarningName));
+            Assert.Contains(expectedError1.Message, received);
+            Assert.Contains(expectedError2, received);
+            Assert.Contains(expectedWarning, received);
+            Assert.Contains(expectedinfo, received);
+            Assert.Contains(LoggerBase.ErrorName, received);
+            Assert.Contains(LoggerBase.InfoName, received);
+            Assert.Contains(LoggerBase.WarningName, received);
         }
 
         [Fact]
