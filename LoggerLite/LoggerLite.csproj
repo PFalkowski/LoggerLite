@@ -17,8 +17,8 @@ Aggreagated Logger</Description>
     <PackageTags>logging,Xml,Yaml,File, Logger,Xml Logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Update .NET standard sdk to 2.0</PackageReleaseNotes>
+    <Version>2.1.0</Version>
+    <PackageReleaseNotes>Add functionality to create directory if not exists if flag CreateDirIfNotExists in FileLogger base is set to true.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
