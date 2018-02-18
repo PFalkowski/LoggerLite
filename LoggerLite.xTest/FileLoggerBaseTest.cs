@@ -122,7 +122,7 @@ namespace LoggerLite.xTest
 
             const string fileName = "test.log";
             var outputFile = new FileInfo(Path.Combine(path.FullName, fileName));
-            var tested = new FileLoggerBase(outputFile.FullName);
+            var tested = new FileLoggerBase(outputFile.FullName) { CreateDirIfNotExists = true };
             tested.LogInfo("test");
             Assert.True(path.Exists);
         }

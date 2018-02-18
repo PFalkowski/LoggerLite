@@ -11,7 +11,7 @@ namespace LoggerLite
         public FileInfo OutputFile { get; }
         public DirectoryInfo OutputDirectory => OutputFile.Directory;
         public override bool FlushAuto => true;
-        public bool CreateDirIfNotExists { get; set; } = true;
+        public bool CreateDirIfNotExists { get; set; } = false;
 
         private string GetOutputPath(string untrusted)
         {
@@ -24,14 +24,14 @@ namespace LoggerLite
         {
             var path = GetOutputPath(filePath);
             OutputFile = new FileInfo(path);
-            if(CreateDirIfNotExists && !OutputDirectory.Exists)
-                OutputDirectory.Create();
         }
 
         protected internal sealed override void Log(string message)
         {
             lock (_syncRoot)
             {
+                if (CreateDirIfNotExists && !OutputDirectory.Exists)
+                    OutputDirectory.Create();
                 var fileStream = new FileStream(OutputFile.FullName, FileMode.Append);
                 using (var streamWriter = new StreamWriter(fileStream))
                 {
