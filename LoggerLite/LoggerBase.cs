@@ -24,5 +24,23 @@ namespace LoggerLite
         public abstract void LogWarning(string warning);
         public abstract void LogError(Exception exception);
         public abstract void LogError(string error);
+
+        public void Log(string message, MessageSeverity severity)
+        {
+            switch (severity)
+            {
+                case MessageSeverity.Information:
+                    LogInfo(message);
+                    break;
+                case MessageSeverity.Warning:
+                    LogWarning(message);
+                    break;
+                case MessageSeverity.Error:
+                    LogError(message);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
