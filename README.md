@@ -1,3 +1,4 @@
+# LoggerLite
 
 [![NuGet version (LoggerLite)](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite/)
 [![Licence (LoggerLite)](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
