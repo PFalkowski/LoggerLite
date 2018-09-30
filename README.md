@@ -32,6 +32,8 @@ namespace ConsoleApp1
     }
 }
 ```
+![Console logger example output](ConsoleExampleOutput.PNG)
+
 The example for yaml logger or any file logger based on FileLoggerBase:
 ```c#
 using System;
@@ -54,4 +56,4 @@ namespace ConsoleApp1
 ```
 
 
-Contributions are welcomed
+Contributions are welcomed!
