@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
@@ -35,6 +36,46 @@ namespace LoggerLite
         public void LogError(string error)
         {
             Loggers?.ForEach(l => l.LogError(error));
+        }
+
+        public Task LogInfoAsync(string message)
+        {
+            var tasks = new List<Task>(Loggers.Capacity);
+            foreach (var logger in Loggers)
+            {
+                tasks.Add(logger.LogInfoAsync(message));
+            }
+            return Task.WhenAll(tasks);
+        }
+
+        public Task LogWarningAsync(string warning)
+        {
+            var tasks = new List<Task>(Loggers.Capacity);
+            foreach (var logger in Loggers)
+            {
+                tasks.Add(logger.LogWarningAsync(warning));
+            }
+            return Task.WhenAll(tasks);
+        }
+
+        public Task LogErrorAsync(Exception exception)
+        {
+            var tasks = new List<Task>(Loggers.Capacity);
+            foreach (var logger in Loggers)
+            {
+                tasks.Add(logger.LogErrorAsync(exception));
+            }
+            return Task.WhenAll(tasks);
+        }
+
+        public Task LogErrorAsync(string error)
+        {
+            var tasks = new List<Task>(Loggers.Capacity);
+            foreach (var logger in Loggers)
+            {
+                tasks.Add(logger.LogErrorAsync(error));
+            }
+            return Task.WhenAll(tasks);
         }
 
         public bool FlushAuto => Loggers.All(l => l.FlushAuto);

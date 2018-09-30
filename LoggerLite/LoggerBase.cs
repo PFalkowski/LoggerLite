@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
@@ -24,5 +25,9 @@ namespace LoggerLite
         public abstract void LogWarning(string warning);
         public abstract void LogError(Exception exception);
         public abstract void LogError(string error);
+        public abstract Task LogInfoAsync(string message);
+        public abstract Task LogWarningAsync(string warning);
+        public abstract Task LogErrorAsync(Exception exception);
+        public abstract Task LogErrorAsync(string error);
     }
 }

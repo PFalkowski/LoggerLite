@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
@@ -14,6 +15,12 @@ namespace LoggerLite
         protected internal override void Log(string message)
         {
             Console.Write(message);
+        }
+
+        protected internal override Task LogAsync(string message) // TODO - is it best way? 
+        {
+            return new Task(() =>
+            Console.Write(message));
         }
 
         public override void LogError(string error)

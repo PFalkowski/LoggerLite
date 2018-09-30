@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
@@ -10,6 +11,7 @@ namespace LoggerLite
         public abstract override bool FlushAuto { get; }
 
         protected internal abstract void Log(string message);
+        protected internal abstract Task LogAsync(string message);
 
         public override void LogInfo(string message)
         {
@@ -29,6 +31,25 @@ namespace LoggerLite
         public override void LogError(Exception exception)
         {
             Log(Formatter(ErrorName, TrimExcess(exception.ToString())));
+        }
+        public override async Task LogInfoAsync(string message)
+        {
+            await LogAsync(Formatter(InfoName, TrimExcess(message)));
+        }
+
+        public override async Task LogWarningAsync(string warning)
+        {
+            await LogAsync(Formatter(WarningName, TrimExcess(warning)));
+        }
+
+        public override async Task LogErrorAsync(string error)
+        {
+            await LogAsync(Formatter(ErrorName, TrimExcess(error)));
+        }
+
+        public override async Task LogErrorAsync(Exception exception)
+        {
+            await LogAsync(Formatter(ErrorName, TrimExcess(exception.ToString())));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
@@ -22,6 +23,13 @@ namespace LoggerLite
         {
             _buffer.Enqueue(message);
             _debouncer.Debounce(WriteEnqueued);
+        }
+
+        protected internal override Task LogAsync(string message)
+        {
+            _buffer.Enqueue(message);
+            return new Task(() => 
+            _debouncer.Debounce(WriteEnqueued)); // TODO - is it the best way? 
         }
 
         private void WriteEnqueued()

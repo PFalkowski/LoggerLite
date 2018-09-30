@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace LoggerLite
@@ -27,10 +27,8 @@ namespace LoggerLite
                 OutputDocument.Save(writer);
             }
         }
-
         public override void LogInfo(string message)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, message),
@@ -39,7 +37,6 @@ namespace LoggerLite
 
         public override void LogWarning(string warning)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, warning),
@@ -48,7 +45,6 @@ namespace LoggerLite
 
         public override void LogError(Exception exception)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, exception),
@@ -57,11 +53,45 @@ namespace LoggerLite
 
         public override void LogError(string error)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, error),
                 new XElement(TypeElementName, ErrorName)));
+        }
+        public override Task LogInfoAsync(string message)
+        {
+            return new Task(() =>
+               OutputDocument.Root.Add(new XElement(EntryElementName,
+                   new XElement(TimeElementName, DateTime.Now),
+                   new XElement(DescriptionElementName, message),
+                   new XElement(TypeElementName, InfoName))));
+        }
+
+        public override Task LogWarningAsync(string warning)
+        {
+            return new Task(() =>
+            OutputDocument.Root.Add(new XElement(EntryElementName,
+                new XElement(TimeElementName, DateTime.Now),
+                new XElement(DescriptionElementName, warning),
+                new XElement(TypeElementName, WarningName))));
+        }
+
+        public override Task LogErrorAsync(Exception exception)
+        {
+            return new Task(() =>
+            OutputDocument.Root.Add(new XElement(EntryElementName,
+                new XElement(TimeElementName, DateTime.Now),
+                new XElement(DescriptionElementName, exception),
+                new XElement(TypeElementName, ErrorName))));
+        }
+
+        public override Task LogErrorAsync(string error)
+        {
+            return new Task(() =>
+            OutputDocument.Root.Add(new XElement(EntryElementName,
+                new XElement(TimeElementName, DateTime.Now),
+                new XElement(DescriptionElementName, error),
+                new XElement(TypeElementName, ErrorName))));
         }
     }
 }

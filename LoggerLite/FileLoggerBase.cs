@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LoggerLite
 {
-    public class FileLoggerBase : FormattedLoggerBase
+    public class FileLoggerBase : FormattedLoggerBase, IDisposable
     {
-        private readonly object _syncRoot = new object();
+        private readonly SemaphoreSlim _syncRoot = new SemaphoreSlim(1, 1);
 
         protected virtual string DefaultExtension => ".log";
         public virtual string DefaultFileName => $"{Path.GetRandomFileName()}{DefaultExtension}";
@@ -30,14 +33,38 @@ namespace LoggerLite
 
         protected internal sealed override void Log(string message)
         {
-            lock (_syncRoot)
+            StreamWriter streamWriter = null;
+            try
             {
-                var fileStream = new FileStream(OutputFile.FullName, FileMode.Append);
-                using (var streamWriter = new StreamWriter(fileStream))
-                {
-                    streamWriter.Write(message);
-                }
+                streamWriter = new StreamWriter(OutputFile.FullName, true);
+                _syncRoot.Wait();
+                streamWriter.Write(message);
             }
+            finally
+            {
+                _syncRoot.Release();
+                streamWriter?.Dispose();
+            }
+        }
+        protected internal sealed override async Task LogAsync(string message)
+        {
+            StreamWriter streamWriter = null;
+            try
+            {
+                streamWriter = new StreamWriter(OutputFile.FullName, true);
+                await _syncRoot.WaitAsync().ConfigureAwait(false);
+                await streamWriter.WriteAsync(message).ConfigureAwait(false);
+            }
+            finally
+            {
+                _syncRoot.Release();
+                streamWriter?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            _syncRoot.Dispose();
         }
     }
 }

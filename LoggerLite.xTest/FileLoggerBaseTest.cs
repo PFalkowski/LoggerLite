@@ -11,110 +11,128 @@ namespace LoggerLite.xTest
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LoggerEaseOfUse)}.log";
             var expected = "testing ease of use.";
-            var myLogger = new FileLoggerBase(myPath);
-            myLogger.LogInfo(expected);
-            var actual = File.ReadAllText(myPath);
-            Assert.Contains(expected, actual);
+            using (var myLogger = new FileLoggerBase(myPath))
+            {
+                myLogger.LogInfo(expected);
+                var actual = File.ReadAllText(myPath);
+                Assert.Contains(expected, actual);
+            }
         }
 
         [Fact]
         public void CreateFileLogger()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(CreateFileLogger)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            testedFileLogger.LogInfo("test7013");
-            Assert.True(File.Exists(myPath));
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                testedFileLogger.LogInfo("test7013");
+                Assert.True(File.Exists(myPath));
+            }
         }
 
         [Fact]
         public void LogInfo()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogInfo)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            var expected = "test";
-            testedFileLogger.LogInfo(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.InfoName, received);
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                var expected = "test";
+                testedFileLogger.LogInfo(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+            }
         }
 
         [Fact]
         public void LogWarning()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogWarning)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            var expected = "test";
-            testedFileLogger.LogWarning(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.WarningName, received);
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                var expected = "test";
+                testedFileLogger.LogWarning(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+            }
         }
 
         [Fact]
         public void LogError1()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError1)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            var expected = "test";
-            testedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                var expected = "test";
+                testedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
         }
 
         [Fact]
         public void LogError2()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError2)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            var expected = new Exception("test");
-            testedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected.Message, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                var expected = new Exception("test");
+                testedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected.Message, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
         }
 
         [Fact]
         public void AppendTest()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(AppendTest)}.log";
-            var testedFileLogger = new FileLoggerBase(myPath);
-            var expectedError1 = new Exception("testError1");
-            var expectedError2 = "testError2";
-            var expectedWarning = "testWarning1";
-            var expectedinfo = "testInfo1";
-            testedFileLogger.LogError(expectedError1);
-            testedFileLogger.LogError(expectedError2);
-            testedFileLogger.LogWarning(expectedWarning);
-            testedFileLogger.LogInfo(expectedinfo);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expectedError1.Message, received);
-            Assert.Contains(expectedError2, received);
-            Assert.Contains(expectedWarning, received);
-            Assert.Contains(expectedinfo, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            Assert.Contains(LoggerBase.InfoName, received);
-            Assert.Contains(LoggerBase.WarningName, received);
+            using (var testedFileLogger = new FileLoggerBase(myPath))
+            {
+                var expectedError1 = new Exception("testError1");
+                var expectedError2 = "testError2";
+                var expectedWarning = "testWarning1";
+                var expectedinfo = "testInfo1";
+                testedFileLogger.LogError(expectedError1);
+                testedFileLogger.LogError(expectedError2);
+                testedFileLogger.LogWarning(expectedWarning);
+                testedFileLogger.LogInfo(expectedinfo);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expectedError1.Message, received);
+                Assert.Contains(expectedError2, received);
+                Assert.Contains(expectedWarning, received);
+                Assert.Contains(expectedinfo, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+            }
         }
 
         [Fact]
         public void FilePathNotChangable()
         {
             const string path = "testPath.test";
-            var tested = new FileLoggerBase(path);
-            Assert.Equal(path, tested.PathToLog);
+            using (var tested = new FileLoggerBase(path))
+            {
+                Assert.Equal(path, tested.PathToLog);
+            }
         }
 
         [Fact]
         public void DefaultExtensionTest1()
         {
-            var tested1 = new FileLoggerBase();
-            Assert.True(tested1.PathToLog.EndsWith(".log"), $"{tested1.PathToLog} does not end with \".log\"");
+            using (var tested1 = new FileLoggerBase())
+            {
+                Assert.True(tested1.PathToLog.EndsWith(".log"), $"{tested1.PathToLog} does not end with \".log\"");
+            }
         }
 
         // TODO: Write possible multithreaded scenarios
