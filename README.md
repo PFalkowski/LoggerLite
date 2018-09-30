@@ -46,7 +46,7 @@ namespace ConsoleApp1
             var logger = new YamlFileLogger("yamlLog.yaml");
             logger.LogInfo("info");
             logger.LogWarning("warning");
-            logger.LogError("error");//no need to call save, it's flushes automatically
+            logger.LogError("error");//no need to call save, it flushes automatically
             Console.ReadKey();
         }
     }
