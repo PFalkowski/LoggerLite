@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Castle.Core.Resource;
 using Xunit;
 
 namespace LoggerLite.xTest
@@ -117,15 +118,28 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
-        public void FilePathNotChangable()
+        public void FilePathDoesNotChange()
         {
             const string path = "testPath.test";
-            using (var tested = new FileLoggerBase(path))
-            {
-                Assert.Equal(path, tested.PathToLog);
-            }
+            var tested = new FileLoggerBase(path);
+            Assert.Contains(path, tested.PathToLog);
         }
 
+        [Fact]
+        public void LoggerCreatesDirectoryIfItDoesNotExist()
+        {
+            var path = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "testDir"));
+            if (path.Exists)
+            {
+                path.Delete(true);
+            }
+
+            const string fileName = "test.log";
+            var outputFile = new FileInfo(Path.Combine(path.FullName, fileName));
+            var tested = new FileLoggerBase(outputFile.FullName) { CreateDirIfNotExists = true };
+            tested.LogInfo("test");
+            Assert.True(path.Exists);
+        }
         [Fact]
         public void DefaultExtensionTest1()
         {

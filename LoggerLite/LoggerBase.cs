@@ -29,5 +29,23 @@ namespace LoggerLite
         public abstract Task LogWarningAsync(string warning);
         public abstract Task LogErrorAsync(Exception exception);
         public abstract Task LogErrorAsync(string error);
+
+        public void Log(string message, MessageSeverity severity)
+        {
+            switch (severity)
+            {
+                case MessageSeverity.Information:
+                    LogInfo(message);
+                    break;
+                case MessageSeverity.Warning:
+                    LogWarning(message);
+                    break;
+                case MessageSeverity.Error:
+                    LogError(message);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

@@ -17,8 +17,8 @@ Aggreagated Logger</Description>
     <PackageTags>logging,Xml,Yaml,File, Logger,Xml Logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Update .NET standard sdk to 2.0</PackageReleaseNotes>
+    <Version>2.2.0</Version>
+    <PackageReleaseNotes>Add Json file logger</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -105,7 +105,7 @@ namespace LoggerLite.xTest
         {
             const string path = "testPath.test";
             var tested = new YamlFileLogger(path);
-            Assert.Equal(path, tested.PathToLog);
+            Assert.Contains(path, tested.PathToLog);
         }
     }
 }
