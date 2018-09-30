@@ -20,6 +20,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                myLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -28,14 +29,15 @@ namespace LoggerLite.xTest
         public void CreateFileLogger()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(CreateFileLogger)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 testedFileLogger.LogInfo("test7013");
                 Assert.True(File.Exists(myPath));
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -44,9 +46,9 @@ namespace LoggerLite.xTest
         public void LogInfo()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogInfo)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogInfo(expected);
                 var received = File.ReadAllText(myPath);
@@ -56,6 +58,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -64,9 +67,9 @@ namespace LoggerLite.xTest
         public void LogWarning()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogWarning)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogWarning(expected);
                 var received = File.ReadAllText(myPath);
@@ -76,6 +79,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -84,9 +88,9 @@ namespace LoggerLite.xTest
         public void LogError1()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError1)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -96,6 +100,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -104,9 +109,9 @@ namespace LoggerLite.xTest
         public void LogError2()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError2)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = new Exception("test");
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -116,6 +121,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -124,9 +130,9 @@ namespace LoggerLite.xTest
         public void AppendTest()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(AppendTest)}.log";
+            var testedFileLogger = new FileLoggerBase(myPath);
             try
             {
-                var testedFileLogger = new FileLoggerBase(myPath);
                 var expectedError1 = new Exception("testError1");
                 var expectedError2 = "testError2";
                 var expectedWarning = "testWarning1";
@@ -147,6 +153,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -155,8 +162,10 @@ namespace LoggerLite.xTest
         public void FilePathDoesNotChange()
         {
             const string path = "testPath.test";
-            var tested = new FileLoggerBase(path);
-            Assert.Contains(path, tested.PathToLog);
+            using (var tested = new FileLoggerBase(path))
+            {
+                Assert.Contains(path, tested.PathToLog);
+            }
         }
 
         [Fact]
@@ -179,6 +188,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                tested.Dispose();
                 outputFile.Delete();
                 path.Delete();
             }

@@ -20,17 +20,16 @@ namespace LoggerLite.xTest
         public void JsonLoggerCreate()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var tested = new JsonFileLogger();
-
-                var testedFileLogger = new JsonFileLogger(myPath);
                 testedFileLogger.LogInfo("test70113");
                 Assert.True(File.Exists(myPath));
                 Assert.Equal(".json", Path.GetExtension(testedFileLogger.OutputFile.Name));
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -38,9 +37,9 @@ namespace LoggerLite.xTest
         public void LogInfo()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogInfo(expected);
                 var received = File.ReadAllText(myPath);
@@ -50,6 +49,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -58,9 +58,9 @@ namespace LoggerLite.xTest
         public void LogWarning()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogWarning(expected);
                 var received = File.ReadAllText(myPath);
@@ -70,6 +70,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -78,9 +79,9 @@ namespace LoggerLite.xTest
         public void LogError1()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -90,6 +91,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -98,9 +100,9 @@ namespace LoggerLite.xTest
         public void LogError2()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = new Exception("testExc");
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -110,6 +112,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -118,9 +121,9 @@ namespace LoggerLite.xTest
         public void AppendTest()
         {
             var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             try
             {
-                var testedFileLogger = new JsonFileLogger(myPath);
                 var expectedError1 = new Exception("test1");
                 var expectedError2 = "test2";
                 var expectedWarning = "test3";
@@ -141,6 +144,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
