@@ -17,8 +17,8 @@ Aggreagated Logger</Description>
     <PackageTags>JSON, XML,YAML,Console,logging,logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.4.0</Version>
-    <PackageReleaseNotes>Change default console formatting. Minor tweaks</PackageReleaseNotes>
+    <Version>2.5.0</Version>
+    <PackageReleaseNotes>Add HtmlLogger</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -14,18 +14,18 @@ namespace LoggerLite
 
         public HtmlLogger() : this(XDocument.Parse(Properties.Resources.XLoggerStylesheet)) { }
 
-        public HtmlLogger(XNode xDocument) : this(xDocument.CreateNavigator()) { }
+        public HtmlLogger(XNode xsltTransformStylesheet) : this(xsltTransformStylesheet.CreateNavigator()) { }
 
-        public HtmlLogger(FileInfo stylesheet)
+        public HtmlLogger(FileInfo xsltTransformStylesheet)
         {
             Transform = new XslCompiledTransform(false);
-            Transform.Load(stylesheet.FullName);
+            Transform.Load(xsltTransformStylesheet.FullName);
         }
 
-        public HtmlLogger(IXPathNavigable xsltNavigator)
+        public HtmlLogger(IXPathNavigable xsltTransformStylesheet)
         {
             Transform = new XslCompiledTransform(false);
-            Transform.Load(xsltNavigator);
+            Transform.Load(xsltTransformStylesheet);
         }
 
         // TODO: add Save() overload accepting XmlWriter, so that not only file save is possible
