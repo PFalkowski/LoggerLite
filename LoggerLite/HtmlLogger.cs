@@ -28,7 +28,6 @@ namespace LoggerLite
             Transform.Load(xsltTransformStylesheet);
         }
 
-        // TODO: add Save() overload accepting XmlWriter, so that not only file save is possible
         public override void Save(FileInfo outputFile)
         {
             var outputFileName = Path.ChangeExtension(outputFile.FullName, "html");
