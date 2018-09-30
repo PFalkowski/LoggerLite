@@ -18,6 +18,7 @@ namespace LoggerLite
                 new XDeclaration("1.0", "utf-8", "true"),
                 new XElement(RootElementName));
 
+        // TODO: add Save() overload accepting XmlWriter, so that not only file save is possible
         public virtual void Save(FileInfo outputFile)
         {
             var outputFileName = Path.ChangeExtension(outputFile.FullName, "xml");
@@ -27,7 +28,6 @@ namespace LoggerLite
                 OutputDocument.Save(writer);
             }
         }
-
         public override void LogInfo(string message)
         {
             OutputDocument.Root.Add(new XElement(EntryElementName,

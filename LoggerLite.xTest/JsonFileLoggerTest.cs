@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xunit;
 
 namespace LoggerLite.xTest
@@ -19,88 +17,130 @@ namespace LoggerLite.xTest
         [Fact]
         public void JsonLoggerCreate()
         {
-            var tested = new JsonFileLogger();
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
+            try
+            {
+                var tested = new JsonFileLogger();
 
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            testedFileLogger.LogInfo("test70113");
-            Assert.True(File.Exists(myPath));
-            Assert.Equal(".json", Path.GetExtension(testedFileLogger.OutputFile.Name));
+                var testedFileLogger = new JsonFileLogger(myPath);
+                testedFileLogger.LogInfo("test70113");
+                Assert.True(File.Exists(myPath));
+                Assert.Equal(".json", Path.GetExtension(testedFileLogger.OutputFile.Name));
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
         [Fact]
         public void LogInfo()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            var expected = "test";
-            testedFileLogger.LogInfo(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.InfoName, received);
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
+            try
+            {
+                var testedFileLogger = new JsonFileLogger(myPath);
+                var expected = "test";
+                testedFileLogger.LogInfo(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogWarning()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            var expected = "test";
-            testedFileLogger.LogWarning(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.WarningName, received);
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
+            try
+            {
+                var testedFileLogger = new JsonFileLogger(myPath);
+                var expected = "test";
+                testedFileLogger.LogWarning(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError1()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            var expected = "test";
-            testedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
+            try
+            {
+                var testedFileLogger = new JsonFileLogger(myPath);
+                var expected = "test";
+                testedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError2()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            var expected = new Exception("testExc");
-            testedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected.Message, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
+            try
+            {
+                var testedFileLogger = new JsonFileLogger(myPath);
+                var expected = new Exception("testExc");
+                testedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected.Message, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void AppendTest()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
-            var testedFileLogger = new JsonFileLogger(myPath);
-            var expectedError1 = new Exception("test1");
-            var expectedError2 = "test2";
-            var expectedWarning = "test3";
-            var expectedinfo = "test4";
-            testedFileLogger.LogError(expectedError1);
-            testedFileLogger.LogError(expectedError2);
-            testedFileLogger.LogWarning(expectedWarning);
-            testedFileLogger.LogInfo(expectedinfo);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expectedError1.Message, received);
-            Assert.Contains(expectedError2, received);
-            Assert.Contains(expectedWarning, received);
-            Assert.Contains(expectedinfo, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            Assert.Contains(LoggerBase.InfoName, received);
-            Assert.Contains(LoggerBase.WarningName, received);
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
+            try
+            {
+                var testedFileLogger = new JsonFileLogger(myPath);
+                var expectedError1 = new Exception("test1");
+                var expectedError2 = "test2";
+                var expectedWarning = "test3";
+                var expectedinfo = "test4";
+                testedFileLogger.LogError(expectedError1);
+                testedFileLogger.LogError(expectedError2);
+                testedFileLogger.LogWarning(expectedWarning);
+                testedFileLogger.LogInfo(expectedinfo);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expectedError1.Message, received);
+                Assert.Contains(expectedError2, received);
+                Assert.Contains(expectedWarning, received);
+                Assert.Contains(expectedinfo, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
