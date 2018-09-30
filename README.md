@@ -7,9 +7,9 @@ Many programming tasks are reducible or somehow related to logging information. 
 - Console Logger
 - Debug Trace Logger
 - File Logger
-- Xml Logger
-- Yaml Logger
-- Json Logger
+- XML Logger
+- YAML Logger
+- JSON Logger
 
 
 The example for console logger:
