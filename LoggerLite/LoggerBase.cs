@@ -5,7 +5,7 @@ namespace LoggerLite
     public abstract class LoggerBase : ILogger
     {
         public const string ErrorName = "Error";
-        public const string InfoName = "Info";
+        public const string InfoName = "Information";
         public const string WarningName = "Warning";
         public const string TruncateInfo = "(truncated)";
 
