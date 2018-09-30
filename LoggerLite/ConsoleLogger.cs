@@ -7,8 +7,8 @@ namespace LoggerLite
     {
         private readonly object _syncRoot = new object();
         public ConsoleColor ErrorColor { get; set; } = ConsoleColor.Red;
-        public ConsoleColor InfoColor { get; set; } = ConsoleColor.DarkGray;
-        public ConsoleColor WarningColor { get; set; } = ConsoleColor.DarkYellow;
+        public ConsoleColor InfoColor { get; set; } = ConsoleColor.Gray;
+        public ConsoleColor WarningColor { get; set; } = ConsoleColor.Yellow;
 
         public override bool FlushAuto => true;
 

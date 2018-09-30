@@ -7,9 +7,9 @@ Many programming tasks are reducible or somehow related to logging information. 
 - Console Logger
 - Debug Trace Logger
 - File Logger
-- Xml Logger
-- Yaml Logger
-- Json Logger
+- XML Logger
+- YAML Logger
+- JSON Logger
 
 
 The example for console logger:
@@ -32,6 +32,8 @@ namespace ConsoleApp1
     }
 }
 ```
+![Console logger example output](ConsoleExampleOutput.PNG)
+
 The example for yaml logger or any file logger based on FileLoggerBase:
 ```c#
 using System;
@@ -46,7 +48,7 @@ namespace ConsoleApp1
             var logger = new YamlFileLogger("yamlLog.yaml");
             logger.LogInfo("info");
             logger.LogWarning("warning");
-            logger.LogError("error");//no need to call save, it's flushes automatically
+            logger.LogError("error");//no need to call save, it flushes automatically
             Console.ReadKey();
         }
     }
@@ -54,4 +56,4 @@ namespace ConsoleApp1
 ```
 
 
-Contributions are welcomed
+Contributions are welcomed!

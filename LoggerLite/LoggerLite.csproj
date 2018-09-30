@@ -14,11 +14,11 @@ Aggreagated Logger</Description>
     <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>logging,Xml,Yaml,File, Logger,Xml Logger</PackageTags>
+    <PackageTags>JSON, XML,YAML,Console,logging,logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.2.0</Version>
-    <PackageReleaseNotes>Add Json file logger</PackageReleaseNotes>
+    <Version>2.4.0</Version>
+    <PackageReleaseNotes>Change default console formatting. Minor tweaks</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

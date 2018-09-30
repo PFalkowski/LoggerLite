@@ -6,7 +6,7 @@ namespace LoggerLite
     public abstract class FormattedLoggerBase : LoggerBase
     {
         public Func<string, string, string> Formatter { get; protected set; } =
-            (level, message) => $"{level}({DateTime.Now:G}):{message}{Environment.NewLine}";
+            (level, message) => $"{DateTime.Now:G} {level}".PadRight(40) + $"{message}{Environment.NewLine}";
 
         public abstract override bool FlushAuto { get; }
 
