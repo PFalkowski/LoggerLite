@@ -8,6 +8,7 @@ Debug Trace Logger
 File Logger
 Xml Logger
 Yaml Logger
+Html Logger
 Aggreagated Logger</Description>
     <Copyright>Piotr Falkowski © 2018</Copyright>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
@@ -17,13 +18,28 @@ Aggreagated Logger</Description>
     <PackageTags>JSON, XML,YAML,Console,logging,logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.4.0</Version>
-    <PackageReleaseNotes>Change default console formatting. Minor tweaks</PackageReleaseNotes>
+    <Version>2.6.0</Version>
+    <PackageReleaseNotes>Introduce buffered logger abstraction.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
 </Project>

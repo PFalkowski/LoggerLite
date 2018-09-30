@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace LoggerLite
 {
-    public class XLogger : LoggerBase
+    public class XLogger : BufferedLoggerBase
     {
         public const string EntryElementName = "entry";
         public const string TimeElementName = "time";
@@ -18,14 +19,11 @@ namespace LoggerLite
                 new XDeclaration("1.0", "utf-8", "true"),
                 new XElement(RootElementName));
 
-        public virtual void Save(FileInfo outputFile)
+        // TODO: add xsd validation
+
+        public override void Save(TextWriter outputSteam)
         {
-            var outputFileName = Path.ChangeExtension(outputFile.FullName, "xml");
-            var fileStream = new FileStream(outputFileName, FileMode.Create);
-            using (var writer = new StreamWriter(fileStream))
-            {
-                OutputDocument.Save(writer);
-            }
+            OutputDocument.Save(outputSteam);
         }
         public override void LogInfo(string message)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
@@ -11,119 +10,162 @@ namespace LoggerLite.xTest
         public void CreateQueuedFileLogger()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            testedQueuedFileLogger.LogInfo("test7013");
-            Assert.True(File.Exists(myPath));
-            File.Delete(myPath);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+                testedQueuedFileLogger.LogInfo("test7013");
+                Assert.True(File.Exists(myPath));
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogInfo()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            var expected = "test";
-            testedQueuedFileLogger.LogInfo(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.InfoName, received);
-            File.Delete(myPath);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+                var expected = "test";
+                testedQueuedFileLogger.LogInfo(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogWarning()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            var expected = "test";
-            testedQueuedFileLogger.LogWarning(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.WarningName, received);
-            File.Delete(myPath);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+                var expected = "test";
+                testedQueuedFileLogger.LogWarning(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError1()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            var expected = "test";
-            testedQueuedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            File.Delete(myPath);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+                var expected = "test";
+                testedQueuedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError2()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            var expected = new Exception("test");
-            testedQueuedFileLogger.LogError(expected);
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expected.Message, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            File.Delete(myPath);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+                var expected = new Exception("test");
+                testedQueuedFileLogger.LogError(expected);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expected.Message, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
         [Fact]
         public void DebounceTest()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 10000 });
-            var expectedError1 = new Exception("testError1");
-            var expectedError2 = "testError2";
-            var expectedWarning = "testError3";
-            var expectedinfo = "testError4";
-            testedQueuedFileLogger.LogError(expectedError1);
-            testedQueuedFileLogger.LogError(expectedError2);
-            testedQueuedFileLogger.LogWarning(expectedWarning);
-            testedQueuedFileLogger.LogInfo(expectedinfo);
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 10000 });
+                var expectedError1 = new Exception("testError1");
+                var expectedError2 = "testError2";
+                var expectedWarning = "testError3";
+                var expectedinfo = "testError4";
+                testedQueuedFileLogger.LogError(expectedError1);
+                testedQueuedFileLogger.LogError(expectedError2);
+                testedQueuedFileLogger.LogWarning(expectedWarning);
+                testedQueuedFileLogger.LogInfo(expectedinfo);
 
 
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expectedError1.Message, received);
-            Assert.DoesNotContain(expectedError2, received);
-            Assert.DoesNotContain(expectedWarning, received);
-            Assert.DoesNotContain(expectedinfo, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            Assert.DoesNotContain(LoggerBase.WarningName, received);
-            Assert.DoesNotContain(LoggerBase.InfoName, received);
-            File.Delete(myPath);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expectedError1.Message, received);
+                Assert.DoesNotContain(expectedError2, received);
+                Assert.DoesNotContain(expectedWarning, received);
+                Assert.DoesNotContain(expectedinfo, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.DoesNotContain(LoggerBase.WarningName, received);
+                Assert.DoesNotContain(LoggerBase.InfoName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void AppendTest()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer());
-            var expectedError1 = new Exception("testError1");
-            var expectedError2 = "testError2";
-            var expectedWarning = "testWarning1";
-            var expectedinfo = "testInfo1";
-            testedQueuedFileLogger.LogError(expectedError1);
-            testedQueuedFileLogger.LogError(expectedError2);
-            testedQueuedFileLogger.LogWarning(expectedWarning);
-            testedQueuedFileLogger.LogInfo(expectedinfo);
-            testedQueuedFileLogger.Flush();
+            try
+            {
+                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer());
+                var expectedError1 = new Exception("testError1");
+                var expectedError2 = "testError2";
+                var expectedWarning = "testWarning1";
+                var expectedinfo = "testInfo1";
+                testedQueuedFileLogger.LogError(expectedError1);
+                testedQueuedFileLogger.LogError(expectedError2);
+                testedQueuedFileLogger.LogWarning(expectedWarning);
+                testedQueuedFileLogger.LogInfo(expectedinfo);
+                testedQueuedFileLogger.Flush();
 
 
-            var received = File.ReadAllText(myPath);
-            Assert.True(File.Exists(myPath));
-            Assert.Contains(expectedError1.Message, received);
-            Assert.Contains(expectedError2, received);
-            Assert.Contains(expectedWarning, received);
-            Assert.Contains(expectedinfo, received);
-            Assert.Contains(LoggerBase.ErrorName, received);
-            Assert.Contains(LoggerBase.WarningName, received);
-            Assert.Contains(LoggerBase.InfoName, received);
+                var received = File.ReadAllText(myPath);
+                Assert.True(File.Exists(myPath));
+                Assert.Contains(expectedError1.Message, received);
+                Assert.Contains(expectedError2, received);
+                Assert.Contains(expectedWarning, received);
+                Assert.Contains(expectedinfo, received);
+                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.Contains(LoggerBase.WarningName, received);
+                Assert.Contains(LoggerBase.InfoName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
 

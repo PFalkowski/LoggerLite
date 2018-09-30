@@ -19,21 +19,28 @@ namespace LoggerLite.xTest
         [Fact]
         public void JsonLoggerCreate()
         {
-            using (var tested = new JsonFileLogger())
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
+            try
             {
-                var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
+                var tested = new JsonFileLogger();
+
                 var testedFileLogger = new JsonFileLogger(myPath);
                 testedFileLogger.LogInfo("test70113");
                 Assert.True(File.Exists(myPath));
                 Assert.Equal(".json", Path.GetExtension(testedFileLogger.OutputFile.Name));
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
         [Fact]
         public void LogInfo()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
-            using (var testedFileLogger = new JsonFileLogger(myPath))
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
+            try
             {
+                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogInfo(expected);
                 var received = File.ReadAllText(myPath);
@@ -41,14 +48,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.InfoName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogWarning()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
-            using (var testedFileLogger = new JsonFileLogger(myPath))
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
+            try
             {
+                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogWarning(expected);
                 var received = File.ReadAllText(myPath);
@@ -56,14 +68,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.WarningName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError1()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
-            using (var testedFileLogger = new JsonFileLogger(myPath))
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
+            try
             {
+                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = "test";
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -71,14 +88,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.ErrorName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError2()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
-            using (var testedFileLogger = new JsonFileLogger(myPath))
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
+            try
             {
+                var testedFileLogger = new JsonFileLogger(myPath);
                 var expected = new Exception("testExc");
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -86,14 +108,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected.Message, received);
                 Assert.Contains(LoggerBase.ErrorName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void AppendTest()
         {
-            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
-            using (var testedFileLogger = new JsonFileLogger(myPath))
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
+            try
             {
+                var testedFileLogger = new JsonFileLogger(myPath);
                 var expectedError1 = new Exception("test1");
                 var expectedError2 = "test2";
                 var expectedWarning = "test3";
@@ -111,6 +138,10 @@ namespace LoggerLite.xTest
                 Assert.Contains(LoggerBase.ErrorName, received);
                 Assert.Contains(LoggerBase.InfoName, received);
                 Assert.Contains(LoggerBase.WarningName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
             }
         }
 

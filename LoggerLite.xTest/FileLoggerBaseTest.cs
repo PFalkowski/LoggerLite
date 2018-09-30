@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Castle.Core.Resource;
 using Xunit;
 
 namespace LoggerLite.xTest
@@ -12,11 +11,16 @@ namespace LoggerLite.xTest
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LoggerEaseOfUse)}.log";
             var expected = "testing ease of use.";
-            using (var myLogger = new FileLoggerBase(myPath))
+            var myLogger = new FileLoggerBase(myPath);
+            try
             {
                 myLogger.LogInfo(expected);
                 var actual = File.ReadAllText(myPath);
                 Assert.Contains(expected, actual);
+            }
+            finally
+            {
+                File.Delete(myPath);
             }
         }
 
@@ -24,10 +28,15 @@ namespace LoggerLite.xTest
         public void CreateFileLogger()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(CreateFileLogger)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 testedFileLogger.LogInfo("test7013");
                 Assert.True(File.Exists(myPath));
+            }
+            finally
+            {
+                File.Delete(myPath);
             }
         }
 
@@ -35,8 +44,9 @@ namespace LoggerLite.xTest
         public void LogInfo()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogInfo)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogInfo(expected);
                 var received = File.ReadAllText(myPath);
@@ -44,14 +54,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.InfoName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogWarning()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogWarning)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogWarning(expected);
                 var received = File.ReadAllText(myPath);
@@ -59,14 +74,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.WarningName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError1()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError1)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = "test";
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -74,14 +94,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected, received);
                 Assert.Contains(LoggerBase.ErrorName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void LogError2()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LogError2)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 var expected = new Exception("test");
                 testedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -89,14 +114,19 @@ namespace LoggerLite.xTest
                 Assert.Contains(expected.Message, received);
                 Assert.Contains(LoggerBase.ErrorName, received);
             }
+            finally
+            {
+                File.Delete(myPath);
+            }
         }
 
         [Fact]
         public void AppendTest()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(AppendTest)}.log";
-            using (var testedFileLogger = new FileLoggerBase(myPath))
+            try
             {
+                var testedFileLogger = new FileLoggerBase(myPath);
                 var expectedError1 = new Exception("testError1");
                 var expectedError2 = "testError2";
                 var expectedWarning = "testWarning1";
@@ -114,6 +144,10 @@ namespace LoggerLite.xTest
                 Assert.Contains(LoggerBase.ErrorName, received);
                 Assert.Contains(LoggerBase.InfoName, received);
                 Assert.Contains(LoggerBase.WarningName, received);
+            }
+            finally
+            {
+                File.Delete(myPath);
             }
         }
 
@@ -137,8 +171,17 @@ namespace LoggerLite.xTest
             const string fileName = "test.log";
             var outputFile = new FileInfo(Path.Combine(path.FullName, fileName));
             var tested = new FileLoggerBase(outputFile.FullName) { CreateDirIfNotExists = true };
-            tested.LogInfo("test");
-            Assert.True(path.Exists);
+            try
+            {
+                tested.LogInfo("test");
+                path.Refresh();
+                Assert.True(path.Exists);
+            }
+            finally
+            {
+                outputFile.Delete();
+                path.Delete();
+            }
         }
         [Fact]
         public void DefaultExtensionTest1()

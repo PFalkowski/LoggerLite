@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using Xunit;
 
@@ -110,12 +111,63 @@ namespace LoggerLite.xTest
             var expected = "info";
             var myLogger = new XLogger();
             var output = new FileInfo("test.xml");
-            myLogger.LogInfo(expected);
-            myLogger.Save(output);
-            Assert.True(File.Exists(output.FullName));
+            try
+            {
+                myLogger.LogInfo(expected);
+                myLogger.Save(output);
+                Assert.True(File.Exists(output.FullName));
 
-            var fromFile = XDocument.Load(output.FullName);
-            Assert.True(XNode.DeepEquals(myLogger.OutputDocument, fromFile));
+                var fromFile = XDocument.Load(output.FullName);
+                Assert.True(XNode.DeepEquals(myLogger.OutputDocument, fromFile));
+            }
+            finally
+            {
+                output.Delete();
+            }
+        }
+
+        [Fact]
+        public void XLoggerSavesToFileTwiceAndTheFileIsValid()
+        {
+            var testInfo = "info";
+            var testWarning = "info";
+            var myLogger = new XLogger();
+            var output = new FileInfo("test.xml");
+            try
+            {
+                myLogger.LogInfo(testInfo);
+                myLogger.Save(output);
+                myLogger.LogWarning(testWarning);
+                myLogger.Save(output);
+
+                var fromFile = XDocument.Load(output.FullName);
+                Assert.True(XNode.DeepEquals(myLogger.OutputDocument, fromFile));
+            }
+            finally
+            {
+                output.Delete();
+            }
+        }
+
+        [Fact]
+        public void XLoggerSavesToStream()
+        {
+            var testInfo = "info";
+            var myLogger = new XLogger();
+            var output = new StringWriter();
+            try
+            {
+                myLogger.LogInfo(testInfo);
+                myLogger.Save(output);
+
+                var actual = XDocument.Parse(output.ToString());
+                var expected = myLogger.OutputDocument;
+                Assert.True(XNode.DeepEquals(expected, actual));
+            }
+            finally
+            {
+                output.Dispose();
+            }
         }
     }
 }
