@@ -5,33 +5,33 @@ namespace LoggerLite
     public class FileLoggerBase : FormattedLoggerBase
     {
         private readonly object _syncRoot = new object();
-
         protected virtual string DefaultExtension => ".log";
         public virtual string DefaultFileName => $"{Path.GetRandomFileName()}{DefaultExtension}";
+        public string PathToLog => OutputFile?.FullName;
+        public FileInfo OutputFile { get; }
+        public DirectoryInfo OutputDirectory => OutputFile.Directory;
+        public override bool FlushAuto => true;
+        public bool CreateDirIfNotExists { get; set; } = false;
 
         private string GetOutputPath(string untrusted)
         {
             var pathTemp = untrusted ?? DefaultFileName;
-            var result = Path.HasExtension(pathTemp) ? pathTemp : pathTemp + DefaultExtension;
+            var result = Path.HasExtension(pathTemp) ? pathTemp : Path.ChangeExtension(pathTemp, DefaultExtension);
             return result;
         }
 
         public FileLoggerBase(string filePath = null)
         {
-            PathToLog = GetOutputPath(filePath);
-            OutputFile = new FileInfo(PathToLog);
+            var path = GetOutputPath(filePath);
+            OutputFile = new FileInfo(path);
         }
-
-        public string PathToLog { get; }
-
-        public FileInfo OutputFile { get; }
-
-        public override bool FlushAuto => true;
 
         protected internal sealed override void Log(string message)
         {
             lock (_syncRoot)
             {
+                if (CreateDirIfNotExists && !OutputDirectory.Exists)
+                    OutputDirectory.Create();
                 using (var streamWriter = new StreamWriter(OutputFile.FullName, true))
                 {
                     streamWriter.Write(message);

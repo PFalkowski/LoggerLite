@@ -1,34 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Xunit;
 
 namespace LoggerLite.xTest
 {
-    public class YamlLoggerTest
+    public class JsonFileLoggerTest
     {
+
         [Fact]
         public void DefaultExtensionTest1()
         {
-            var tested1 = new YamlFileLogger();
-            Assert.True(tested1.PathToLog.EndsWith(".yaml"), $"{tested1.PathToLog} does not end with \".yaml\"");
+            var tested1 = new JsonFileLogger();
+            Assert.True(tested1.PathToLog.EndsWith(".json"), $"{tested1.PathToLog} does not end with \".json\"");
         }
 
         [Fact]
-        public void YamlCreate()
+        public void JsonLoggerCreate()
         {
-            var tested = new YamlFileLogger();
+            var tested = new JsonFileLogger();
 
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(YamlCreate)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(JsonLoggerCreate)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             testedFileLogger.LogInfo("test70113");
             Assert.True(File.Exists(myPath));
-            Assert.Equal(".yaml", Path.GetExtension(testedFileLogger.OutputFile.Name));
+            Assert.Equal(".json", Path.GetExtension(testedFileLogger.OutputFile.Name));
         }
         [Fact]
         public void LogInfo()
         {
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(LogInfo)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogInfo)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             var expected = "test";
             testedFileLogger.LogInfo(expected);
             var received = File.ReadAllText(myPath);
@@ -40,8 +43,8 @@ namespace LoggerLite.xTest
         [Fact]
         public void LogWarning()
         {
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(LogWarning)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogWarning)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             var expected = "test";
             testedFileLogger.LogWarning(expected);
             var received = File.ReadAllText(myPath);
@@ -53,8 +56,8 @@ namespace LoggerLite.xTest
         [Fact]
         public void LogError1()
         {
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(LogError1)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError1)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             var expected = "test";
             testedFileLogger.LogError(expected);
             var received = File.ReadAllText(myPath);
@@ -66,8 +69,8 @@ namespace LoggerLite.xTest
         [Fact]
         public void LogError2()
         {
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(LogError2)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(LogError2)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             var expected = new Exception("testExc");
             testedFileLogger.LogError(expected);
             var received = File.ReadAllText(myPath);
@@ -79,8 +82,8 @@ namespace LoggerLite.xTest
         [Fact]
         public void AppendTest()
         {
-            var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(AppendTest)}.yaml";
-            var testedFileLogger = new YamlFileLogger(myPath);
+            var myPath = $"{typeof(global::LoggerLite.xTest.JsonFileLoggerTest).Namespace}.{nameof(AppendTest)}.json";
+            var testedFileLogger = new JsonFileLogger(myPath);
             var expectedError1 = new Exception("test1");
             var expectedError2 = "test2";
             var expectedWarning = "test3";
@@ -104,8 +107,9 @@ namespace LoggerLite.xTest
         public void FilePathNotNull()
         {
             const string path = "testPath.test";
-            var tested = new YamlFileLogger(path);
+            var tested = new JsonFileLogger(path);
             Assert.Contains(path, tested.PathToLog);
         }
+
     }
 }

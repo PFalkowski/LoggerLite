@@ -37,6 +37,11 @@ namespace LoggerLite
             Loggers?.ForEach(l => l.LogError(error));
         }
 
+        public void Log(string message, MessageSeverity severity)
+        {
+            Loggers?.ForEach(l => l.Log(message, severity));
+        }
+
         public bool FlushAuto => Loggers.All(l => l.FlushAuto);
     }
 }
