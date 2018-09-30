@@ -32,8 +32,7 @@ namespace LoggerLite
         {
             lock (_syncRoot)
             {
-                var fileStream = new FileStream(OutputFile.FullName, FileMode.Append);
-                using (var streamWriter = new StreamWriter(fileStream))
+                using (var streamWriter = new StreamWriter(OutputFile.FullName, true))
                 {
                     streamWriter.Write(message);
                 }

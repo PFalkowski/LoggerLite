@@ -29,8 +29,7 @@ namespace LoggerLite
             var builder = new StringBuilder();
             while (!_buffer.IsEmpty)
             {
-                string temp;
-                if (_buffer.TryDequeue(out temp))
+                if (_buffer.TryDequeue(out var temp))
                 {
                     builder.Append(temp);
                 }

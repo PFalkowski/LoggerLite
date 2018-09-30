@@ -30,7 +30,6 @@ namespace LoggerLite
 
         public override void LogInfo(string message)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, message),
@@ -39,7 +38,6 @@ namespace LoggerLite
 
         public override void LogWarning(string warning)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, warning),
@@ -48,7 +46,6 @@ namespace LoggerLite
 
         public override void LogError(Exception exception)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, exception),
@@ -57,7 +54,6 @@ namespace LoggerLite
 
         public override void LogError(string error)
         {
-            Debug.Assert(OutputDocument.Root != null, "OutputDocument.Root != null");
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, error),
