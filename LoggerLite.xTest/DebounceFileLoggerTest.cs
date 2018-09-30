@@ -10,14 +10,15 @@ namespace LoggerLite.xTest
         public void CreateQueuedFileLogger()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
                 testedQueuedFileLogger.LogInfo("test7013");
                 Assert.True(File.Exists(myPath));
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -26,9 +27,9 @@ namespace LoggerLite.xTest
         public void LogInfo()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
                 var expected = "test";
                 testedQueuedFileLogger.LogInfo(expected);
                 var received = File.ReadAllText(myPath);
@@ -38,6 +39,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -46,9 +48,9 @@ namespace LoggerLite.xTest
         public void LogWarning()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
                 var expected = "test";
                 testedQueuedFileLogger.LogWarning(expected);
                 var received = File.ReadAllText(myPath);
@@ -58,6 +60,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -66,9 +69,9 @@ namespace LoggerLite.xTest
         public void LogError1()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
                 var expected = "test";
                 testedQueuedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -78,6 +81,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -86,9 +90,9 @@ namespace LoggerLite.xTest
         public void LogError2()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
                 var expected = new Exception("test");
                 testedQueuedFileLogger.LogError(expected);
                 var received = File.ReadAllText(myPath);
@@ -98,6 +102,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -105,9 +110,9 @@ namespace LoggerLite.xTest
         public void DebounceTest()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 10000 });
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 10000 });
                 var expectedError1 = new Exception("testError1");
                 var expectedError2 = "testError2";
                 var expectedWarning = "testError3";
@@ -130,6 +135,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }
@@ -138,9 +144,9 @@ namespace LoggerLite.xTest
         public void AppendTest()
         {
             var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer());
             try
             {
-                var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer());
                 var expectedError1 = new Exception("testError1");
                 var expectedError2 = "testError2";
                 var expectedWarning = "testWarning1";
@@ -164,6 +170,7 @@ namespace LoggerLite.xTest
             }
             finally
             {
+                testedQueuedFileLogger.Dispose();
                 File.Delete(myPath);
             }
         }

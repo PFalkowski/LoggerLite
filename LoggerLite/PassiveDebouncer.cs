@@ -35,5 +35,10 @@ namespace LoggerLite
                 _watch.Reset();
             }
         }
+
+        public void Dispose()
+        {
+            // Nothing to do here
+        }
     }
 }
