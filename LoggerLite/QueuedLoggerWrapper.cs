@@ -7,15 +7,18 @@ namespace LoggerLite
     // TODO: split debouncing logger from queued
     public sealed class QueuedLoggerWrapper : FormattedLoggerBase, IDisposable
     {
+        private readonly object _syncRoot = new object();
+
         private readonly ConcurrentQueue<string> _buffer = new ConcurrentQueue<string>();
         private readonly IDebouncer _debouncer;
         private readonly FormattedLoggerBase _logger;
 
+        public override bool FlushAuto => _logger.FlushAuto;
+        public override bool IsThreadSafe => true;
         //TODO: add for all file loggers
         public int LogRequests { get; private set; } = 0;
         //TODO: add for all file loggers
         public int FailedDequeues { get; private set; } = 0;
-        private readonly object _syncRoot = new object();
 
         public QueuedLoggerWrapper(FormattedLoggerBase logger, IDebouncer debouncer)
         {
@@ -23,9 +26,6 @@ namespace LoggerLite
             _debouncer = debouncer;
         }
 
-        public override bool FlushAuto => _logger.FlushAuto;
-
-        public override bool IsThreadSafe => true;
 
         protected internal override void Log(string message)
         {
