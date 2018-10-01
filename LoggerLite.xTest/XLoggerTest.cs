@@ -9,14 +9,13 @@ namespace LoggerLite.xTest
 {
     public class XLoggerTest
     {
-
         [Fact]
-        public void XLoggerCreateTest()
+        public void FlushAutoAlwaysReturnsFalse()
         {
             var myLogger = new XLogger();
-            Assert.NotNull(myLogger);
             Assert.False(myLogger.FlushAuto);
         }
+
         [Fact]
         public void LoggerEaseOfUse()
         {

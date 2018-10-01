@@ -14,6 +14,13 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
+        public void FlushAutoAlwaysReturnsTrue()
+        {
+            var tested1 = new YamlFileLogger();
+            Assert.True(tested1.FlushAuto);
+        }
+
+        [Fact]
         public void YamlCreate()
         {
             var myPath = $"{typeof(YamlLoggerTest).Namespace}.{nameof(YamlCreate)}.yaml";

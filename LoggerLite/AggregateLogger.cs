@@ -43,5 +43,7 @@ namespace LoggerLite
         }
 
         public bool FlushAuto => Loggers.All(l => l.FlushAuto);
+
+        public bool IsThreadSafe => Loggers.All(l => l.IsThreadSafe);
     }
 }

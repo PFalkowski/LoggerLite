@@ -6,6 +6,19 @@ namespace LoggerLite.xTest
 {
     public class JsonFileLoggerTest
     {
+        [Fact]
+        public void FlushAutoAlwaysReturnsFalse()
+        {
+            var tested1 = new JsonFileLogger();
+            Assert.True(tested1.FlushAuto);
+        }
+
+        [Fact]
+        public void IsThreadSafeAlwaysReturnsTrue()
+        {
+            var tested1 = new JsonFileLogger();
+            Assert.True(tested1.IsThreadSafe);
+        }
 
         [Fact]
         public void DefaultExtensionTest1()

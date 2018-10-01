@@ -12,7 +12,7 @@ namespace PassiveDebouncerTestHarness
         {
             Console.WriteLine("Hello in Passive Debouncer test harness! " +
                 "This is the load test. The file logger will be spammed with the number of messages (random GUIDs) you choose from multiple threads." +
-                " The debouncer role is to keep the messaged queued in memory and not flush immidiatly. How many messages would you like to send from the thread pool?");
+                " The debouncer role is to keep the messages queued in memory and not flush immidiatly. How many messages would you like to send from the thread pool?");
             Console.Write("Number of messages: ");
             var line = Console.ReadLine();
             int validInteger;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Xunit;
 
 namespace LoggerLite.xTest
@@ -27,11 +28,16 @@ namespace LoggerLite.xTest
             var testedDebouncer = new PassiveDebouncer { DebounceMilliseconds = debounceMs };
             Assert.Equal(debounceMs, testedDebouncer.DebounceMilliseconds);
             Action actionToDebounce = () => { ++counter; };
+            var stopwatch = Stopwatch.StartNew();
             for (var i = 0; i < numRepeats; ++i)
             {
                 testedDebouncer.Debounce(actionToDebounce);
             }
-            Assert.Equal(1, counter);
+            stopwatch.Stop();
+            if (stopwatch.ElapsedMilliseconds < debounceMs)
+            {
+                Assert.Equal(1, counter);
+            }
         }
     }
 }

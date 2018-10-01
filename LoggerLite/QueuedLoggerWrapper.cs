@@ -22,6 +22,8 @@ namespace LoggerLite
 
         public override bool FlushAuto => _logger.FlushAuto;
 
+        public override bool IsThreadSafe => true;
+
         protected internal override void Log(string message)
         {
             lock (_syncRoot)

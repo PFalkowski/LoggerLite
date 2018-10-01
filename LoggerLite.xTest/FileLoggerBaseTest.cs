@@ -7,6 +7,20 @@ namespace LoggerLite.xTest
     public class FileLoggerBaseTest
     {
         [Fact]
+        public void FlushAutoAlwaysReturnsTrue()
+        {
+            var tested1 = new FileLoggerBase();
+            Assert.True(tested1.FlushAuto);
+        }
+
+        [Fact]
+        public void IsThreadSafeAlwaysReturnsTrue()
+        {
+            var tested1 = new FileLoggerBase();
+            Assert.True(tested1.IsThreadSafe);
+        }
+
+        [Fact]
         public void LoggerEaseOfUse()
         {
             var myPath = $"{typeof(FileLoggerBaseTest).Namespace}.{nameof(LoggerEaseOfUse)}.log";

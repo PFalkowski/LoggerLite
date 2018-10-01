@@ -4,13 +4,14 @@ namespace LoggerLite
 {
     public class FileLoggerBase : FormattedLoggerBase
     {
-        private readonly object _syncRoot = new object();
+        protected readonly object _syncRoot = new object();
         protected virtual string DefaultExtension => ".log";
         public virtual string DefaultFileName => $"{Path.GetRandomFileName()}{DefaultExtension}";
         public string PathToLog => OutputFile?.FullName;
         public FileInfo OutputFile { get; }
         public DirectoryInfo OutputDirectory => OutputFile.Directory;
         public override bool FlushAuto => true;
+        public override bool IsThreadSafe => true;
         public bool CreateDirIfNotExists { get; set; } = false;
 
         private string GetOutputPath(string untrusted)

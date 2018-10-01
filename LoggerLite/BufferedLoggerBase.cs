@@ -7,6 +7,7 @@ namespace LoggerLite
 {
     public abstract class BufferedLoggerBase : LoggerBase
     {
+        public override sealed bool FlushAuto => false;
         public virtual void Save(FileInfo outputFile)
         {
             var fileStream = new FileStream(outputFile.FullName, FileMode.Create);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.IO;
 using Xunit;
 
@@ -23,6 +24,33 @@ namespace LoggerLite.xTest
             }
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void FlushAutoReturnsValueDependingOnWrappedLogger(bool flushesAuto)
+        {
+            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var mockLogger1 = new Mock<FileLoggerBase>(myPath);
+            var mockDebouncer1 = new Mock<IDebouncer>();
+            mockLogger1.SetupGet(m => m.FlushAuto).Returns(flushesAuto);
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(mockLogger1.Object, mockDebouncer1.Object);
+            Assert.Equal(flushesAuto, testedQueuedFileLogger.FlushAuto);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsThreadSafeAlwaysReturnsTrue(bool isThreadSafe)
+        {
+            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var mockLogger1 = new Mock<FileLoggerBase>(myPath);
+            var mockDebouncer1 = new Mock<IDebouncer>();
+            mockLogger1.SetupGet(m => m.IsThreadSafe).Returns(isThreadSafe);
+            var testedQueuedFileLogger = new QueuedLoggerWrapper(mockLogger1.Object, mockDebouncer1.Object);
+            Assert.True(testedQueuedFileLogger.IsThreadSafe);
+        }
+
+        // TODO: this is not a unit. refactor
         [Fact]
         public void LogInfo()
         {
@@ -44,6 +72,7 @@ namespace LoggerLite.xTest
             }
         }
 
+        // TODO: this is not a unit. refactor
         [Fact]
         public void LogWarning()
         {
@@ -65,6 +94,7 @@ namespace LoggerLite.xTest
             }
         }
 
+        // TODO: this is not a unit. refactor
         [Fact]
         public void LogError1()
         {
@@ -86,6 +116,7 @@ namespace LoggerLite.xTest
             }
         }
 
+        // TODO: this is not a unit. refactor
         [Fact]
         public void LogError2()
         {
@@ -106,6 +137,8 @@ namespace LoggerLite.xTest
                 File.Delete(myPath);
             }
         }
+
+        // TODO: this is not a unit. refactor
         [Fact]
         public void DebounceTest()
         {
@@ -140,6 +173,7 @@ namespace LoggerLite.xTest
             }
         }
 
+        // TODO: this is not a unit. refactor
         [Fact]
         public void AppendTest()
         {

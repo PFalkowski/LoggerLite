@@ -10,7 +10,9 @@ namespace LoggerLite
         public const string TruncateInfo = "(truncated)";
 
         public int MaxSingleMessageLength { get; protected set; } = 1000 * 1000;
+
         public abstract bool FlushAuto { get; }
+        public abstract bool IsThreadSafe { get; }
 
         protected string TrimExcess(string input)
         {

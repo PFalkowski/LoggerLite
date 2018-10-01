@@ -21,6 +21,20 @@ namespace LoggerLite.xTest
 </xsl:stylesheet>";
 
         [Fact]
+        public void FlushAutoAlwaysReturnsFalse()
+        {
+            var tested1 = new HtmlLogger();
+            Assert.False(tested1.FlushAuto);
+        }
+
+        [Fact]
+        public void IsThreadSafeAlwaysReturnsTrue()
+        {
+            var tested1 = new HtmlLogger();
+            Assert.False(tested1.IsThreadSafe);
+        }
+
+        [Fact]
         public void HtmlLoggerLogs()
         {
             const string error = "test error";

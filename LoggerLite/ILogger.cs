@@ -10,8 +10,9 @@ namespace LoggerLite
         void LogError(Exception exception);
         void LogError(string error);
         /// <summary>
-        /// Indicates, whether the logger will automatically update underlying object/stream, or a special call to some method (ex. Save) is required.
+        /// Indicates, whether the logger will automatically update underlying object/stream, or it requires a call to Flush() method
         /// </summary>
         bool FlushAuto { get; }
+        bool IsThreadSafe { get; }
     }
 }

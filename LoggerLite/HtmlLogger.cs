@@ -9,9 +9,7 @@ namespace LoggerLite
     public class HtmlLogger : XLogger
     {
         private XslCompiledTransform Transform { get; }
-
-        public override bool FlushAuto => false;
-
+        
         public HtmlLogger() : this(XDocument.Parse(Properties.Resources.XLoggerStylesheet)) { }
 
         public HtmlLogger(XNode xsltTransformStylesheet) : this(xsltTransformStylesheet.CreateNavigator()) { }

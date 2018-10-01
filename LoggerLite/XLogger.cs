@@ -14,13 +14,13 @@ namespace LoggerLite
         public const string TypeElementName = "type";
         public const string RootElementName = "activity";
 
-        public override bool FlushAuto => false;
         public XDocument OutputDocument { get; } = new XDocument(
                 new XDeclaration("1.0", "utf-8", "true"),
                 new XElement(RootElementName));
 
-        // TODO: add xsd validation
+        public override bool IsThreadSafe => false;
 
+        // TODO: add xsd validation
         public override void Save(TextWriter outputSteam)
         {
             OutputDocument.Save(outputSteam);
