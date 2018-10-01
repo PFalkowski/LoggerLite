@@ -16,6 +16,13 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
+        public void NeedsDisposingAlwaysReturnsTrue()
+        {
+            var testedDebouncer = new ActiveDebouncer();
+            Assert.True(testedDebouncer.NeedsDisposing);
+        }
+
+        [Fact]
         public void DebouncerSetterThrowsArgumentException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new ActiveDebouncer { DebounceMilliseconds = -1 });

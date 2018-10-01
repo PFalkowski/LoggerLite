@@ -161,7 +161,7 @@ namespace LoggerLite.xTest
         }
 
 
-        // TODO: Write possible multithreaded scenarios
+        // TODO: uncomment 
         //private static void AssertFileFormedWell(string myPath)
         //{
         //    const int numberOfRepeats = 10;

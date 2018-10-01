@@ -5,6 +5,8 @@ namespace LoggerLite
 {
     public sealed class PassiveDebouncer : IDebouncer
     {
+        public bool NeedsDisposing => false;
+
         private readonly Stopwatch _watch = new Stopwatch();
 
         private int _debounceMilliseconds = 1000;
@@ -19,6 +21,7 @@ namespace LoggerLite
                 _debounceMilliseconds = value;
             }
         }
+
 
         public void Debounce(Action action)
         {

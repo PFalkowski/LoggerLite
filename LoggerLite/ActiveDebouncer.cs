@@ -9,6 +9,8 @@ namespace LoggerLite
         private Action _pendingAction;
         private bool _started;
 
+        public bool NeedsDisposing => true;
+
         private void _startTimer()
         {
             if (!_started)
