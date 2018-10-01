@@ -21,7 +21,61 @@ namespace LoggerLite.xTest
 </xsl:stylesheet>";
 
         [Fact]
-        public void Create()
+        public void HtmlLoggerLogs()
+        {
+            const string error = "test error";
+            const string info = "test info";
+            const string warning = "test warning";
+            const string outputFile = "htmlLogTest2.html";
+            var file = new FileInfo(outputFile);
+
+            var xDock = XDocument.Parse(Xslt);
+            var tested = new HtmlLogger(xDock);
+
+            tested.LogError(error);
+            tested.LogInfo(info);
+            tested.LogWarning(warning);
+
+            var writer = new StringWriter();
+
+            tested.OutputDocument.Save(writer);
+
+            var actual = writer.ToString();
+
+            Assert.Contains(error, actual);
+            Assert.Contains(info, actual);
+            Assert.Contains(warning, actual);
+        }
+
+        [Fact]
+        public void HtmlLoggerSavesToWriter()
+        {
+            const string error = "test error";
+            const string info = "test info";
+            const string warning = "test warning";
+            const string outputFile = "htmlLogTest2.html";
+            var file = new FileInfo(outputFile);
+
+            var xDock = XDocument.Parse(Xslt);
+            var tested = new HtmlLogger(xDock);
+
+            tested.LogError(error);
+            tested.LogInfo(info);
+            tested.LogWarning(warning);
+
+            var writer = new StringWriter();
+
+            tested.Save(writer);
+
+            var actual = writer.ToString();
+
+            Assert.Contains(error, actual);
+            Assert.Contains(info, actual);
+            Assert.Contains(warning, actual);
+        }
+
+        [Fact]
+        public void HtmlLoggerSavesToDisk()
         {
             const string error = "test error";
             const string info = "test info";
@@ -38,32 +92,6 @@ namespace LoggerLite.xTest
             tested.LogInfo(info);
             tested.LogWarning(warning);
             tested.LogError(error);
-            try
-            {
-                tested.Save(file);
-                Assert.True(File.Exists(outputFile));
-            }
-            finally
-            {
-                file.Delete();
-            }
-        }
-
-        [Fact]
-        public void Create2()
-        {
-            const string error = "test error";
-            const string info = "test info";
-            const string warning = "test warning";
-            const string outputFile = "htmlLogTest2.html";
-            var file = new FileInfo(outputFile);
-
-            var xDock = XDocument.Parse(Xslt);
-            var tested = new HtmlLogger(xDock);
-
-            tested.LogError(error);
-            tested.LogInfo(info);
-            tested.LogWarning(warning);
             try
             {
                 tested.Save(file);

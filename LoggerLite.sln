@@ -11,9 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleLoggerTestHarness", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlLoggerTestHarness", "HtmlLoggerTestHarness\HtmlLoggerTestHarness.csproj", "{4C454313-C86E-4E9D-8EB4-E8BABE251B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassiveDebouncerTestHarness", "PassiveDebouncerTestHarness\PassiveDebouncerTestHarness.csproj", "{4D95B2D8-091A-46C4-B3DE-1D43322D2871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PassiveDebouncerTestHarness", "PassiveDebouncerTestHarness\PassiveDebouncerTestHarness.csproj", "{4D95B2D8-091A-46C4-B3DE-1D43322D2871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveDebouncerTestHarness", "ActiveDebouncerTestHarness\ActiveDebouncerTestHarness.csproj", "{5B01A458-C030-4A85-A323-A08E044BB8A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveDebouncerTestHarness", "ActiveDebouncerTestHarness\ActiveDebouncerTestHarness.csproj", "{5B01A458-C030-4A85-A323-A08E044BB8A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration Tests", "Integration Tests", "{BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{8F816E36-2E01-4D78-8B88-5513738740C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +52,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02F55669-31B5-4C10-AA27-FEB7C000007F} = {8F816E36-2E01-4D78-8B88-5513738740C1}
+		{DC9DAD9C-86FA-4068-B135-3625D5594F56} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
+		{4C454313-C86E-4E9D-8EB4-E8BABE251B75} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
+		{4D95B2D8-091A-46C4-B3DE-1D43322D2871} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
+		{5B01A458-C030-4A85-A323-A08E044BB8A1} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DAFFE2D-569E-4C98-B8E7-EEF85C3F2961}
