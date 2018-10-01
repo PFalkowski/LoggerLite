@@ -33,7 +33,7 @@ namespace LoggerLite
 
         private void Callback(object state)
         {
-            _pendingAction();
+            _pendingAction?.Invoke();
             _stopTimer();
         }
 

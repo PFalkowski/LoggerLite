@@ -4,29 +4,30 @@ using Xunit;
 
 namespace LoggerLite.xTest
 {
-    public class PassiveDebouncerTest
+    public class ActiveDebouncerTest
     {
         [Fact]
         public void DebouncerDefault()
         {
-            var testedDebouncer = new PassiveDebouncer { DebounceMilliseconds = 100 };
+            var testedDebouncer = new ActiveDebouncer { DebounceMilliseconds = 100 };
             Assert.Equal(100, testedDebouncer.DebounceMilliseconds);
-            testedDebouncer = new PassiveDebouncer ();
+            testedDebouncer = new ActiveDebouncer();
             Assert.Equal(1000, testedDebouncer.DebounceMilliseconds);
         }
+
         [Fact]
         public void DebouncerSetterThrowsArgumentException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new PassiveDebouncer { DebounceMilliseconds = -1 });
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ActiveDebouncer { DebounceMilliseconds = -1 });
         }
+
         [Fact]
         public void Debouncer()
         {
             const int numRepeats = 300;
-            const int debounceMs = 100;
+            const int debounceMs = 1;
             var counter = 0;
-            var testedDebouncer = new PassiveDebouncer { DebounceMilliseconds = debounceMs };
-            Assert.Equal(debounceMs, testedDebouncer.DebounceMilliseconds);
+            var testedDebouncer = new ActiveDebouncer { DebounceMilliseconds = debounceMs };
             void actionToDebounce() { ++counter; }
             var stopwatch = Stopwatch.StartNew();
             for (var i = 0; i < numRepeats; ++i)
@@ -36,7 +37,11 @@ namespace LoggerLite.xTest
             stopwatch.Stop();
             if (stopwatch.ElapsedMilliseconds < debounceMs)
             {
-                Assert.Equal(1, counter);
+                Assert.Equal(0, counter);
+            }
+            else if (stopwatch.ElapsedMilliseconds * 2 < debounceMs)
+            {
+                Assert.True(counter > 0);
             }
         }
     }
