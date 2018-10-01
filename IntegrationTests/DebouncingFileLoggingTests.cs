@@ -1,60 +1,16 @@
-﻿using Moq;
+using Moq;
 using System;
 using System.IO;
 using Xunit;
 
 namespace LoggerLite.xTest
 {
-    public class DebounceFileLoggerTest
+    public class DebouncingFileLoggingTests
     {
-        [Fact]
-        public void CreateQueuedFileLogger()
-        {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
-            try
-            {
-                testedQueuedFileLogger.LogInfo("test7013");
-                Assert.True(File.Exists(myPath));
-            }
-            finally
-            {
-                testedQueuedFileLogger.Dispose();
-                File.Delete(myPath);
-            }
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void FlushAutoReturnsValueDependingOnWrappedLogger(bool flushesAuto)
-        {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var mockLogger1 = new Mock<FileLoggerBase>(myPath);
-            var mockDebouncer1 = new Mock<IDebouncer>();
-            mockLogger1.SetupGet(m => m.FlushAuto).Returns(flushesAuto);
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(mockLogger1.Object, mockDebouncer1.Object);
-            Assert.Equal(flushesAuto, testedQueuedFileLogger.FlushAuto);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void IsThreadSafeAlwaysReturnsTrue(bool isThreadSafe)
-        {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
-            var mockLogger1 = new Mock<FileLoggerBase>(myPath);
-            var mockDebouncer1 = new Mock<IDebouncer>();
-            mockLogger1.SetupGet(m => m.IsThreadSafe).Returns(isThreadSafe);
-            var testedQueuedFileLogger = new QueuedLoggerWrapper(mockLogger1.Object, mockDebouncer1.Object);
-            Assert.True(testedQueuedFileLogger.IsThreadSafe);
-        }
-
-        // TODO: this is not a unit. refactor
         [Fact]
         public void LogInfo()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
@@ -72,11 +28,10 @@ namespace LoggerLite.xTest
             }
         }
 
-        // TODO: this is not a unit. refactor
         [Fact]
         public void LogWarning()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
@@ -94,11 +49,10 @@ namespace LoggerLite.xTest
             }
         }
 
-        // TODO: this is not a unit. refactor
         [Fact]
         public void LogError1()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
@@ -116,11 +70,10 @@ namespace LoggerLite.xTest
             }
         }
 
-        // TODO: this is not a unit. refactor
         [Fact]
         public void LogError2()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
             try
             {
@@ -138,11 +91,10 @@ namespace LoggerLite.xTest
             }
         }
 
-        // TODO: this is not a unit. refactor
         [Fact]
         public void DebounceTest()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 10000 });
             try
             {
@@ -173,11 +125,10 @@ namespace LoggerLite.xTest
             }
         }
 
-        // TODO: this is not a unit. refactor
         [Fact]
         public void AppendTest()
         {
-            var myPath = $"{typeof(DebounceFileLoggerTest).Namespace}.{Path.GetRandomFileName()}.log";
+            var myPath = $"{typeof(DebouncingFileLoggingTests).Namespace}.{Path.GetRandomFileName()}.log";
             var testedQueuedFileLogger = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer());
             try
             {
@@ -231,7 +182,6 @@ namespace LoggerLite.xTest
         //        }
         //    }
         //}
-        //#region Synchronous
 
         //[Fact]
         //public void Synchronous()

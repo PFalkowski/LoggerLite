@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFileLoggerTestHarness", "JsonFileLoggerTestHarness\JsonFileLoggerTestHarness.csproj", "{8CFBAA84-51F6-49FE-A14F-000F8E78EB76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{8CFBAA84-51F6-49FE-A14F-000F8E78EB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CFBAA84-51F6-49FE-A14F-000F8E78EB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CFBAA84-51F6-49FE-A14F-000F8E78EB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{4D95B2D8-091A-46C4-B3DE-1D43322D2871} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
 		{5B01A458-C030-4A85-A323-A08E044BB8A1} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
 		{8CFBAA84-51F6-49FE-A14F-000F8E78EB76} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
+		{B5DCF2DD-F7A2-42BE-BF13-BDD0B01CC5BF} = {BFBFE8D0-5562-4F99-9B5B-CF86E37E8847}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DAFFE2D-569E-4C98-B8E7-EEF85C3F2961}

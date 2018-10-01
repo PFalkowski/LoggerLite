@@ -4,13 +4,16 @@ using System.Text;
 
 namespace LoggerLite
 {
+    // TODO: split debouncing logger from queued
     public sealed class QueuedLoggerWrapper : FormattedLoggerBase, IDisposable
     {
         private readonly ConcurrentQueue<string> _buffer = new ConcurrentQueue<string>();
         private readonly IDebouncer _debouncer;
         private readonly FormattedLoggerBase _logger;
 
+        //TODO: add for all file loggers
         public int LogRequests { get; private set; } = 0;
+        //TODO: add for all file loggers
         public int FailedDequeues { get; private set; } = 0;
         private readonly object _syncRoot = new object();
 

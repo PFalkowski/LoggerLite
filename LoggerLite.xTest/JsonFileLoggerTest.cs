@@ -45,6 +45,7 @@ namespace LoggerLite.xTest
                 File.Delete(myPath);
             }
         }
+
         [Fact]
         public void LogInfo()
         {
