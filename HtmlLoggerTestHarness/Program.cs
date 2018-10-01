@@ -10,20 +10,44 @@ namespace HtmlLoggerTestHarness
         static void Main(string[] args)
         {
             Console.WriteLine("Hello! This is html logger demo / test.");
-            Console.WriteLine("Press any key to continue to test phase...");
-
-            Console.ReadKey();
+            Console.Write("Please enter number of messages to show in logger: ");
+            var line = Console.ReadLine();
+            int validInteger;
+            while (!int.TryParse(line, out validInteger) && !(validInteger > 0))
+            {
+                Console.WriteLine($"There was a problem with your input: {line} is not a valid integer in this context. Enter any natural number greater than 0.");
+                Console.Write("Number of messages: ");
+                line = Console.ReadLine();
+            }
             Console.Clear();
+            Console.Write($"You chose {validInteger}.");
+            if (validInteger > 100000)
+                Console.Write(" This can take a while:)");
+
 
             var outputFile = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "html"));
             var logger = new HtmlLogger();
-            logger.LogInfo("info1");
-            logger.LogInfo("info2");
-            logger.LogInfo("info3");
-            logger.LogInfo("info4");
-            logger.LogInfo("info5");
-            logger.LogWarning("warning1");
-            logger.LogError("error, but not really:)");
+            var random = new Random(0);
+            for (int i = 0; i < validInteger; ++i)
+            {
+                switch (random.Next(6))
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        logger.LogInfo("info");
+                        break;
+                    case 3:
+                    case 4:
+                        logger.LogWarning("warning");
+                        break;
+                    case 5:
+                        logger.LogError("error, but not really:)");
+                        break;
+                    default:
+                        break;
+                }
+            }
             logger.Save(outputFile);
             using (var process = Process.Start(new ProcessStartInfo { FileName = outputFile.FullName, UseShellExecute = true } ))
             { }

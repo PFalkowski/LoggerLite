@@ -25,7 +25,7 @@ namespace JsonFileLoggerTestHarness
             if (validInteger > 100000)
                 Console.Write(" This can take a while:)");
             Console.WriteLine();
-            var file = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "txt"));
+            var file = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "json"));
             Console.WriteLine($"The contents will be written to {file.FullName}.");
 
             var fileLogger = new JsonFileLogger(file.FullName);
@@ -36,7 +36,6 @@ namespace JsonFileLoggerTestHarness
                 fileLogger.LogInfo(Guid.NewGuid().ToString());
             });
             watch.Stop();
-            //Console.WriteLine($"Finished in {watch.Elapsed} with {wrapper.FailedDequeues} failures, {wrapper.SuccessfulDequeues} successful dequeues after {wrapper.LogRequests} log requests with {wrapper.BufferPeak} buffer peak.");
             Console.WriteLine($"Finished in {watch.Elapsed}");// with {wrapper.FailedDequeues} failures, after {wrapper.LogRequests} log requests");
 
             Console.WriteLine("Delete file? y/n");
