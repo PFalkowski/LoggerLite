@@ -18,8 +18,8 @@ Aggreagated Logger</Description>
     <PackageTags>JSON, XML,YAML,Console,logging,logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>2.6.0</Version>
-    <PackageReleaseNotes>Introduce buffered logger abstraction.</PackageReleaseNotes>
+    <Version>3.0.0-beta</Version>
+    <PackageReleaseNotes>Introduce buffered logger abstraction. Improved verbosity of variables, arguments and member names. Added ActiveDebouncer. Now PassiveDebouncer implements IDisposable, because ActiveDebouncer needs it. Introduced new properties to BaseLogger: IsThreadSafe. Removed Info/Warning/Error Name constants from LoggerBase - the same info is already stored in MessageSeverity enum.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

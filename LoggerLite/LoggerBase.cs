@@ -11,6 +11,10 @@ namespace LoggerLite
         public abstract bool FlushAuto { get; }
         public abstract bool IsThreadSafe { get; }
 
+        public abstract int Requests { get; protected set; }
+        public abstract int Sucesses { get; protected set; }
+        public abstract int Failures { get; protected set; }
+
         protected string TrimExcess(string input)
         {
             if (string.IsNullOrEmpty(input)) return input;

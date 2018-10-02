@@ -8,9 +8,22 @@ namespace LoggerLite
 
         public override bool IsThreadSafe => true;
 
+        public override int Requests { get; protected set; }
+        public override int Sucesses { get; protected set; }
+        public override int Failures { get; protected set; }
+
         protected internal override void Log(string message)
         {
-            Debug.WriteLine(message);
+            ++Requests;
+            try
+            {
+                Debug.WriteLine(message);
+                ++Sucesses;
+            }
+            catch (System.Exception)
+            {
+                ++Failures;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace LoggerLite
 {
@@ -10,9 +11,13 @@ namespace LoggerLite
         public string PathToLog => OutputFile?.FullName;
         public FileInfo OutputFile { get; }
         public DirectoryInfo OutputDirectory => OutputFile.Directory;
+        public bool CreateDirIfNotExists { get; set; } = false;
+
         public override bool FlushAuto => true;
         public override bool IsThreadSafe => true;
-        public bool CreateDirIfNotExists { get; set; } = false;
+        public override int Requests { get; protected set; }
+        public override int Sucesses { get; protected set; }
+        public override int Failures { get; protected set; }
 
         private string GetOutputPath(string untrusted)
         {
@@ -31,11 +36,21 @@ namespace LoggerLite
         {
             lock (_syncRoot)
             {
-                if (CreateDirIfNotExists && !OutputDirectory.Exists)
-                    OutputDirectory.Create();
-                using (var streamWriter = new StreamWriter(OutputFile.FullName, true))
+                StreamWriter streamWriter = null;
+                try
                 {
+                    if (CreateDirIfNotExists && !OutputDirectory.Exists)
+                        OutputDirectory.Create();
+                    streamWriter = new StreamWriter(OutputFile.FullName, true);
                     streamWriter.Write(message);
+                }
+                catch (Exception)
+                {
+                    ++Failures;
+                }
+                finally
+                {
+                    streamWriter?.Dispose();
                 }
             }
         }

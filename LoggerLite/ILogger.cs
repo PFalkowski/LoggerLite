@@ -14,5 +14,8 @@ namespace LoggerLite
         /// </summary>
         bool FlushAuto { get; }
         bool IsThreadSafe { get; }
+        int Requests { get; }
+        int Sucesses { get; }
+        int Failures { get; }
     }
 }

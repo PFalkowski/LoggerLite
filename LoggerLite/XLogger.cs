@@ -14,6 +14,10 @@ namespace LoggerLite
         public const string TypeElementName = "type";
         public const string RootElementName = "activity";
 
+        public override int Requests { get; protected set; }
+        public override int Sucesses { get; protected set; }
+        public override int Failures { get; protected set; }
+
         public XDocument OutputDocument { get; } = new XDocument(
                 new XDeclaration("1.0", "utf-8", "true"),
                 new XElement(RootElementName));
@@ -28,10 +32,19 @@ namespace LoggerLite
 
         public override void Log(string message, MessageSeverity severity)
         {
-            OutputDocument.Root.Add(new XElement(EntryElementName,
-                new XElement(TimeElementName, DateTime.Now),
-                new XElement(DescriptionElementName, message),
-                new XElement(TypeElementName, severity.ToString())));
+            ++Requests;
+            try
+            {
+                OutputDocument.Root.Add(new XElement(EntryElementName,
+                    new XElement(TimeElementName, DateTime.Now),
+                    new XElement(DescriptionElementName, message),
+                    new XElement(TypeElementName, severity.ToString())));
+                ++Sucesses;
+            }
+            catch (Exception)
+            {
+                ++Failures;
+            }
         }
     }
 }

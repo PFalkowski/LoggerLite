@@ -39,7 +39,7 @@ namespace PassiveDebouncerTestHarness
                     wrapper.LogInfo(Guid.NewGuid().ToString());
                 });
                 watch.Stop();
-                Console.WriteLine($"Finished in {watch.Elapsed} with {wrapper.FailedDequeues} failures, after {wrapper.LogRequests} log requests");
+                Console.WriteLine($"Finished in {watch.Elapsed} with {wrapper.Failures} failures, after {wrapper.Requests} log requests");
             }
             Console.WriteLine("Delete file? y/n");
             var key = Console.ReadKey();
