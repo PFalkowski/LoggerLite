@@ -38,8 +38,16 @@ namespace JsonFileLoggerTestHarness
             watch.Stop();
             Console.WriteLine($"Finished in {watch.Elapsed}");// with {wrapper.FailedDequeues} failures, after {wrapper.LogRequests} log requests");
 
-            Console.WriteLine("Delete file? y/n");
+            Console.WriteLine("Open file? y/n");
             var key = Console.ReadKey();
+            if (key.KeyChar == 'y')
+            {
+                using (var process = Process.Start(new ProcessStartInfo { FileName = fileLogger.OutputFile.FullName, UseShellExecute = true }))
+                { }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Delete file? y/n");
+            key = Console.ReadKey();
             if (key.KeyChar == 'y')
             {
                 fileLogger.OutputFile.Delete();

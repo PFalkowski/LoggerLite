@@ -161,9 +161,9 @@ namespace LoggerLite.xTest
         {
             var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
             var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
-            mockLogger1.Setup(l => l.LogError(It.IsAny<Exception>()));
             mockLogger1.Setup(l => l.LogError(It.IsAny<string>()));
-            mockLogger2.Setup(l => l.LogError(It.IsAny<Exception>()));
+            mockLogger1.Setup(l => l.LogError(It.IsAny<string>()));
+            mockLogger2.Setup(l => l.LogError(It.IsAny<string>()));
             mockLogger2.Setup(l => l.LogError(It.IsAny<string>()));
             var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
 
