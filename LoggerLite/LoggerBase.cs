@@ -4,9 +4,6 @@ namespace LoggerLite
 {
     public abstract class LoggerBase : ILogger
     {
-        public const string ErrorName = "Error";
-        public const string InfoName = "Information";
-        public const string WarningName = "Warning";
         public const string TruncateInfo = "(truncated)";
 
         public int MaxSingleMessageLength { get; protected set; } = 1000 * 1000;
@@ -22,27 +19,24 @@ namespace LoggerLite
                 : input;
         }
 
-        public abstract void LogInfo(string message);
-        public abstract void LogWarning(string warning);
-        public abstract void LogError(Exception exception);
-        public abstract void LogError(string error);
+        public abstract void Log(string message, MessageSeverity severity);
 
-        public void Log(string message, MessageSeverity severity)
+        public void LogInfo(string message)
         {
-            switch (severity)
-            {
-                case MessageSeverity.Information:
-                    LogInfo(message);
-                    break;
-                case MessageSeverity.Warning:
-                    LogWarning(message);
-                    break;
-                case MessageSeverity.Error:
-                    LogError(message);
-                    break;
-                default:
-                    break;
-            }
+            Log(message, MessageSeverity.Information);
         }
+        public void LogWarning(string warning)
+        {
+            Log(warning, MessageSeverity.Warning);
+        }
+        public void LogError(string error)
+        {
+            Log(error, MessageSeverity.Error);
+        }
+        public void LogError(Exception exception)
+        {
+            Log(exception.ToString(), MessageSeverity.Error);
+        }
+
     }
 }

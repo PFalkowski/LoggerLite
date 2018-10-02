@@ -58,7 +58,7 @@ namespace LoggerLite.xTest
                 var received = File.ReadAllText(myPath);
                 Assert.True(File.Exists(myPath));
                 Assert.Contains(expected, received);
-                Assert.Contains(LoggerBase.InfoName, received);
+                Assert.Contains(MessageSeverity.Information.ToString(), received);
             }
             finally
             {
@@ -78,7 +78,7 @@ namespace LoggerLite.xTest
                 var received = File.ReadAllText(myPath);
                 Assert.True(File.Exists(myPath));
                 Assert.Contains(expected, received);
-                Assert.Contains(LoggerBase.WarningName, received);
+                Assert.Contains(MessageSeverity.Warning.ToString(), received);
             }
             finally
             {
@@ -98,7 +98,7 @@ namespace LoggerLite.xTest
                 var received = File.ReadAllText(myPath);
                 Assert.True(File.Exists(myPath));
                 Assert.Contains(expected, received);
-                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.Contains(MessageSeverity.Error.ToString(), received);
             }
             finally
             {
@@ -118,7 +118,7 @@ namespace LoggerLite.xTest
                 var received = File.ReadAllText(myPath);
                 Assert.True(File.Exists(myPath));
                 Assert.Contains(expected.Message, received);
-                Assert.Contains(LoggerBase.ErrorName, received);
+                Assert.Contains(MessageSeverity.Error.ToString(), received);
             }
             finally
             {
@@ -147,9 +147,9 @@ namespace LoggerLite.xTest
                 Assert.Contains(expectedError2, received);
                 Assert.Contains(expectedWarning, received);
                 Assert.Contains(expectedinfo, received);
-                Assert.Contains(LoggerBase.ErrorName, received);
-                Assert.Contains(LoggerBase.InfoName, received);
-                Assert.Contains(LoggerBase.WarningName, received);
+                Assert.Contains(MessageSeverity.Error.ToString(), received);
+                Assert.Contains(MessageSeverity.Information.ToString(), received);
+                Assert.Contains(MessageSeverity.Warning.ToString(), received);
             }
             finally
             {

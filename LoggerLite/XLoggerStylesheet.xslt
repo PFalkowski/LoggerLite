@@ -24,7 +24,7 @@
           <td colspan="7">Log</td>
         </tr>
         <tr>
-          <td colspan="1">infos</td>
+          <td colspan="1">informations</td>
           <td colspan="6">
             <xsl:value-of select="count(entry[type='Information'])"/>
           </td>

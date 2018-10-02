@@ -39,7 +39,7 @@ namespace LoggerLite.xTest
             myLogger.LogError(expected);
 
             Assert.Single(myLogger.OutputDocument.Root.Elements(XLogger.EntryElementName));
-            Assert.Equal(LoggerBase.ErrorName, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
+            Assert.Equal(MessageSeverity.Error.ToString(), myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
             Assert.Equal(expected, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.DescriptionElementName).Value);
             if (loggedApproxDate.Minute != 59 || loggedApproxDate.Second < 59 || loggedApproxDate.Millisecond < 999)
             {
@@ -58,7 +58,7 @@ namespace LoggerLite.xTest
             myLogger.LogError(expected);
 
             Assert.Single(myLogger.OutputDocument.Root.Elements(XLogger.EntryElementName));
-            Assert.Equal(LoggerBase.ErrorName, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
+            Assert.Equal(MessageSeverity.Error.ToString(), myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
             Assert.Equal(expected, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.DescriptionElementName).Value);
             if (loggedApproxDate.Minute != 59 || loggedApproxDate.Second < 59 || loggedApproxDate.Millisecond < 999)
             {
@@ -77,7 +77,7 @@ namespace LoggerLite.xTest
             myLogger.LogWarning(expected);
 
             Assert.Single(myLogger.OutputDocument.Root.Elements(XLogger.EntryElementName));
-            Assert.Equal(LoggerBase.WarningName, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
+            Assert.Equal(MessageSeverity.Warning.ToString(), myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
             Assert.Equal(expected, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.DescriptionElementName).Value);
             if (loggedApproxDate.Minute != 59 || loggedApproxDate.Second < 59 || loggedApproxDate.Millisecond < 999)
             {
@@ -95,7 +95,7 @@ namespace LoggerLite.xTest
             myLogger.LogInfo(expected);
 
             Assert.Single(myLogger.OutputDocument.Root.Elements(XLogger.EntryElementName));
-            Assert.Equal(LoggerBase.InfoName, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
+            Assert.Equal(MessageSeverity.Information.ToString(), myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.TypeElementName).Value);
             Assert.Equal(expected, myLogger.OutputDocument.Root.Element(XLogger.EntryElementName).Element(XLogger.DescriptionElementName).Value);
             if (loggedApproxDate.Minute != 59 || loggedApproxDate.Second < 59 || loggedApproxDate.Millisecond < 999)
             {

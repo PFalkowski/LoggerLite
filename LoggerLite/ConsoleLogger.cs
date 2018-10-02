@@ -13,71 +13,34 @@ namespace LoggerLite
 
         public override bool IsThreadSafe => true;
 
+
         protected internal override void Log(string message)
         {
             Console.Write(message);
         }
 
-        public override void LogError(string error)
+        public override void Log(string message, MessageSeverity severity)
         {
             lock (_syncRoot)
             {
                 var prevColor = Console.ForegroundColor;
                 try
                 {
-                    Console.ForegroundColor = ErrorColor;
-                    base.LogError(error);
-                }
-                finally
-                {
-                    Console.ForegroundColor = prevColor;
-                }
-            }
-        }
-
-        public override void LogError(Exception exception)
-        {
-            lock (_syncRoot)
-            {
-                var prevColor = Console.ForegroundColor;
-                try
-                {
-                    Console.ForegroundColor = ErrorColor;
-                    base.LogError(exception);
-                }
-                finally
-                {
-                    Console.ForegroundColor = prevColor;
-                }
-            }
-        }
-
-        public override void LogInfo(string message)
-        {
-            lock (_syncRoot)
-            {
-                var prevColor = Console.ForegroundColor;
-                try
-                {
-                    Console.ForegroundColor = InfoColor;
-                    base.LogInfo(message);
-                }
-                finally
-                {
-                    Console.ForegroundColor = prevColor;
-                }
-            }
-        }
-
-        public override void LogWarning(string warning)
-        {
-            lock (_syncRoot)
-            {
-                var prevColor = Console.ForegroundColor;
-                try
-                {
-                    Console.ForegroundColor = WarningColor;
-                    base.LogWarning(warning);
+                    switch (severity)
+                    {
+                        case MessageSeverity.Information:
+                            Console.ForegroundColor = InfoColor;
+                            break;
+                        case MessageSeverity.Warning:
+                            Console.ForegroundColor = WarningColor;
+                            break;
+                        case MessageSeverity.Error:
+                            Console.ForegroundColor = ErrorColor;
+                            break;
+                        default:
+                            break;
+                    }
+                    Log(Formatter(severity.ToString(), TrimExcess(message)));
                 }
                 finally
                 {

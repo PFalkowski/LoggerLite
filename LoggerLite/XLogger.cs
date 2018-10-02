@@ -26,36 +26,12 @@ namespace LoggerLite
             OutputDocument.Save(outputSteam);
         }
 
-        public override void LogInfo(string message)
+        public override void Log(string message, MessageSeverity severity)
         {
             OutputDocument.Root.Add(new XElement(EntryElementName,
                 new XElement(TimeElementName, DateTime.Now),
                 new XElement(DescriptionElementName, message),
-                new XElement(TypeElementName, InfoName)));
-        }
-
-        public override void LogWarning(string warning)
-        {
-            OutputDocument.Root.Add(new XElement(EntryElementName,
-                new XElement(TimeElementName, DateTime.Now),
-                new XElement(DescriptionElementName, warning),
-                new XElement(TypeElementName, WarningName)));
-        }
-
-        public override void LogError(Exception exception)
-        {
-            OutputDocument.Root.Add(new XElement(EntryElementName,
-                new XElement(TimeElementName, DateTime.Now),
-                new XElement(DescriptionElementName, exception),
-                new XElement(TypeElementName, ErrorName)));
-        }
-
-        public override void LogError(string error)
-        {
-            OutputDocument.Root.Add(new XElement(EntryElementName,
-                new XElement(TimeElementName, DateTime.Now),
-                new XElement(DescriptionElementName, error),
-                new XElement(TypeElementName, ErrorName)));
+                new XElement(TypeElementName, severity.ToString())));
         }
     }
 }
