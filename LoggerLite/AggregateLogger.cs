@@ -9,10 +9,6 @@ namespace LoggerLite
         public override bool FlushAuto => Loggers.All(l => l.FlushAuto);
         public override bool IsThreadSafe => Loggers.All(l => l.IsThreadSafe);
 
-        public override int Requests { get; protected set; }
-        public override int Sucesses { get; protected set; }
-        public override int Failures { get; protected set; }
-
         public List<ILogger> Loggers { get; } = new List<ILogger>();
 
         public AggregateLogger(IEnumerable<ILogger> loggers)
@@ -22,25 +18,34 @@ namespace LoggerLite
 
         public AggregateLogger(params ILogger[] loggers) : this(loggers.AsEnumerable()) { }
 
-        public override void Log(string message, MessageSeverity severity)
+        protected internal override void Log(string message, MessageSeverity severity)
         {
-            var errorOccured = false;
-            ++Requests;
+            var exceptions = new List<Exception>();
             foreach (var logger in Loggers)
             {
                 try
                 {
-                    logger.Log(message, severity);
+                    switch (severity)
+                    {
+                        case MessageSeverity.Information:
+                            logger.LogInfo(message);
+                            break;
+                        case MessageSeverity.Warning:
+                            logger.LogWarning(message);
+                            break;
+                        case MessageSeverity.Error:
+                            logger.LogError(message);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    errorOccured = true;
+                    exceptions.Add(ex);
                 }
             }
-            if (!errorOccured)
-            { ++Sucesses; }
-            else
-            { ++Failures; }
+            if (exceptions.Any()) throw new AggregateException(exceptions);
         }
     }
 }

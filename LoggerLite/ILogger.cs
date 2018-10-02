@@ -4,7 +4,6 @@ namespace LoggerLite
 {
     public interface ILogger
     {
-        void Log(string message, MessageSeverity severity);
         void LogInfo(string message);
         void LogWarning(string warning);
         void LogError(Exception exception);

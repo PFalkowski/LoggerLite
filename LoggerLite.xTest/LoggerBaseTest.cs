@@ -13,30 +13,30 @@ namespace LoggerLite.xTest
         {
             const string testMessage = "testMessage!@#";
             var tested = new Mock<LoggerBase>();
-            tested.Setup(x => x.Log(It.IsAny<string>(), It.IsAny<MessageSeverity>()));
-            tested.Object.Log(testMessage, MessageSeverity.Information);
+            tested.Setup(x => x.LogInfo(It.IsAny<string>()));
+            tested.Object.LogInfo(testMessage);
 
-            tested.Verify(x => x.Log(testMessage, MessageSeverity.Information), Times.Once());
+            tested.Verify(x => x.LogInfo(testMessage), Times.Once());
         }
         [Fact]
         public void LogCallsLogWarningWithWarningSev()
         {
             const string testMessage = "testMessage!@#";
             var tested = new Mock<LoggerBase>();
-            tested.Setup(x => x.Log(It.IsAny<string>(), It.IsAny<MessageSeverity>()));
+            tested.Setup(x => x.LogInfo(It.IsAny<string>()));
             tested.Object.LogWarning(testMessage);
 
-            tested.Verify(x => x.Log(testMessage, MessageSeverity.Warning), Times.Once());
+            tested.Verify(x => x.LogWarning(testMessage), Times.Once());
         }
         [Fact]
         public void LogCallsLogErrorWithErrorSev()
         {
             const string testMessage = "testMessage!@#";
             var tested = new Mock<LoggerBase>();
-            tested.Setup(x => x.Log(It.IsAny<string>(), It.IsAny<MessageSeverity>()));
+            tested.Setup(x => x.LogInfo(It.IsAny<string>()));
             tested.Object.LogError(testMessage);
 
-            tested.Verify(x => x.Log(testMessage, MessageSeverity.Error), Times.Once());
+            tested.Verify(x => x.LogError(testMessage), Times.Once());
         }
     }
 }

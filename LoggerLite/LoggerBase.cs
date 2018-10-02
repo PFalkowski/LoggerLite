@@ -11,9 +11,9 @@ namespace LoggerLite
         public abstract bool FlushAuto { get; }
         public abstract bool IsThreadSafe { get; }
 
-        public abstract int Requests { get; protected set; }
-        public abstract int Sucesses { get; protected set; }
-        public abstract int Failures { get; protected set; }
+        public int Requests { get; protected set; }
+        public int Sucesses { get; protected set; }
+        public int Failures { get; protected set; }
 
         protected string TrimExcess(string input)
         {
@@ -23,23 +23,59 @@ namespace LoggerLite
                 : input;
         }
 
-        public abstract void Log(string message, MessageSeverity severity);
+        protected internal abstract void Log(string message, MessageSeverity severity);
 
         public void LogInfo(string message)
         {
-            Log(message, MessageSeverity.Information);
+            ++Requests;
+            try
+            {
+                Log(message, MessageSeverity.Information);
+                ++Sucesses;
+            }
+            catch (Exception)
+            {
+                ++Failures;
+            }
         }
         public void LogWarning(string warning)
         {
-            Log(warning, MessageSeverity.Warning);
+            ++Requests;
+            try
+            {
+                Log(warning, MessageSeverity.Warning);
+                ++Sucesses;
+            }
+            catch (Exception)
+            {
+                ++Failures;
+            }
         }
         public void LogError(string error)
         {
-            Log(error, MessageSeverity.Error);
+            ++Requests;
+            try
+            {
+                Log(error, MessageSeverity.Error);
+                ++Sucesses;
+            }
+            catch (Exception)
+            {
+                ++Failures;
+            }
         }
         public void LogError(Exception exception)
         {
-            Log(exception.ToString(), MessageSeverity.Error);
+            ++Requests;
+            try
+            {
+                Log(exception.ToString(), MessageSeverity.Error);
+                ++Sucesses;
+            }
+            catch (Exception)
+            {
+                ++Failures;
+            }
         }
 
     }

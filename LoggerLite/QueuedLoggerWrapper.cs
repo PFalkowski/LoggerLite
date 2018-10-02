@@ -15,9 +15,6 @@ namespace LoggerLite
 
         public override bool FlushAuto => _logger.FlushAuto;
         public override bool IsThreadSafe => true;
-        public override int Requests { get; protected set; }
-        public override int Sucesses { get; protected set; }
-        public override int Failures { get; protected set; }
 
         public QueuedLoggerWrapper(FormattedLoggerBase logger, IDebouncer debouncer)
         {
@@ -30,17 +27,9 @@ namespace LoggerLite
         {
             lock (_syncRoot)
             {
-                ++Requests;
-                try
-                {
-                    _buffer.Enqueue(message);
-                    _debouncer.Debounce(WriteEnqueued);
-                    ++Sucesses;
-                }
-                catch (Exception)
-                {
-                    ++Failures;
-                }
+                _buffer.Enqueue(message);
+                _debouncer.Debounce(WriteEnqueued);
+                ++Sucesses;
             }
         }
 

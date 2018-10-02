@@ -10,7 +10,7 @@ namespace LoggerLite
         public abstract override bool FlushAuto { get; }
 
         protected internal abstract void Log(string message);
-        public override void Log(string message, MessageSeverity severity)
+        protected internal override void Log(string message, MessageSeverity severity)
         {
             Log(Formatter(severity.ToString(), TrimExcess(message)));
         }

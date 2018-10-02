@@ -161,10 +161,10 @@ namespace LoggerLite.xTest
         {
             var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
             var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
-            mockLogger1.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Error));
-            mockLogger1.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Error));
-            mockLogger2.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Error));
-            mockLogger2.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Error));
+            mockLogger1.Setup(l => l.LogError(It.IsAny<Exception>()));
+            mockLogger1.Setup(l => l.LogError(It.IsAny<string>()));
+            mockLogger2.Setup(l => l.LogError(It.IsAny<Exception>()));
+            mockLogger2.Setup(l => l.LogError(It.IsAny<string>()));
             var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogError(new Exception("test, not exception."));
@@ -176,8 +176,8 @@ namespace LoggerLite.xTest
         {
             var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
             var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
-            mockLogger1.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Information));
-            mockLogger2.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Information));
+            mockLogger1.Setup(l => l.LogInfo(It.IsAny<string>()));
+            mockLogger2.Setup(l => l.LogInfo(It.IsAny<string>()));
             var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogInfo("test");
@@ -188,8 +188,8 @@ namespace LoggerLite.xTest
         {
             var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
             var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
-            mockLogger1.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Warning));
-            mockLogger2.Setup(l => l.Log(It.IsAny<string>(), MessageSeverity.Warning));
+            mockLogger1.Setup(l => l.LogWarning(It.IsAny<string>()));
+            mockLogger2.Setup(l => l.LogWarning(It.IsAny<string>()));
             var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogWarning("test");

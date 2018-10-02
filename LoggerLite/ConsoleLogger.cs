@@ -11,22 +11,16 @@ namespace LoggerLite
 
         public override bool FlushAuto => true;
         public override bool IsThreadSafe => true;
-
-        public override int Requests { get; protected set; }
-        public override int Sucesses { get; protected set; }
-        public override int Failures { get; protected set; }
-
-
+               
         protected internal override void Log(string message)
         {
             Console.Write(message);
         }
 
-        public override void Log(string message, MessageSeverity severity)
+        protected internal override void Log(string message, MessageSeverity severity)
         {
             lock (_syncRoot)
             {
-                ++Requests;
                 var prevColor = Console.ForegroundColor;
                 try
                 {
@@ -46,10 +40,6 @@ namespace LoggerLite
                     }
                     Log(Formatter(severity.ToString(), TrimExcess(message)));
                     ++Sucesses;
-                }
-                catch
-                {
-                    ++Failures;
                 }
                 finally
                 {
