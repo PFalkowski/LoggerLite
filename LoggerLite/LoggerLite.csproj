@@ -19,7 +19,7 @@ Aggreagated Logger</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Version>3.0.0-beta</Version>
-    <PackageReleaseNotes>Introduce buffered logger abstraction. Improved verbosity of variables, arguments and member names. Added ActiveDebouncer. Now PassiveDebouncer implements IDisposable, because ActiveDebouncer needs it. Introduced new properties to BaseLogger: IsThreadSafe. Removed Info/Warning/Error Name constants from LoggerBase - the same info is already stored in MessageSeverity enum.</PackageReleaseNotes>
+    <PackageReleaseNotes>Introduce buffered logger abstraction. Improved verbosity of variables, arguments and member names. Added ActiveDebouncer. Now PassiveDebouncer implements IDisposable, because ActiveDebouncer needs it. Introduced new properties to BaseLogger: IsThreadSafe. Removed Info/Warning/Error Name constants from LoggerBase - the same info is already stored in MessageSeverity enum. Protected generic Log method and added error handling - now sucessful, failed and overall number of Log calls can be acessed in properties</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
