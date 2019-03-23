@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using static ConsoleUserInteractionHelper.ConsoleHelper;
 
 namespace ActiveDebouncerTestHarness
 {
@@ -49,22 +50,6 @@ namespace ActiveDebouncerTestHarness
             {
                 fileLogger.OutputFile.Delete();
             }
-        }
-
-        private static int GetNaturalInt()
-        {
-            var line = Console.ReadLine();
-            int validInteger;
-            while (!int.TryParse(line, out validInteger) && !(validInteger > 0))
-            {
-                Console.WriteLine(
-                    $"There was a problem with your input: {line} is not a valid integer in this context. Enter any natural number greater than 0.");
-                Console.Write("Number of messages: ");
-                line = Console.ReadLine();
-            }
-
-            Console.Write($"You chose {validInteger}.");
-            return validInteger;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using static ConsoleUserInteractionHelper.ConsoleHelper;
 
 namespace HtmlLoggerTestHarness
 {
@@ -42,21 +43,6 @@ namespace HtmlLoggerTestHarness
             logger.Save(outputFile);
             using (var process = Process.Start(new ProcessStartInfo { FileName = outputFile.FullName, UseShellExecute = true } ))
             { }
-        }
-        private static int GetNaturalInt()
-        {
-            var line = Console.ReadLine();
-            int validInteger;
-            while (!int.TryParse(line, out validInteger) && !(validInteger > 0))
-            {
-                Console.WriteLine(
-                    $"There was a problem with your input: {line} is not a valid integer in this context. Enter any natural number greater than 0.");
-                Console.Write("Number of messages: ");
-                line = Console.ReadLine();
-            }
-
-            Console.Write($"You chose {validInteger}.");
-            return validInteger;
         }
     }
 }
