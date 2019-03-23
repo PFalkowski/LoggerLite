@@ -13,15 +13,7 @@ namespace JsonFileLoggerTestHarness
             Console.WriteLine("Hello in JSON logger test harness! " +
                 "This is the load test. The file logger will be spammed with the number of messages (random GUIDs) you choose from multiple threads.");
             Console.Write("Please enter number of messages to spam with: ");
-            var line = Console.ReadLine();
-            int validInteger;
-            while (!int.TryParse(line, out validInteger) && !(validInteger > 0))
-            {
-                Console.WriteLine($"There was a problem with your input: {line} is not a valid integer in this context. Enter any natural number greater than 0.");
-                Console.Write("Number of messages: ");
-                line = Console.ReadLine();
-            }
-            Console.Write($"You chose {validInteger}.");
+            var validInteger = GetNaturalInt();
             if (validInteger > 100000)
                 Console.Write(" This can take a while:)");
             Console.WriteLine();
@@ -52,6 +44,22 @@ namespace JsonFileLoggerTestHarness
             {
                 fileLogger.OutputFile.Delete();
             }
+        }
+
+        private static int GetNaturalInt()
+        {
+            var line = Console.ReadLine();
+            int validInteger;
+            while (!int.TryParse(line, out validInteger) && !(validInteger > 0))
+            {
+                Console.WriteLine(
+                    $"There was a problem with your input: {line} is not a valid integer in this context. Enter any natural number greater than 0.");
+                Console.Write("Number of messages: ");
+                line = Console.ReadLine();
+            }
+
+            Console.Write($"You chose {validInteger}.");
+            return validInteger;
         }
     }
 }
