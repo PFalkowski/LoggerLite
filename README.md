@@ -13,7 +13,7 @@ Many programming tasks are reducible or somehow related to logging information. 
 - HTML Logger
 
 
-The example for console logger:
+The example of console logger:
 ```c#
 using System;
 using LoggerLite;
