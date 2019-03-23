@@ -10,7 +10,7 @@ Xml Logger
 Yaml Logger
 Html Logger
 Aggreagated Logger</Description>
-    <Copyright>Piotr Falkowski © 2018</Copyright>
+    <Copyright>Piotr Falkowski © 2019</Copyright>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
