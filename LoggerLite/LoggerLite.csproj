@@ -31,14 +31,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\License.txt" Link="License.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\README.md" Link="README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
