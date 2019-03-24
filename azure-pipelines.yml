@@ -35,23 +35,6 @@ steps:
     projects: '**/*.csproj'
     #verbosityRestore: 'detailed' # Options: quiet, minimal, normal, detailed, diagnostic
 
-- task: VSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: '**\*.sln'
-    platform: 'Any CPU'
-    configuration: 'Debug'
-    maximumCpuCount: true
-
-- task: VSTest@2
-  displayName: 'Test Assemblies'
-  inputs:
-    testAssemblyVer2: |
-     **\*test*(s).dll
-     !**\obj\**
-    codeCoverageEnabled: true
-    platform: 'Any CPU'
-    configuration: 'Debug'
 
 
 # Build source, tests and run tests with coverage
@@ -61,6 +44,6 @@ steps:
 
 # Upload coverage to codecov.io
 - script: | 
-    %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f "./LoggerLite.xTest/coverage.opencover.xml" -t $(CODECOV_TOKEN)
+    %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f "./Unit Tests/LoggerLite.xTest/coverage.opencover.xml" -t $(CODECOV_TOKEN)
   displayName: Upload coverage to codecov.io
   failOnStderr: false
