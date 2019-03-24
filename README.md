@@ -61,5 +61,33 @@ namespace ConsoleApp1
 }
 ```
 
+The example of HTML logger:
+```c#
+using System;
+using LoggerLite;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var outputFile = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "html"));
+            var logger = new HtmlLogger();
+            logger.LogWarning("warning");
+            logger.LogWarning("warning");
+            logger.LogWarning("warning");
+            logger.LogWarning("warning");
+            logger.LogInfo("info");
+            logger.LogWarning("warning");
+            logger.LogError("error, but not really:)");
+            logger.Save(outputFile);            
+            using (var process = Process.Start(new ProcessStartInfo 
+            { FileName = outputFile.FullName, UseShellExecute = true }))
+        }
+    }
+}
+```
+![HTML logger example output](HtmlLoggerExampleOutput.PNG)
 
 Contributions are welcomed!
