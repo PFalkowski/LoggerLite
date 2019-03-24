@@ -61,12 +61,11 @@ steps:
   inputs:
     command: test
     projects: ./LoggerLite.xTest/LoggerLite.xTest.csproj
-    arguments: '--configuration Debug --no-build /p:AltCover=true /p:AltCoverForce=true /p:CoverletOutputFormat=opencover /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=.\coverage.opencover.xml'
+    arguments: '--configuration Debug --no-build /p:AltCover=true /p:AltCoverForce=true /p:CoverletOutputFormat=opencover /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=./coverage.opencover.xml'
 
 - script: |
-    mkdir $(Build.SourcesDirectory)\results
-    dotnet test --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover LoggerLite.xTest
-  displayName: 'Unit testing'
+    dotnet test --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=./coverage.opencover.xml' LoggerLite.xTest
+  displayName: 'Test assemblies'
 
 # Upload coverage to codecov.io
 - script: | 
