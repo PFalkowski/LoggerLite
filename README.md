@@ -5,7 +5,7 @@
 
 Build status
 
-[![Build status](https://piotrfalkowski.visualstudio.com/ContinuousIntegration/_apis/build/status/ContinuousIntegration-ASP.NET%20Core%20(.NET%20Framework)-CI)](https://piotrfalkowski.visualstudio.com/ContinuousIntegration/_build/latest?definitionId=1)
+[![Build status](https://piotrfalkowski.visualstudio.com/LoggerLite/_apis/build/status/LoggerLite-CI)](https://piotrfalkowski.visualstudio.com/LoggerLite/_build/latest?definitionId=3)
 
 __________________________________
 Many programming tasks are reducible or somehow related to logging information. Tracing all the different implementations or handling concurency issues can be a nuisance. While there are many great, full-featured solutions, they are either not portable, bloated or hard to grasp. If you need lightweight, extensible and easy to understand logging solution, this is a library for you. Unit tests cover most of the codeline, there are no external dependencies and all relevant cade takes around 15 KB / 350 LOC. The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
