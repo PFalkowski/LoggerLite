@@ -32,7 +32,7 @@ steps:
   inputs:
     solution: '**\*.sln'
     platform: 'Any CPU'
-    configuration: 'Release'
+    configuration: 'Debug'
     maximumCpuCount: true
 
 - task: VSTest@2
@@ -47,7 +47,7 @@ steps:
     runTestsInIsolation: false
     codeCoverageEnabled: true
     platform: 'Any CPU'
-    configuration: 'Release'
+    configuration: 'Debug'
     publishRunAttachments: false
 
 
