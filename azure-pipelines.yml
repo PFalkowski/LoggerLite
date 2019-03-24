@@ -36,6 +36,7 @@ steps:
     command: 'build'
     solution: '**\*.sln'
     configuration: 'Debug'
+    platform: 'Any CPU'
     
 
 # Build source, tests and run tests with coverage
