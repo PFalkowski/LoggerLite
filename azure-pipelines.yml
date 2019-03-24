@@ -23,7 +23,7 @@ pool:
 
 steps:
 - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
+  displayName: 'Use NuGet'
   inputs:
     versionSpec: 4.4.1
 
@@ -61,7 +61,7 @@ steps:
 
 
 - script: |
-    dotnet test LoggerLite.xTest --configuration $(configuration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
+    dotnet test LoggerLite.xTest --no-build --configuration $(configuration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
   displayName: 'Test assemblies'
 
 # Upload coverage to codecov.io
