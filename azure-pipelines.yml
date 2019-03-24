@@ -46,7 +46,7 @@ steps:
     - master
   paths:
     exclude:
-    - **\README.md
+    - **/README.md
     - *.png
     - *.txt
     - **\azure?pipelines.yml
