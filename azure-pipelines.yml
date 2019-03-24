@@ -30,14 +30,23 @@ steps:
 
 
 
-- task: DotNetCoreCLI@2
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build solution'
+#  inputs:
+#    command: 'build'
+#    solution: '**\*.sln'
+#    configuration: 'Debug'
+#    platform: 'Any CPU'
+
+# because of open bug, need to build using VSBuild@1 task. ref: https://github.com/Microsoft/msbuild/issues/2221
+
+- task: VSBuild@1
   displayName: 'Build solution'
   inputs:
-    command: 'build'
     solution: '**\*.sln'
-    configuration: 'Debug'
     platform: 'Any CPU'
-    
+    configuration: 'Debug'
+    maximumCpuCount: true
 
 # Build source, tests and run tests with coverage
 - script: |
