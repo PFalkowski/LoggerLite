@@ -3,11 +3,12 @@ trigger:
     include:
     - master
   paths:
+    include:    
+    - 'azure-pipelines.yml'
     exclude: 
     - 'README.md'
     - '*.png'
     - '*.txt'
-    - 'azure-pipelines.yml'
 
 pool:
   name: Hosted VS2017
@@ -35,13 +36,7 @@ steps:
     command: 'build'
     solution: '**\*.sln'
     configuration: 'Debug'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Test Assemblies'
-  inputs:
-    command: 'test'
-    configuration: 'Debug'
-
+    
 
 # Build source, tests and run tests with coverage
 - script: |
