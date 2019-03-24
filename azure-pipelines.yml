@@ -49,14 +49,9 @@ steps:
     testAssemblyVer2: |
      **\*test*(s).dll
      !**\obj\**
-     !**\xunit.runner.visualstudio.testadapter.dll
-     !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
-    runInParallel: true
-    runTestsInIsolation: false
     codeCoverageEnabled: true
     platform: 'Any CPU'
     configuration: 'Debug'
-    publishRunAttachments: false
 
 
 # Build source, tests and run tests with coverage
