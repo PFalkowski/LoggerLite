@@ -2,16 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations: 
-Console Logger
-Debug Trace Logger
-File Logger
-Xml Logger
-Yaml Logger
-Html Logger
-Aggreagated Logger</Description>
+    <Description>
+      The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
+      Console Logger
+      Debug Trace Logger
+      File Logger
+      Xml Logger
+      Yaml Logger
+      JSON Logger
+      Html Logger
+      Aggreagate Logger</Description>
     <Copyright>Piotr Falkowski © 2019</Copyright>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -20,6 +22,7 @@ Aggreagated Logger</Description>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Version>3.1.0</Version>
     <PackageReleaseNotes>Open Formatter poperty setter.</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

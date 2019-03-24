@@ -11,7 +11,7 @@ namespace LoggerLite
 
         public bool NeedsDisposing => true;
 
-        private void _startTimer()
+        private void StartTimer()
         {
             if (!_started)
             {
@@ -19,7 +19,7 @@ namespace LoggerLite
                 _started = true;
             }
         }
-        private void _stopTimer()
+        private void StopTimer()
         {
             if (_started)
             {
@@ -36,7 +36,7 @@ namespace LoggerLite
         private void Callback(object state)
         {
             _pendingAction?.Invoke();
-            _stopTimer();
+            StopTimer();
         }
 
         private int _debounceMilliseconds = 1000;
@@ -57,13 +57,13 @@ namespace LoggerLite
             _pendingAction = action;
             if (!_started)
             {
-                _startTimer();
+                StartTimer();
             }
         }
 
         public void Dispose()
         {
-            if (_started) { _stopTimer(); }
+            if (_started) { StopTimer(); }
             _timer?.Dispose();
         }
     }
