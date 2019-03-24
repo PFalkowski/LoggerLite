@@ -1,7 +1,6 @@
 # LoggerLite
-
-[![NuGet version (LoggerLite)](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite/)
 [![Licence (LoggerLite)](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![Nuget](https://buildstats.info/nuget/LoggerLite)](https://www.nuget.org/packages/LoggerLite)
 
 Build status
 [![Build status](https://piotrfalkowski.visualstudio.com/LoggerLite/_apis/build/status/LoggerLite-CI)](https://piotrfalkowski.visualstudio.com/LoggerLite/_build/latest?definitionId=3)
