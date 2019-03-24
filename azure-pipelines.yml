@@ -75,5 +75,5 @@ steps:
   
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '_buildOutput\**'
+    pathtoPublish: '.\'
     artifactName: drop
