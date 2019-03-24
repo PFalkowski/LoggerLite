@@ -65,7 +65,7 @@ steps:
 
 - script: |
     mkdir $(Build.SourcesDirectory)\results
-    dotnet test --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  StrikesLibrary.Test
+    dotnet test --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover LoggerLite.xTest
   displayName: 'Unit testing'
 
 # Upload coverage to codecov.io
