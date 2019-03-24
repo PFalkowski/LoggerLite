@@ -41,7 +41,7 @@ namespace HtmlLoggerTestHarness
                 }
             }
             logger.Save(outputFile);
-            using (var process = Process.Start(new ProcessStartInfo { FileName = outputFile.FullName, UseShellExecute = true } ))
+            using (var process = Process.Start(new ProcessStartInfo { FileName = outputFile.FullName, UseShellExecute = true }))
             { }
         }
     }
