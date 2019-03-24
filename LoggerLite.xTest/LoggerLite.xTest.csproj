@@ -3,7 +3,9 @@
   <PropertyGroup>    
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Codecov" Version="1.3.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
