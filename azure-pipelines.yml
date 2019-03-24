@@ -50,3 +50,13 @@ steps:
     configuration: 'Release'
     publishRunAttachments: false
 
+
+# Build source, tests and run tests with coverage
+- script: |
+    dotnet test ./LoggerLite.xTest/LoggerLite.xTest.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: 'Build source, tests and run tests with coverage'
+
+# Upload coverage to codecov.io
+- script: |
+    %USERPROFILE%\.nuget\packages\codecov\1.1.0\tools\codecov.exe -f "./test/MyTestProject/coverage.opencover.xml" -t $(CODECOV_TOKEN)
+  displayName: Upload coverage to codecov.io
