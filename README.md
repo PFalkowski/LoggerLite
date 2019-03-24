@@ -1,14 +1,12 @@
-# LoggerLite
+# LoggerLite [![Licence (LoggerLite)](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 
-[![NuGet version (LoggerLite)](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite/)
-[![Licence (LoggerLite)](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+| | Integrations |
+| --- | --- |
+| **Nuget** | [![Nuget](https://buildstats.info/nuget/LoggerLite)](https://www.nuget.org/packages/LoggerLite) |
+| **Build** | [![Build status](https://piotrfalkowski.visualstudio.com/LoggerLite/_apis/build/status/LoggerLite-CI)](https://piotrfalkowski.visualstudio.com/LoggerLite/_build/latest?definitionId=3) |
+| **Coverage** | [![codecov](https://codecov.io/gh/PFalkowski/LoggerLite/branch/master/graph/badge.svg)](https://codecov.io/gh/PFalkowski/LoggerLite) |
 
-Build status
-[![Build status](https://piotrfalkowski.visualstudio.com/LoggerLite/_apis/build/status/LoggerLite-CI)](https://piotrfalkowski.visualstudio.com/LoggerLite/_build/latest?definitionId=3)
-
-Code coverage
-[![codecov](https://codecov.io/gh/PFalkowski/LoggerLite/branch/master/graph/badge.svg)](https://codecov.io/gh/PFalkowski/LoggerLite)
-__________________________________
+# Why?
 Many programming tasks are reducible or somehow related to logging information. Tracing all the different implementations or handling concurency issues can be a nuisance. While there are many great, full-featured solutions, they are either not portable, bloated or hard to grasp. If you need lightweight, extensible and easy to understand logging solution, this is a library for you. Unit tests cover most of the codeline, there are no external dependencies and all relevant cade takes around 15 KB / 350 LOC. The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
 - Console Logger
 - Debug Trace Logger
@@ -18,7 +16,7 @@ Many programming tasks are reducible or somehow related to logging information. 
 - JSON Logger
 - HTML Logger
 
-
+# How?
 The example of console logger:
 ```c#
 using System;
@@ -91,4 +89,4 @@ namespace ConsoleApp1
 ```
 ![HTML logger example output](HtmlLoggerExampleOutput.PNG)
 
-Contributions are welcomed!
+Contributions are welcomed
