@@ -41,7 +41,7 @@ steps:
 
 # Build source, tests and run tests with coverage
 - script: |
-    dotnet test '**\*.sln' -c Debug --no-build --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    dotnet test ./LoggerLite.xTest/LoggerLite.xTest.csproj -c Debug --no-build --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   displayName: 'Build source, tests and run tests with coverage'
 
 # Upload coverage to codecov.io
