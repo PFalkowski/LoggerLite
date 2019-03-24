@@ -26,7 +26,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CEF75860-34EC-48E5-B56B-F035ECD137BA}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
-		codecov.yaml = codecov.yaml
 		ConsoleExampleOutput.PNG = ConsoleExampleOutput.PNG
 		HtmlLoggerExampleOutput.PNG = HtmlLoggerExampleOutput.PNG
 		License.txt = License.txt

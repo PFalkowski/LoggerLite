@@ -66,8 +66,6 @@ steps:
 - script: |
     mkdir $(Build.SourcesDirectory)\results
     dotnet test --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover LoggerLite.xTest
-    opencover.console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test LoggerLite.xTest" -output:"coverage.opencover.xml"
-    copy $(Build.SourcesDirectory)\LoggerLite.xTest\coverage.opencover.xml $(Build.SourcesDirectory)\results
   displayName: 'Unit testing'
 
 # Upload coverage to codecov.io
