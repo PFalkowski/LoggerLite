@@ -61,7 +61,7 @@ steps:
 
 
 - script: |
-    dotnet test LoggerLite.xTest --no-build --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
+    dotnet test LoggerLite.xTest --no-build --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   displayName: 'Test assemblies'
 
 # Upload coverage to codecov.io
@@ -73,4 +73,4 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '.\'
-    artifactName: 'drop$(pipeline.endTime)'
+    artifactName: 'drop[$(pipeline.endTime)]'
