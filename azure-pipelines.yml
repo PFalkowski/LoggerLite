@@ -40,12 +40,12 @@ steps:
     publishRunAttachments: false
 
 
-    trigger:
+trigger:
   branches:
     include:
     - master
   paths:
-    exclude:
+    exclude: |
     - README.md
     - *.png
     - *.txt
