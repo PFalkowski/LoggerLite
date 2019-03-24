@@ -43,6 +43,15 @@ steps:
     configuration: 'Debug'
     maximumCpuCount: true
 
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\*test*(s).dll
+     !**\obj\**
+    codeCoverageEnabled: true
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
 
 # Build source, tests and run tests with coverage
 - script: |
