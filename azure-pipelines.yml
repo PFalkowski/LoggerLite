@@ -1,6 +1,6 @@
 variables:
-  configuration: 'debug'
-  platform: 'Any CPU'
+  BuildConfiguration: 'debug'
+  BuildPlatform: 'Any CPU'
 
 trigger:
   branches:
@@ -46,8 +46,8 @@ steps:
 #  inputs:
 #    command: 'build'
 #    solution: '**\*.sln'
-#    configuration: '$(configuration)'
-#    platform: $(platform)
+#    configuration: '$(BuildConfiguration)'
+#    platform: $(BuildPlatform)
 
 # because of open bug, need to build using VSBuild@1 task. ref: https://github.com/Microsoft/msbuild/issues/2221
 
@@ -55,13 +55,13 @@ steps:
   displayName: 'Build solution'
   inputs:
     solution: '**\*.sln'
-    platform: $(platform)
-    configuration: $(configuration)
+    platform: $(BuildPlatform)
+    configuration: $(BuildConfiguration)
     maximumCpuCount: true
 
 
 - script: |
-    dotnet test LoggerLite.xTest --no-build --configuration $(configuration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
+    dotnet test LoggerLite.xTest --no-build --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
   displayName: 'Test assemblies'
 
 # Upload coverage to codecov.io
