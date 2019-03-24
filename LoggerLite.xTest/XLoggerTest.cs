@@ -105,50 +105,6 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
-        public void XLoggerSavesToFile()
-        {
-            var expected = "info";
-            var myLogger = new XLogger();
-            var output = new FileInfo("test.xml");
-            try
-            {
-                myLogger.LogInfo(expected);
-                myLogger.Save(output);
-                Assert.True(File.Exists(output.FullName));
-
-                var fromFile = XDocument.Load(output.FullName);
-                Assert.True(XNode.DeepEquals(myLogger.OutputDocument, fromFile));
-            }
-            finally
-            {
-                output.Delete();
-            }
-        }
-
-        [Fact]
-        public void XLoggerSavesToFileTwiceAndTheFileIsValid()
-        {
-            var testInfo = "info";
-            var testWarning = "info";
-            var myLogger = new XLogger();
-            var output = new FileInfo("test.xml");
-            try
-            {
-                myLogger.LogInfo(testInfo);
-                myLogger.Save(output);
-                myLogger.LogWarning(testWarning);
-                myLogger.Save(output);
-
-                var fromFile = XDocument.Load(output.FullName);
-                Assert.True(XNode.DeepEquals(myLogger.OutputDocument, fromFile));
-            }
-            finally
-            {
-                output.Delete();
-            }
-        }
-
-        [Fact]
         public void XLoggerSavesToStream()
         {
             var testInfo = "info";
