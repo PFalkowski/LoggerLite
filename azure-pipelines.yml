@@ -55,13 +55,17 @@ steps:
     configuration: 'Debug'
     maximumCpuCount: true
 
-# Build source, tests and run tests with coverage
-- script: |
-    dotnet test ./LoggerLite.xTest/LoggerLite.xTest.csproj -c Debug --no-build --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Build source, tests and run tests with coverage'
+# Run tests and create coverage report
+- task: DotNetCoreCLI@2
+  displayName: Test assemblies
+  inputs:
+    command: test
+    projects: ./LoggerLite.xTest/LoggerLite.xTest.csproj
+    arguments: '--configuration Debug --no-build /p:AltCover=true /p:AltCoverForce=true /p:AltCoverCallContext=[Fact] /p:AltCoverXmlReport=..\target\reports\coverage\coverage.opencover.xml'
+
 
 # Upload coverage to codecov.io
 - script: | 
     %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f "./coverage.opencover.xml" -t $(CODECOV_TOKEN)
-  displayName: Upload coverage to codecov.io
+  displayName: 'Upload coverage to codecov.io'
   failOnStderr: false
