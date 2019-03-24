@@ -46,7 +46,7 @@ trigger:
     - master
   paths:
     exclude: |
-    - README.md
-    - *.png
-    - *.txt
-    - **\azure?pipelines.yml
+     - README.md
+     - *.png
+     - *.txt
+     - **\azure?pipelines.yml
