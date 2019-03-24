@@ -40,3 +40,13 @@ steps:
     publishRunAttachments: false
 
 
+    trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - **\README.md
+    - *.png
+    - *.txt
+    - **\azure?pipelines.yml
