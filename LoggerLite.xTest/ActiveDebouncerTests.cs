@@ -29,7 +29,7 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
-        public void Debouncer()
+        public void DebouncerDebounces()
         {
             const int numRepeats = 300;
             const int debounceMs = 1;
@@ -44,7 +44,7 @@ namespace LoggerLite.xTest
             stopwatch.Stop();
             if (stopwatch.ElapsedMilliseconds < debounceMs)
             {
-                Assert.Equal(0, counter);
+                Assert.True(counter < numRepeats);
             }
             else if (stopwatch.ElapsedMilliseconds * 2 < debounceMs)
             {
