@@ -60,10 +60,17 @@ steps:
 
 
 - script: |
-    dotnet test LoggerLite.xTest --no-build --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Test assemblies'
+    dotnet test YourProjectName.Tests --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+#- powershell: .\codecov.ps1 -token $(CODECOV_TOKEN)
+#  displayName: Upload to CodeCov.io
 
-# Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
+
+# Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed
 - script: | 
     %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f ".\LoggerLite.xTest\TestResults\coverage.opencover.xml" -t $(CODECOV_TOKEN)
   displayName: 'Upload coverage to codecov.io'
