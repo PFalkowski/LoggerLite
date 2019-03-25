@@ -8,8 +8,6 @@ trigger:
     include:
     - master
   paths:
-    include:    
-    - 'azure-pipelines.yml'
     exclude: 
     - 'README.md'
     - '*.png'
