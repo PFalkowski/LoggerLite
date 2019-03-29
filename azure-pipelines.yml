@@ -57,7 +57,12 @@ steps:
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
     maximumCpuCount: true
-
+    
+- task: PublishBuildArtifacts@1
+  condition: succeededOrFailed()
+  inputs:
+    pathtoPublish: '.\'
+    artifactName: drop
 
 - script: |
     dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
@@ -76,7 +81,3 @@ steps:
   displayName: 'Upload coverage to codecov.io'
   failOnStderr: false
   
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '.\'
-    artifactName: drop
