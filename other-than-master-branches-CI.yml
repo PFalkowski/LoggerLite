@@ -27,12 +27,6 @@ steps:
     versionSpec: 4.4.1
 
       
-- task: DotNetCoreCLI@2
-  displayName: 'Test Assemblies'
-  inputs:
-    command: 'test'
-    solution: $(Solution)
-
 - script: |
     dotnet build --configuration $(buildConfiguration)
     dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
