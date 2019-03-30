@@ -26,24 +26,11 @@ steps:
   inputs:
     versionSpec: 4.4.1
 
-# .NET Core
-# Restore NuGet packages.
 - task: DotNetCoreCLI@2
   displayName: 'NuGet Restore'
   inputs:
     command: 'restore'
     solution: $(Solution)
-
-
-#- task: DotNetCoreCLI@2
-#  displayName: 'Build solution'
-#  inputs:
-#    command: 'build'
-#    solution: '**\*.sln'
-#    configuration: '$(BuildConfiguration)'
-#    platform: $(BuildPlatform)
-
-# because of open bug, need to build using VSBuild@1 task. ref: https://github.com/Microsoft/msbuild/issues/2221
 
 - task: VSBuild@1
   displayName: 'Build solution'
@@ -52,7 +39,6 @@ steps:
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
     maximumCpuCount: true
-
 
 - task: VSTest@2
   displayName: 'Test Assemblies'
@@ -63,6 +49,7 @@ steps:
     runInParallel: true
     runTestsInIsolation: false
     codeCoverageEnabled: true
+    coverletOutputFormat: opencover
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
 
