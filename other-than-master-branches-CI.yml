@@ -26,20 +26,7 @@ steps:
   inputs:
     versionSpec: 4.4.1
 
-- task: DotNetCoreCLI@2
-  displayName: 'NuGet Restore'
-  inputs:
-    command: 'restore'
-    solution: $(Solution)
-
-- task: VSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: $(Solution)
-    platform: $(BuildPlatform)
-    configuration: $(BuildConfiguration)
-    maximumCpuCount: true
-        
+      
 - task: DotNetCoreCLI@2
   displayName: 'Test Assemblies'
   inputs:
