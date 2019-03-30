@@ -54,7 +54,8 @@ steps:
     maximumCpuCount: true
     
 - script: |
-    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
+    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true 
+#/p:CoverletOutputFormat=opencover  
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
