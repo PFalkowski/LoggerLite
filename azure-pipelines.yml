@@ -60,20 +60,11 @@ steps:
     testAssemblyVer2: |
      **\*test*(s).dll
      !**\obj\**
-     !**\xunit.runner.visualstudio.testadapter.dll
-     !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
     runInParallel: true
     runTestsInIsolation: false
     codeCoverageEnabled: true
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
-    publishRunAttachments: false
-
-
-# Build source, tests and run tests with coverage
-- script: |
-    dotnet test ./LoggerLite.xTest/LoggerLite.xTest.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Build source, tests and run tests with coverage'
 
 # Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
 - script: | 
