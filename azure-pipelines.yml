@@ -25,7 +25,7 @@ steps:
   displayName: 'Use NuGet'
   inputs:
     versionSpec: 4.4.1
-    
+
 # .NET Core
 # Restore NuGet packages.
 - task: DotNetCoreCLI@2
@@ -52,21 +52,20 @@ steps:
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
     maximumCpuCount: true
-    
+
+
 - script: |
-    dotnet test LoggerLite.xTest --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
+    dotnet test LoggerLite.xTest --no-build --configuration $(BuildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   displayName: 'Test assemblies'
 
+# Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
+- script: | 
+    %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f ".\LoggerLite.xTest\TestResults\coverage.opencover.xml" -t $(CODECOV_TOKEN)
+  displayName: 'Upload coverage to codecov.io'
+  failOnStderr: false
+  
 - task: PublishBuildArtifacts@1
   condition: succeededOrFailed()
   inputs:
     pathtoPublish: '.\'
     artifactName: drop
-
-
-# Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed
-#- script: | 
-#    %USERPROFILE%\.nuget\packages\codecov\1.3.0\tools\codecov.exe -f ".\LoggerLite.xTest\TestResults\coverage.opencover.xml" -t $(CODECOV_TOKEN)
-#  displayName: 'Upload coverage to codecov.io'
-#  failOnStderr: false
-  
