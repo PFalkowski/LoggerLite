@@ -54,15 +54,8 @@ steps:
     maximumCpuCount: true
     
 - script: |
-    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true 
-#/p:CoverletOutputFormat=opencover  
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: Xunit
-    testResultsFiles: '**/*.trx'
-#- powershell: .\codecov.ps1 -token $(CODECOV_TOKEN)
-#  displayName: Upload to CodeCov.io
+    dotnet test LoggerLite.xTest --configuration Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:AltCoverXmlReport=coverage.opencover.xml
+  displayName: 'Test assemblies'
 
 - task: PublishBuildArtifacts@1
   condition: succeededOrFailed()
