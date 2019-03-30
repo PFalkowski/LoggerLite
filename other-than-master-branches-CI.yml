@@ -47,8 +47,13 @@ steps:
     solution: $(Solution)
 
 - script: |
+    dotnet build --configuration $(buildConfiguration)
     dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
-  displayName: 'Test Assemblies With Coverage'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
 # Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
 - script: | 
