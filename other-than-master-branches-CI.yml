@@ -47,7 +47,7 @@ steps:
     solution: $(Solution)
 
 - script: |
-    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true p:CoverletOutputFormat=opencover  
+    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
 
 # Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
 - script: | 
