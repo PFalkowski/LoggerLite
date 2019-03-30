@@ -26,15 +26,48 @@ steps:
   inputs:
     versionSpec: 4.4.1
 
-      
-- script: |
-    dotnet build --configuration $(buildConfiguration)
-    dotnet test LoggerLite.xTest --configuration $(buildConfiguration) --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
+- task: DotNetCoreCLI@2
+  displayName: 'NuGet Restore'
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+    command: 'restore'
+    solution: $(Solution)
+
+- task: VSBuild@1
+  displayName: 'Build solution'
+  inputs:
+    solution: $(Solution)
+    platform: $(BuildPlatform)
+    configuration: $(BuildConfiguration)
+    maximumCpuCount: true
+
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\*test*(s).dll
+     !**\obj\**
+    runInParallel: true
+    runTestsInIsolation: false
+    codeCoverageEnabled: true
+    coverletOutputFormat: opencover
+    platform: $(BuildPlatform)
+    configuration: $(BuildConfiguration)
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Test Assemblies'
+  inputs:
+    command: 'test'
+    solution: $(Solution)
+
+# Publish Code Coverage Results
+# Publish Cobertura or JaCoCo code coverage results from a build
+- task: PublishCodeCoverageResults@1
+  inputs:
+    #codeCoverageTool: 'JaCoCo' # Options: cobertura, jaCoCo
+    summaryFileLocation: 
+    #reportDirectory: # Optional
+    #additionalCodeCoverageFiles: # Optional
+    #failIfCoverageEmpty: false # Optional
 
 # Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
 - script: | 
