@@ -6,7 +6,7 @@ variables:
 trigger:
   branches:
     include:
-    - !**master**
+    - CodeCoverageExperimental
   paths:
     exclude: 
     - 'README.md'
