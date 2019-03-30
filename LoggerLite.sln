@@ -25,10 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "Integra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CEF75860-34EC-48E5-B56B-F035ECD137BA}"
 	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml = azure-pipelines.yml
 		ConsoleExampleOutput.PNG = ConsoleExampleOutput.PNG
 		HtmlLoggerExampleOutput.PNG = HtmlLoggerExampleOutput.PNG
 		License.txt = License.txt
+		master-CI.yml = master-CI.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
