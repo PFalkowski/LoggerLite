@@ -39,31 +39,21 @@ steps:
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
     maximumCpuCount: true
-
-- task: VSTest@2
-  displayName: 'Test Assemblies'
-  inputs:
-    testAssemblyVer2: |
-     **\*test*(s).dll
-     !**\obj\**
-    runInParallel: true
-    runTestsInIsolation: false
-    codeCoverageEnabled: true
-    coverletOutputFormat: opencover
-    platform: $(BuildPlatform)
-    configuration: $(BuildConfiguration)
-    
+        
 - task: DotNetCoreCLI@2
   displayName: 'Test Assemblies'
   inputs:
     command: 'test'
     solution: $(Solution)
+    platform: $(BuildPlatform)
+    configuration: $(BuildConfiguration)
+    nobuild: true
 
 # Publish Code Coverage Results
 # Publish Cobertura or JaCoCo code coverage results from a build
 - task: PublishCodeCoverageResults@1
   inputs:
-    #codeCoverageTool: 'JaCoCo' # Options: cobertura, jaCoCo
+    codeCoverageTool: 'JaCoCo' # Options: cobertura, jaCoCo
     summaryFileLocation: 
     #reportDirectory: # Optional
     #additionalCodeCoverageFiles: # Optional
