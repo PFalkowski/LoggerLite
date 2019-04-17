@@ -12,7 +12,6 @@ namespace ConsoleLoggerTestHarness
             Console.WriteLine($"\tConsole.BackgroundColor: {Console.BackgroundColor}"); 
             Console.WriteLine($"\tConsole.ForegroundColor : {Console.ForegroundColor }"); 
             Console.WriteLine("Press any key to continue to test phase..."); 
-
             Console.ReadKey();
             Console.Clear();
 
