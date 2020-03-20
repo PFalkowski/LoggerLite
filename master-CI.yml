@@ -61,10 +61,17 @@ steps:
      **\*test*(s).dll
      !**\obj\**
     runInParallel: true
-    runTestsInIsolation: false
+    runTestsInIsolation: true
     codeCoverageEnabled: true
     platform: $(BuildPlatform)
     configuration: $(BuildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: pack
+    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+    versioningScheme: byBuildNumber
 
 # Upload coverage to codecov.io. See https://medium.com/@alexsalisbury/getting-codecov-io-working-in-azure-pipelines-d49b884f9aed for ref.
 - script: | 
