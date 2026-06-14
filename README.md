@@ -1,9 +1,12 @@
 # LoggerLite
 
 [![CI](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml/badge.svg)](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PFalkowski_LoggerLite&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=PFalkowski_LoggerLite)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PFalkowski_LoggerLite&metric=coverage)](https://sonarcloud.io/summary/new_code?id=PFalkowski_LoggerLite)
 [![NuGet](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![Downloads](https://img.shields.io/nuget/dt/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![License: MIT](https://img.shields.io/github/license/PFalkowski/LoggerLite.svg)](License.txt)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/piotrfalkowski)
 
 Lightweight, dependency-free logging for .NET — a thin, easy-to-read wrapper around `Console`,
 file streaming, `XDocument` and friends, behind a single `ILoggerLite` interface. Targets
