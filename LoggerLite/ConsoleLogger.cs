@@ -43,7 +43,6 @@ namespace LoggerLite
                             break;
                     }
                     Log(Formatter(severity.ToString(), TrimExcess(message)));
-                    ++Sucesses;
                 }
                 finally
                 {

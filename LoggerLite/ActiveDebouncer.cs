@@ -29,7 +29,6 @@ namespace LoggerLite
         }
         public ActiveDebouncer()
         {
-            var test = new System.Timers.Timer();
             _timer = new Timer(Callback, null, Timeout.Infinite, DebounceMilliseconds);
         }
 
