@@ -5,6 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![Downloads](https://img.shields.io/nuget/dt/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![License: MIT](https://img.shields.io/github/license/PFalkowski/LoggerLite.svg)](License.txt)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/piotrfalkowski)
 
 Lightweight, dependency-free logging for .NET — a thin, easy-to-read wrapper around `Console`,
 file streaming, `XDocument` and friends, behind a single `ILoggerLite` interface. Targets
