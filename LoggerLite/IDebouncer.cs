@@ -1,11 +1,12 @@
 using System;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public interface IDebouncer : IDisposable
 {
-    public interface IDebouncer : IDisposable
-    {
-        int DebounceMilliseconds { get; set; }
-        bool NeedsDisposing { get; }
-        void Debounce(Action action);
-    }
+	int DebounceMilliseconds { get; set; }
+
+	bool NeedsDisposing { get; }
+
+	void Debounce(Action action);
 }

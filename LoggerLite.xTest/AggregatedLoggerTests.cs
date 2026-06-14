@@ -10,8 +10,8 @@ namespace LoggerLite.xTest
         [Fact]
         public void AggregatedLoggerCreateTest()
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
             var tested = new AggregateLogger(mockLogger1.Object, mockLogger2.Object);
             Assert.Equal(2, tested.Loggers.Count);
         }
@@ -20,9 +20,9 @@ namespace LoggerLite.xTest
         [InlineData(false)]
         public void FlushAutoReturnsWhatAllLogersDo(bool flushesAuto)
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
-            var mockLogger3 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
+            var mockLogger3 = new Mock<ILoggerLite>();
             mockLogger1.SetupGet(m => m.FlushAuto).Returns(flushesAuto);
             mockLogger2.SetupGet(m => m.FlushAuto).Returns(flushesAuto);
             mockLogger3.SetupGet(m => m.FlushAuto).Returns(flushesAuto);
@@ -32,9 +32,9 @@ namespace LoggerLite.xTest
         [Fact]
         public void FlushAutoReturnsFalseWhenAnyLoggerDoesent()
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
-            var mockLogger3 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
+            var mockLogger3 = new Mock<ILoggerLite>();
             mockLogger1.SetupGet(m => m.FlushAuto).Returns(true);
             mockLogger2.SetupGet(m => m.FlushAuto).Returns(true);
             mockLogger3.SetupGet(m => m.FlushAuto).Returns(false);
@@ -46,9 +46,9 @@ namespace LoggerLite.xTest
         [InlineData(false)]
         public void IsThreadSafeReturnsWhatAllLogersDo(bool isThreadSafe)
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
-            var mockLogger3 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
+            var mockLogger3 = new Mock<ILoggerLite>();
             mockLogger1.SetupGet(m => m.IsThreadSafe).Returns(isThreadSafe);
             mockLogger2.SetupGet(m => m.IsThreadSafe).Returns(isThreadSafe);
             mockLogger3.SetupGet(m => m.IsThreadSafe).Returns(isThreadSafe);
@@ -58,9 +58,9 @@ namespace LoggerLite.xTest
         [Fact]
         public void IsThreadSafeReturnsFalseWhenAnyLoggerIsnt()
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
-            var mockLogger3 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
+            var mockLogger3 = new Mock<ILoggerLite>();
             mockLogger1.SetupGet(m => m.IsThreadSafe).Returns(true);
             mockLogger2.SetupGet(m => m.IsThreadSafe).Returns(true);
             mockLogger3.SetupGet(m => m.IsThreadSafe).Returns(false);
@@ -70,9 +70,9 @@ namespace LoggerLite.xTest
         [Fact]
         public void AggregatedLoggerCreateTest2()
         {
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
             Assert.Equal(2, tested.Loggers.Count);
         }
         [Fact]
@@ -80,11 +80,11 @@ namespace LoggerLite.xTest
         {
             const int repeats = 10;
             var calls = 0;
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
             mockLogger1.Setup(l => l.LogInfo(It.IsAny<string>())).Callback(() => ++calls);
             mockLogger2.Setup(l => l.LogInfo(It.IsAny<string>())).Callback(() => ++calls);
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
             for (var i = 0; i < repeats; )
             {
                 Assert.Equal(i, calls);
@@ -100,11 +100,11 @@ namespace LoggerLite.xTest
         {
             const int repeats = 10;
             var calls = 0;
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
             mockLogger1.Setup(l => l.LogWarning(It.IsAny<string>())).Callback(() => ++calls);
             mockLogger2.Setup(l => l.LogWarning(It.IsAny<string>())).Callback(() => ++calls);
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
             for (var i = 0; i < repeats;)
             {
                 Assert.Equal(i, calls);
@@ -120,11 +120,11 @@ namespace LoggerLite.xTest
         {
             const int repeats = 10;
             var calls = 0;
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
             mockLogger1.Setup(l => l.LogError(It.IsAny<string>())).Callback(() => ++calls);
             mockLogger2.Setup(l => l.LogError(It.IsAny<string>())).Callback(() => ++calls);
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
             for (var i = 0; i < repeats;)
             {
                 Assert.Equal(i, calls);
@@ -140,11 +140,11 @@ namespace LoggerLite.xTest
         {
             const int repeats = 10;
             var calls = 0;
-            var mockLogger1 = new Mock<ILogger>();
-            var mockLogger2 = new Mock<ILogger>();
+            var mockLogger1 = new Mock<ILoggerLite>();
+            var mockLogger2 = new Mock<ILoggerLite>();
             mockLogger1.Setup(l => l.LogError(It.IsAny<Exception>())).Callback(() => ++calls);
             mockLogger2.Setup(l => l.LogError(It.IsAny<Exception>())).Callback(() => ++calls);
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
             for (var i = 0; i < repeats;)
             {
                 Assert.Equal(i, calls);
@@ -159,13 +159,13 @@ namespace LoggerLite.xTest
         [Fact]
         public void AggregatedLoggerLogErrorTest()
         {
-            var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
-            var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
+            var mockLogger1 = new Mock<ILoggerLite>(MockBehavior.Strict);
+            var mockLogger2 = new Mock<ILoggerLite>(MockBehavior.Strict);
             mockLogger1.Setup(l => l.LogError(It.IsAny<string>()));
             mockLogger1.Setup(l => l.LogError(It.IsAny<string>()));
             mockLogger2.Setup(l => l.LogError(It.IsAny<string>()));
             mockLogger2.Setup(l => l.LogError(It.IsAny<string>()));
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogError(new Exception("test, not exception."));
             tested.LogError("test, not exception.");
@@ -174,11 +174,11 @@ namespace LoggerLite.xTest
         [Fact]
         public void AggregatedLoggerLogInfoTest()
         {
-            var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
-            var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
+            var mockLogger1 = new Mock<ILoggerLite>(MockBehavior.Strict);
+            var mockLogger2 = new Mock<ILoggerLite>(MockBehavior.Strict);
             mockLogger1.Setup(l => l.LogInfo(It.IsAny<string>()));
             mockLogger2.Setup(l => l.LogInfo(It.IsAny<string>()));
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogInfo("test");
             mockLogger1.VerifyAll();
@@ -186,11 +186,11 @@ namespace LoggerLite.xTest
         [Fact]
         public void AggregatedLoggerLogWarningTest()
         {
-            var mockLogger1 = new Mock<ILogger>(MockBehavior.Strict);
-            var mockLogger2 = new Mock<ILogger>(MockBehavior.Strict);
+            var mockLogger1 = new Mock<ILoggerLite>(MockBehavior.Strict);
+            var mockLogger2 = new Mock<ILoggerLite>(MockBehavior.Strict);
             mockLogger1.Setup(l => l.LogWarning(It.IsAny<string>()));
             mockLogger2.Setup(l => l.LogWarning(It.IsAny<string>()));
-            var tested = new AggregateLogger(new List<ILogger> { mockLogger1.Object, mockLogger2.Object });
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
 
             tested.LogWarning("test");
             mockLogger1.VerifyAll();

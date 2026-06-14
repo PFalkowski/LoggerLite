@@ -24,8 +24,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>4.0.0</Version>
-    <PackageReleaseNotes>Multi-target netstandard2.0 and net8.0. Fixed success double-counting (ConsoleLogger, QueuedLoggerWrapper), invalid JSON output (JsonFileLogger now escapes), and a leaked timer in ActiveDebouncer. Added correctly-spelled ILogger.Successes; the misspelled Sucesses is now [Obsolete] and will be removed in a future major version.</PackageReleaseNotes>
+    <Version>4.1.0</Version>
+    <PackageReleaseNotes>Restores the 4.0.0 public API (ILoggerLite, LogInformation, LogSuccess, LogError(exception, description)) whose source had been lost. Adds a net8.0 target alongside netstandard2.0. Fixes carried over: success double-counting (ConsoleLogger, QueuedLoggerWrapper), invalid JSON output (JsonFileLogger now escapes per RFC 8259), and a leaked timer in ActiveDebouncer.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

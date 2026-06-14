@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+namespace LoggerLite;
 
-namespace LoggerLite
+public enum MessageSeverity
 {
-    public enum MessageSeverity
-    {
-        Information = 0,
-        Warning = 1,
-        Error = 2
-    }
+	Information,
+	Warning,
+	Error,
+	Success
 }

@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public abstract class BufferedLoggerBase : LoggerBase
 {
-    public abstract class BufferedLoggerBase : LoggerBase
-    {
-        public override sealed bool FlushAuto => false;
-        public virtual void Save(FileInfo outputFile)
-        {
-            var fileStream = new FileStream(outputFile.FullName, FileMode.Create);
-            using (var writer = new StreamWriter(fileStream))
-            {
-                Save(writer);
-            }
-        }
+	public override bool FlushAuto => false;
 
-        public abstract void Save(TextWriter outputSteam);
-    }
+	public virtual void Save(FileInfo outputFile)
+	{
+		using StreamWriter outputSteam = new StreamWriter(new FileStream(outputFile.FullName, FileMode.Create));
+		Save(outputSteam);
+	}
+
+	public abstract void Save(TextWriter outputSteam);
 }

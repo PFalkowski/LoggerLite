@@ -1,47 +1,51 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public class PassiveDebouncer : IDebouncer, IDisposable
 {
-    public sealed class PassiveDebouncer : IDebouncer
-    {
-        public bool NeedsDisposing => false;
+	private readonly Stopwatch _watch = new Stopwatch();
 
-        private readonly Stopwatch _watch = new Stopwatch();
+	private int _debounceMilliseconds = 1000;
 
-        private int _debounceMilliseconds = 1000;
-        private bool _started;
+	private bool _started;
 
-        public int DebounceMilliseconds
-        {
-            get => _debounceMilliseconds;
-            set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                _debounceMilliseconds = value;
-            }
-        }
+	public bool NeedsDisposing => false;
 
+	public int DebounceMilliseconds
+	{
+		get
+		{
+			return _debounceMilliseconds;
+		}
+		set
+		{
+			if (value < 0)
+			{
+				throw new ArgumentOutOfRangeException("value");
+			}
+			_debounceMilliseconds = value;
+		}
+	}
 
-        public void Debounce(Action action)
-        {
-            if (!_started)
-            {
-                action();
-                _started = true;
-                _watch.Restart();
-            }
-            else if (_started && _watch.ElapsedMilliseconds > DebounceMilliseconds)
-            {
-                action();
-                _started = false;
-                _watch.Reset();
-            }
-        }
+	public void Debounce(Action action)
+	{
+		if (!_started)
+		{
+			action();
+			_started = true;
+			_watch.Restart();
+		}
+		else if (_started && _watch.ElapsedMilliseconds > DebounceMilliseconds)
+		{
+			action();
+			_started = false;
+			_watch.Reset();
+		}
+	}
 
-        public void Dispose()
-        {
-            // Nothing to do here
-        }
-    }
+	public void Dispose()
+	{
+	}
 }

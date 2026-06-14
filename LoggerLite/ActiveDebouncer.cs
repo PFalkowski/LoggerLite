@@ -1,69 +1,84 @@
-﻿using System;
+using System;
 using System.Threading;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public class ActiveDebouncer : IDebouncer, IDisposable
 {
-    public class ActiveDebouncer : IDebouncer, IDisposable
-    {
-        private readonly Timer _timer;
-        private Action _pendingAction;
-        private bool _started;
+	private readonly System.Threading.Timer _timer;
 
-        public bool NeedsDisposing => true;
+	private Action _pendingAction;
 
-        private void StartTimer()
-        {
-            if (!_started)
-            {
-                _timer.Change(0, _debounceMilliseconds);
-                _started = true;
-            }
-        }
-        private void StopTimer()
-        {
-            if (_started)
-            {
-                _timer.Change(Timeout.Infinite, _debounceMilliseconds);
-                _started = false;
-            }
-        }
-        public ActiveDebouncer()
-        {
-            _timer = new Timer(Callback, null, Timeout.Infinite, DebounceMilliseconds);
-        }
+	private bool _started;
 
-        private void Callback(object state)
-        {
-            _pendingAction?.Invoke();
-            StopTimer();
-        }
+	private int _debounceMilliseconds = 1000;
 
-        private int _debounceMilliseconds = 1000;
-        public int DebounceMilliseconds
-        {
-            get => _debounceMilliseconds;
-            set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                if (value == _debounceMilliseconds) return;
-                _debounceMilliseconds = value;
-                _timer.Change(0, _debounceMilliseconds);
-            }
-        }
+	public bool NeedsDisposing => true;
 
-        public void Debounce(Action action)
-        {
-            _pendingAction = action;
-            if (!_started)
-            {
-                StartTimer();
-            }
-        }
+	public int DebounceMilliseconds
+	{
+		get
+		{
+			return _debounceMilliseconds;
+		}
+		set
+		{
+			if (value < 0)
+			{
+				throw new ArgumentOutOfRangeException("value");
+			}
+			if (value != _debounceMilliseconds)
+			{
+				_debounceMilliseconds = value;
+				_timer.Change(0, _debounceMilliseconds);
+			}
+		}
+	}
 
-        public void Dispose()
-        {
-            if (_started) { StopTimer(); }
-            _timer?.Dispose();
-        }
-    }
+	private void StartTimer()
+	{
+		if (!_started)
+		{
+			_timer.Change(0, _debounceMilliseconds);
+			_started = true;
+		}
+	}
+
+	private void StopTimer()
+	{
+		if (_started)
+		{
+			_timer.Change(-1, _debounceMilliseconds);
+			_started = false;
+		}
+	}
+
+	public ActiveDebouncer()
+	{
+		_timer = new System.Threading.Timer(Callback, null, -1, DebounceMilliseconds);
+	}
+
+	private void Callback(object state)
+	{
+		_pendingAction?.Invoke();
+		StopTimer();
+	}
+
+	public void Debounce(Action action)
+	{
+		_pendingAction = action;
+		if (!_started)
+		{
+			StartTimer();
+		}
+	}
+
+	public void Dispose()
+	{
+		if (_started)
+		{
+			StopTimer();
+		}
+		_timer?.Dispose();
+	}
 }
