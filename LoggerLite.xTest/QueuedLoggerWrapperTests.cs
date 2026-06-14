@@ -37,7 +37,7 @@ namespace LoggerLite.xTest
                 tested.LogInfo("b");
 
                 Assert.Equal(2, tested.Requests);
-                Assert.Equal(2, tested.Sucesses);
+                Assert.Equal(2, tested.Successes);
                 Assert.Equal(0, tested.Failures);
             }
             finally

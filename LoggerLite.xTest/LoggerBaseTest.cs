@@ -35,19 +35,19 @@ namespace LoggerLite.xTest
 
             Assert.Equal(0, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogInfo(testMessage);
             Assert.Equal(1, tested.Requests);
             Assert.Equal(1, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogError(testMessage);
             Assert.Equal(2, tested.Requests);
             Assert.Equal(2, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogWarning(testMessage);
             Assert.Equal(3, tested.Requests);
             Assert.Equal(3, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
         }
 
         [Fact]
@@ -58,15 +58,15 @@ namespace LoggerLite.xTest
 
             Assert.Equal(0, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogInfo(testMessage);
             Assert.Equal(1, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(1, tested.Sucesses);
+            Assert.Equal(1, tested.Successes);
             tested.LogInfo(testMessage);
             Assert.Equal(2, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(2, tested.Sucesses);
+            Assert.Equal(2, tested.Successes);
         }
         [Fact]
         public void LoggingWarningSucessfully()
@@ -76,15 +76,15 @@ namespace LoggerLite.xTest
 
             Assert.Equal(0, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogWarning(testMessage);
             Assert.Equal(1, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(1, tested.Sucesses);
+            Assert.Equal(1, tested.Successes);
             tested.LogWarning(testMessage);
             Assert.Equal(2, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(2, tested.Sucesses);
+            Assert.Equal(2, tested.Successes);
         }
         [Fact]
         public void LoggingErrorSucessfully()
@@ -94,15 +94,15 @@ namespace LoggerLite.xTest
 
             Assert.Equal(0, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogError(testMessage);
             Assert.Equal(1, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(1, tested.Sucesses);
+            Assert.Equal(1, tested.Successes);
             tested.LogError(testMessage);
             Assert.Equal(2, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(2, tested.Sucesses);
+            Assert.Equal(2, tested.Successes);
         }
         [Fact]
         public void LoggingErrorSucessfully2()
@@ -113,15 +113,28 @@ namespace LoggerLite.xTest
 
             Assert.Equal(0, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(0, tested.Sucesses);
+            Assert.Equal(0, tested.Successes);
             tested.LogError(argException);
             Assert.Equal(1, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(1, tested.Sucesses);
+            Assert.Equal(1, tested.Successes);
             tested.LogError(argException);
             Assert.Equal(2, tested.Requests);
             Assert.Equal(0, tested.Failures);
-            Assert.Equal(2, tested.Sucesses);
+            Assert.Equal(2, tested.Successes);
+        }
+
+        [Fact]
+        public void ObsoleteSucessesForwardsToSuccesses()
+        {
+            var tested = new LoggerBaseJustAStubInherit();
+            tested.LogInfo("x");
+            tested.LogInfo("y");
+
+            Assert.Equal(2, tested.Successes);
+#pragma warning disable CS0618 // verify the deprecated shim still mirrors Successes
+            Assert.Equal(tested.Successes, tested.Sucesses);
+#pragma warning restore CS0618
         }
     }
 }

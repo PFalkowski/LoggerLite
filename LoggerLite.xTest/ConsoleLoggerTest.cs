@@ -16,7 +16,7 @@ namespace LoggerLite.xTest
             tested.LogError("err");
 
             Assert.Equal(3, tested.Requests);
-            Assert.Equal(3, tested.Sucesses);
+            Assert.Equal(3, tested.Successes);
             Assert.Equal(0, tested.Failures);
         }
     }

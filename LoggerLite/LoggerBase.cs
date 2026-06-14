@@ -12,7 +12,11 @@ namespace LoggerLite
         public abstract bool IsThreadSafe { get; }
 
         public int Requests { get; protected set; }
-        public int Sucesses { get; protected set; }
+        public int Successes { get; protected set; }
+
+        [Obsolete("Misspelled. Use Successes instead. Will be removed in a future major version.")]
+        public int Sucesses => Successes;
+
         public int Failures { get; protected set; }
 
         protected string TrimExcess(string input)
@@ -31,7 +35,7 @@ namespace LoggerLite
             try
             {
                 Log(message, MessageSeverity.Information);
-                ++Sucesses;
+                ++Successes;
             }
             catch (Exception)
             {
@@ -44,7 +48,7 @@ namespace LoggerLite
             try
             {
                 Log(warning, MessageSeverity.Warning);
-                ++Sucesses;
+                ++Successes;
             }
             catch (Exception)
             {
@@ -57,7 +61,7 @@ namespace LoggerLite
             try
             {
                 Log(error, MessageSeverity.Error);
-                ++Sucesses;
+                ++Successes;
             }
             catch (Exception)
             {
@@ -70,7 +74,7 @@ namespace LoggerLite
             try
             {
                 Log(exception.ToString(), MessageSeverity.Error);
-                ++Sucesses;
+                ++Successes;
             }
             catch (Exception)
             {
