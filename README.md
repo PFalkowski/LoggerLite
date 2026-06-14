@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml/badge.svg)](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PFalkowski_LoggerLite&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=PFalkowski_LoggerLite)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=PFalkowski_LoggerLite&metric=coverage)](https://sonarcloud.io/summary/new_code?id=PFalkowski_LoggerLite)
 [![NuGet](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![Downloads](https://img.shields.io/nuget/dt/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
 [![License: MIT](https://img.shields.io/github/license/PFalkowski/LoggerLite.svg)](License.txt)
