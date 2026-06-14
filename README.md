@@ -139,4 +139,4 @@ logger.Flush(); // force pending writes
 
 ## License
 
-MIT — see [License.txt](License.txt). Contributions welcome.
+MIT — see [License.txt](https://github.com/PFalkowski/LoggerLite/blob/master/License.txt). Contributions welcome.
