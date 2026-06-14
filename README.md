@@ -1,92 +1,142 @@
-# LoggerLite [![Licence (LoggerLite)](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+# LoggerLite
 
-| | Integrations |
+[![CI](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml/badge.svg)](https://github.com/PFalkowski/LoggerLite/actions/workflows/ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
+[![Downloads](https://img.shields.io/nuget/dt/LoggerLite.svg)](https://www.nuget.org/packages/LoggerLite)
+[![License: MIT](https://img.shields.io/github/license/PFalkowski/LoggerLite.svg)](License.txt)
+
+Lightweight, dependency-free logging for .NET — a thin, easy-to-read wrapper around `Console`,
+file streaming, `XDocument` and friends, behind a single `ILoggerLite` interface. Targets
+`netstandard2.0` and `net8.0`.
+
+## Install
+
+```bash
+dotnet add package LoggerLite
+```
+
+## Why?
+
+Lots of everyday code is just "write this somewhere." Full-featured logging frameworks are
+powerful but can be heavy, opaque, or awkward to target portably. LoggerLite is the opposite:
+one small interface, a handful of implementations, **no external dependencies**, and a test
+suite covering the behavior. If you want something you can read in one sitting and drop into
+any project, this is it.
+
+## Loggers
+
+| Logger | Output |
 | --- | --- |
-| **Nuget** | [![Nuget](https://buildstats.info/nuget/LoggerLite)](https://www.nuget.org/packages/LoggerLite) |
-| **Build** | [![Build status](https://piotrfalkowski.visualstudio.com/LoggerLite/_apis/build/status/LoggerLite-CI)](https://piotrfalkowski.visualstudio.com/LoggerLite/_build/latest?definitionId=3) |
-| **Coverage** | [![codecov](https://codecov.io/gh/PFalkowski/LoggerLite/branch/master/graph/badge.svg)](https://codecov.io/gh/PFalkowski/LoggerLite) |
+| `ConsoleLogger` | colored console (per-severity colors) |
+| `DebugLogger` | `System.Diagnostics.Debug` trace |
+| `JsonFileLogger` | newline-delimited JSON file |
+| `YamlFileLogger` | YAML file |
+| `XLogger` | XML document |
+| `HtmlLogger` | HTML (XSLT-transformed) |
+| `AggregateLogger` | fans one message out to several loggers |
+| `QueuedLoggerWrapper` | buffers + debounces writes to a wrapped logger |
 
-# Why?
-Many programming tasks are reducible or somehow related to logging information. Tracing all the different implementations or handling concurency issues can be a nuisance. While there are many great, full-featured solutions, they are either not portable, bloated or hard to grasp. If you need lightweight, extensible and easy to understand logging solution, this is a library for you. Unit tests cover most of the codeline, there are no external dependencies and all relevant cade takes around 15 KB / 350 LOC. The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
-- Console Logger
-- Debug Trace Logger
-- File Logger
-- XML Logger
-- YAML Logger
-- JSON Logger
-- HTML Logger
+All implement `ILoggerLite`:
 
-# How?
-The example of console logger:
-```c#
-using System;
-using LoggerLite;
-
-namespace ConsoleApp1
+```csharp
+public interface ILoggerLite
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var logger = new ConsoleLogger();
-            logger.LogInfo("info!");
-            logger.LogWarning("warning");
-            logger.LogError("error :(");
-            Console.ReadKey();
-        }
-    }
-}
-```
-![Console logger example output](ConsoleExampleOutput.PNG)
+    void LogInfo(string message);
+    void LogInformation(string message);              // alias for LogInfo
+    void LogSuccess(string message);
+    void LogWarning(string warning);
+    void LogError(string error);
+    void LogError(Exception exception);
+    void LogError(Exception exception, string description);
+    void Log(string message, MessageSeverity severity);
 
-The example of yaml logger or any file logger based on FileLoggerBase:
-```c#
-using System;
-using LoggerLite;
-
-namespace ConsoleApp1
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var logger = new YamlFileLogger("yamlLog.yaml");
-            logger.LogInfo("info");
-            logger.LogWarning("warning");
-            logger.LogError("error");//no need to call save, it flushes automatically
-            Console.ReadKey();
-        }
-    }
+    bool FlushAuto { get; }   // true => writes immediately; false => call Save()/Flush()
+    bool IsThreadSafe { get; }
+    int Requests { get; }     // total Log* calls
+    int Successes { get; }    // succeeded
+    int Failures { get; }     // threw internally (logging never throws to the caller)
 }
 ```
 
-The example of HTML logger:
-```c#
+Logging never throws: failures are swallowed and counted in `Failures`.
+
+## Examples
+
+### Console
+
+```csharp
+using LoggerLite;
+
+var logger = new ConsoleLogger();
+logger.LogInfo("info!");
+logger.LogSuccess("done");
+logger.LogWarning("warning");
+logger.LogError("error :(");
+```
+
+![Console logger example output](https://raw.githubusercontent.com/PFalkowski/LoggerLite/master/ConsoleExampleOutput.PNG)
+
+### File (JSON / YAML / …)
+
+`FileLoggerBase` subclasses flush automatically — no need to call `Save`:
+
+```csharp
 using System;
 using LoggerLite;
 
-namespace ConsoleApp1
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var outputFile = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "html"));
-            var logger = new HtmlLogger();
-            logger.LogWarning("warning");
-            logger.LogWarning("warning");
-            logger.LogWarning("warning");
-            logger.LogWarning("warning");
-            logger.LogInfo("info");
-            logger.LogWarning("warning");
-            logger.LogError("error, but not really:)");
-            logger.Save(outputFile);            
-            using (var process = Process.Start(new ProcessStartInfo 
-            { FileName = outputFile.FullName, UseShellExecute = true }))
-        }
-    }
-}
+var logger = new JsonFileLogger("log.json");
+logger.LogInfo("info");
+logger.LogError(new Exception("boom"), "while processing order 42");
 ```
-![HTML logger example output](HtmlLoggerExampleOutput.PNG)
 
-Contributions are welcomed
+### HTML
+
+```csharp
+using System.Diagnostics;
+using System.IO;
+using LoggerLite;
+
+var outputFile = new FileInfo(Path.ChangeExtension(Path.GetRandomFileName(), "html"));
+var logger = new HtmlLogger();
+logger.LogInfo("info");
+logger.LogWarning("warning");
+logger.LogError("error, but not really :)");
+logger.Save(outputFile);
+
+Process.Start(new ProcessStartInfo { FileName = outputFile.FullName, UseShellExecute = true });
+```
+
+![HTML logger example output](https://raw.githubusercontent.com/PFalkowski/LoggerLite/master/HtmlLoggerExampleOutput.PNG)
+
+### Aggregate — one call, many sinks
+
+```csharp
+using LoggerLite;
+
+var logger = new AggregateLogger(new ConsoleLogger(), new JsonFileLogger("log.json"));
+logger.LogInfo("goes to both the console and the file");
+```
+
+### Buffered / debounced writes
+
+Wrap any `FormattedLoggerBase` to batch writes through a debouncer:
+
+```csharp
+using LoggerLite;
+
+using var logger = new QueuedLoggerWrapper(
+    new FileLoggerBase("log.log"),
+    new PassiveDebouncer { DebounceMilliseconds = 250 });
+
+logger.LogInfo("buffered");
+logger.Flush(); // force pending writes
+```
+
+## Notes
+
+- **Custom formatting** per logger via the `Formatter` property (`Func<string level, string message, string>`).
+- **Targets** `netstandard2.0` (broad reach) and `net8.0`; no external dependencies.
+
+## License
+
+MIT — see [License.txt](https://github.com/PFalkowski/LoggerLite/blob/master/License.txt). Contributions welcome.
