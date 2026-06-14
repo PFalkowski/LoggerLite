@@ -165,5 +165,28 @@ namespace LoggerLite.xTest
             Assert.Contains(path, tested.PathToLog);
         }
 
+        [Fact]
+        public void ProducesValidJsonForSpecialCharacters()
+        {
+            // Regression: messages containing ", \, or newlines used to produce invalid JSON.
+            var myPath = $"{typeof(JsonFileLoggerTest).Namespace}.{nameof(ProducesValidJsonForSpecialCharacters)}.json";
+            try
+            {
+                var logger = new JsonFileLogger(myPath);
+                var message = "He said \"hi\"\\ then\na new line\ttab";
+                logger.LogInfo(message);
+
+                foreach (var line in File.ReadAllLines(myPath))
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+                    using var doc = System.Text.Json.JsonDocument.Parse(line); // throws if invalid JSON
+                    Assert.Equal(message, doc.RootElement.GetProperty("message").GetString());
+                }
+            }
+            finally
+            {
+                File.Delete(myPath);
+            }
+        }
     }
 }

@@ -14,7 +14,11 @@ namespace LoggerLite
         bool FlushAuto { get; }
         bool IsThreadSafe { get; }
         int Requests { get; }
+        int Successes { get; }
+
+        [Obsolete("Misspelled. Use Successes instead. Will be removed in a future major version.")]
         int Sucesses { get; }
+
         int Failures { get; }
     }
 }

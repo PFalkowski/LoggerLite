@@ -24,6 +24,29 @@ namespace LoggerLite.xTest
             }
         }
 
+        [Fact]
+        public void CountsEachSuccessExactlyOnce()
+        {
+            // Regression: QueuedLoggerWrapper.Log incremented the success counter itself in
+            // addition to LoggerBase, so successes were double-counted (> requests).
+            var myPath = $"{typeof(QueuedLoggerWrapperTests).Namespace}.{Path.GetRandomFileName()}.log";
+            var tested = new QueuedLoggerWrapper(new FileLoggerBase(myPath), new PassiveDebouncer { DebounceMilliseconds = 1 });
+            try
+            {
+                tested.LogInfo("a");
+                tested.LogInfo("b");
+
+                Assert.Equal(2, tested.Requests);
+                Assert.Equal(2, tested.Successes);
+                Assert.Equal(0, tested.Failures);
+            }
+            finally
+            {
+                tested.Dispose();
+                File.Delete(myPath);
+            }
+        }
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]

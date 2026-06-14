@@ -1,9 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Ship XML docs for documented members without requiring every public member to be documented. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <Description>
-      The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, handfull of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
+      The LoggerLite is a .NET Core and .NET classic compatible solution, featuring one interface ILogger, a handful of implementations and a passive debouncer. The solution is a thin wrapper around .NET FileStreaming, XDocument, Console and other classes. Currently, the project contains following implementations:
       Console Logger
       Debug Trace Logger
       File Logger
@@ -11,24 +15,27 @@
       Yaml Logger
       JSON Logger
       Html Logger
-      Aggreagate Logger</Description>
-    <Copyright>Piotr Falkowski © 2019</Copyright>
-    <PackageLicenseUrl></PackageLicenseUrl>
+      Aggregate Logger</Description>
+    <Copyright>Piotr Falkowski © 2026</Copyright>
     <PackageProjectUrl>https://github.com/PFalkowski/LoggerLite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PFalkowski/LoggerLite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>JSON, XML,YAML,Console,logging,logger</PackageTags>
+    <PackageTags>JSON, XML, YAML, Console, logging, logger</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>3.1.0</Version>
-    <PackageReleaseNotes>Open Formatter poperty setter.</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>4.0.0</Version>
+    <PackageReleaseNotes>Multi-target netstandard2.0 and net8.0. Fixed success double-counting (ConsoleLogger, QueuedLoggerWrapper), invalid JSON output (JsonFileLogger now escapes), and a leaked timer in ActiveDebouncer. Added correctly-spelled ILogger.Successes; the misspelled Sucesses is now [Obsolete] and will be removed in a future major version.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

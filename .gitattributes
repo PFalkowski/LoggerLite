@@ -3,6 +3,10 @@
 ###############################################################################
 * text=auto
 
+# Workflow/CI YAML must stay LF so bash run: steps work on Linux runners.
+*.yml  text eol=lf
+*.yaml text eol=lf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #

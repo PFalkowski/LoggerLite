@@ -29,7 +29,6 @@ namespace LoggerLite
             {
                 _buffer.Enqueue(message);
                 _debouncer.Debounce(WriteEnqueued);
-                ++Sucesses;
             }
         }
 
