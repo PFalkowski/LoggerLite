@@ -1,38 +1,45 @@
-﻿using System.IO;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using LoggerLite.Properties;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public class HtmlLogger : XLogger
 {
-    public class HtmlLogger : XLogger
-    {
-        private XslCompiledTransform Transform { get; }
-        
-        public HtmlLogger() : this(XDocument.Parse(Properties.Resources.XLoggerStylesheet)) { }
+	private XslCompiledTransform Transform { get; }
 
-        public HtmlLogger(XNode xsltTransformStylesheet) : this(xsltTransformStylesheet.CreateNavigator()) { }
+	public HtmlLogger()
+		: this(XDocument.Parse(Resources.XLoggerStylesheet))
+	{
+	}
 
-        public HtmlLogger(FileInfo xsltTransformStylesheet)
-        {
-            Transform = new XslCompiledTransform(false);
-            Transform.Load(xsltTransformStylesheet.FullName);
-        }
+	public HtmlLogger(XNode xsltTransformStylesheet)
+		: this(xsltTransformStylesheet.CreateNavigator())
+	{
+	}
 
-        public HtmlLogger(IXPathNavigable xsltTransformStylesheet)
-        {
-            Transform = new XslCompiledTransform(false);
-            Transform.Load(xsltTransformStylesheet);
-        }
+	public HtmlLogger(FileInfo xsltTransformStylesheet)
+	{
+		Transform = new XslCompiledTransform(enableDebug: false);
+		Transform.Load(xsltTransformStylesheet.FullName);
+	}
 
-        public override void Save(FileInfo outputFile)
-        {
-            var outputFileName = Path.ChangeExtension(outputFile.FullName, "html");
-            using (var output = XmlWriter.Create(outputFileName, new XmlWriterSettings() { Indent = true, ConformanceLevel = ConformanceLevel.Auto }))
-            {
-                Transform.Transform(OutputDocument.CreateNavigator(), output);
-            }
-        }
-    }
+	public HtmlLogger(IXPathNavigable xsltTransformStylesheet)
+	{
+		Transform = new XslCompiledTransform(enableDebug: false);
+		Transform.Load(xsltTransformStylesheet);
+	}
+
+	public override void Save(FileInfo outputFile)
+	{
+		using XmlWriter results = XmlWriter.Create(Path.ChangeExtension(outputFile.FullName, "html"), new XmlWriterSettings
+		{
+			Indent = true,
+			ConformanceLevel = ConformanceLevel.Auto
+		});
+		Transform.Transform(base.OutputDocument.CreateNavigator(), results);
+	}
 }

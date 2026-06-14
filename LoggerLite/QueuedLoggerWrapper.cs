@@ -1,61 +1,61 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Text;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public class QueuedLoggerWrapper : FormattedLoggerBase, IDisposable
 {
-    // TODO: split debouncing logger from queued
-    public sealed class QueuedLoggerWrapper : FormattedLoggerBase, IDisposable
-    {
-        private readonly object _syncRoot = new object();
+	private readonly object _syncRoot = new object();
 
-        private readonly ConcurrentQueue<string> _buffer = new ConcurrentQueue<string>();
-        private readonly IDebouncer _debouncer;
-        private readonly FormattedLoggerBase _logger;
+	private readonly ConcurrentQueue<string> _buffer = new ConcurrentQueue<string>();
 
-        public override bool FlushAuto => _logger.FlushAuto;
-        public override bool IsThreadSafe => true;
+	private readonly IDebouncer _debouncer;
 
-        public QueuedLoggerWrapper(FormattedLoggerBase logger, IDebouncer debouncer)
-        {
-            _logger = logger;
-            _debouncer = debouncer;
-        }
+	private readonly FormattedLoggerBase _logger;
 
+	public override bool FlushAuto => _logger.FlushAuto;
 
-        protected internal override void Log(string message)
-        {
-            lock (_syncRoot)
-            {
-                _buffer.Enqueue(message);
-                _debouncer.Debounce(WriteEnqueued);
-            }
-        }
+	public override bool IsThreadSafe => true;
 
-        private void WriteEnqueued()
-        {
-            var builder = new StringBuilder();
-            while (!_buffer.IsEmpty)
-            {
-                if (_buffer.TryDequeue(out var temp))
-                {
-                    builder.Append(temp);
-                }
-            }
-            if (builder.Length > 0)
-            {
-                _logger.Log(builder.ToString());
-            }
-        }
+	public QueuedLoggerWrapper(FormattedLoggerBase logger, IDebouncer debouncer)
+	{
+		_logger = logger;
+		_debouncer = debouncer;
+	}
 
-        public void Flush()
-        {
-            WriteEnqueued();
-        }
+	protected internal override void Log(string message)
+	{
+		lock (_syncRoot)
+		{
+			_buffer.Enqueue(message);
+			_debouncer.Debounce(WriteEnqueued);
+		}
+	}
 
-        public void Dispose()
-        {
-            _debouncer?.Dispose();
-        }
-    }
+	private void WriteEnqueued()
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		while (!_buffer.IsEmpty)
+		{
+			if (_buffer.TryDequeue(out var result))
+			{
+				stringBuilder.Append(result);
+			}
+		}
+		if (stringBuilder.Length > 0)
+		{
+			_logger.Log(stringBuilder.ToString());
+		}
+	}
+
+	public void Flush()
+	{
+		WriteEnqueued();
+	}
+
+	public void Dispose()
+	{
+		_debouncer?.Dispose();
+	}
 }

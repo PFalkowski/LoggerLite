@@ -12,7 +12,7 @@ namespace LoggerLite.xTest
 
             public override bool IsThreadSafe => true;
 
-            protected override void Log(string message, MessageSeverity severity)
+            public override void Log(string message, MessageSeverity severity)
             {
                 throw new ArgumentException();
             }
@@ -23,7 +23,7 @@ namespace LoggerLite.xTest
 
             public override bool IsThreadSafe => true;
 
-            protected override void Log(string message, MessageSeverity severity)
+            public override void Log(string message, MessageSeverity severity)
             {
             }
         }
@@ -125,16 +125,16 @@ namespace LoggerLite.xTest
         }
 
         [Fact]
-        public void ObsoleteSucessesForwardsToSuccesses()
+        public void LogSuccessAndLogInformationCountSuccesses()
         {
             var tested = new LoggerBaseJustAStubInherit();
-            tested.LogInfo("x");
-            tested.LogInfo("y");
 
+            tested.LogInformation("info");
+            tested.LogSuccess("done");
+
+            Assert.Equal(2, tested.Requests);
             Assert.Equal(2, tested.Successes);
-#pragma warning disable CS0618 // verify the deprecated shim still mirrors Successes
-            Assert.Equal(tested.Successes, tested.Sucesses);
-#pragma warning restore CS0618
+            Assert.Equal(0, tested.Failures);
         }
     }
 }

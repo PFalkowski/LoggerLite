@@ -1,86 +1,135 @@
-﻿using System;
+using System;
 
-namespace LoggerLite
+namespace LoggerLite;
+
+public abstract class LoggerBase : ILoggerLite
 {
-    public abstract class LoggerBase : ILogger
-    {
-        public const string TruncateInfo = "(truncated)";
+	public const string TruncateInfo = "(truncated)";
 
-        public int MaxSingleMessageLength { get; protected set; } = 1000 * 1000;
+	public int MaxSingleMessageLength { get; protected set; } = 1000000;
 
-        public abstract bool FlushAuto { get; }
-        public abstract bool IsThreadSafe { get; }
+	public abstract bool FlushAuto { get; }
 
-        public int Requests { get; protected set; }
-        public int Successes { get; protected set; }
+	public abstract bool IsThreadSafe { get; }
 
-        [Obsolete("Misspelled. Use Successes instead. Will be removed in a future major version.")]
-        public int Sucesses => Successes;
+	public int Requests { get; protected set; }
 
-        public int Failures { get; protected set; }
+	public int Successes { get; protected set; }
 
-        protected string TrimExcess(string input)
-        {
-            if (string.IsNullOrEmpty(input)) return input;
-            return input.Length > MaxSingleMessageLength
-                ? input.Substring(0, MaxSingleMessageLength - TruncateInfo.Length) + TruncateInfo
-                : input;
-        }
+	public int Failures { get; protected set; }
 
-        protected internal abstract void Log(string message, MessageSeverity severity);
+	protected string TrimExcess(string input)
+	{
+		if (string.IsNullOrEmpty(input))
+		{
+			return input;
+		}
+		if (input.Length <= MaxSingleMessageLength)
+		{
+			return input;
+		}
+		return input.Substring(0, MaxSingleMessageLength - "(truncated)".Length) + "(truncated)";
+	}
 
-        public void LogInfo(string message)
-        {
-            ++Requests;
-            try
-            {
-                Log(message, MessageSeverity.Information);
-                ++Successes;
-            }
-            catch (Exception)
-            {
-                ++Failures;
-            }
-        }
-        public void LogWarning(string warning)
-        {
-            ++Requests;
-            try
-            {
-                Log(warning, MessageSeverity.Warning);
-                ++Successes;
-            }
-            catch (Exception)
-            {
-                ++Failures;
-            }
-        }
-        public void LogError(string error)
-        {
-            ++Requests;
-            try
-            {
-                Log(error, MessageSeverity.Error);
-                ++Successes;
-            }
-            catch (Exception)
-            {
-                ++Failures;
-            }
-        }
-        public void LogError(Exception exception)
-        {
-            ++Requests;
-            try
-            {
-                Log(exception.ToString(), MessageSeverity.Error);
-                ++Successes;
-            }
-            catch (Exception)
-            {
-                ++Failures;
-            }
-        }
+	public abstract void Log(string message, MessageSeverity severity);
 
-    }
+	public void LogInformation(string message)
+	{
+		LogInfo(message);
+	}
+
+	public void LogInfo(string message)
+	{
+		int requests = Requests + 1;
+		Requests = requests;
+		try
+		{
+			Log(message, MessageSeverity.Information);
+			requests = Successes + 1;
+			Successes = requests;
+		}
+		catch (Exception)
+		{
+			requests = Failures + 1;
+			Failures = requests;
+		}
+	}
+
+	public void LogSuccess(string message)
+	{
+		int requests = Requests + 1;
+		Requests = requests;
+		try
+		{
+			Log(message, MessageSeverity.Success);
+			requests = Successes + 1;
+			Successes = requests;
+		}
+		catch (Exception)
+		{
+			requests = Failures + 1;
+			Failures = requests;
+		}
+	}
+
+	public void LogWarning(string warning)
+	{
+		int requests = Requests + 1;
+		Requests = requests;
+		try
+		{
+			Log(warning, MessageSeverity.Warning);
+			requests = Successes + 1;
+			Successes = requests;
+		}
+		catch (Exception)
+		{
+			requests = Failures + 1;
+			Failures = requests;
+		}
+	}
+
+	public void LogError(string error)
+	{
+		int requests = Requests + 1;
+		Requests = requests;
+		try
+		{
+			Log(error, MessageSeverity.Error);
+			requests = Successes + 1;
+			Successes = requests;
+		}
+		catch (Exception)
+		{
+			requests = Failures + 1;
+			Failures = requests;
+		}
+	}
+
+	public void LogError(Exception exception)
+	{
+		int requests = Requests + 1;
+		Requests = requests;
+		try
+		{
+			Log(exception.ToString(), MessageSeverity.Error);
+			requests = Successes + 1;
+			Successes = requests;
+		}
+		catch (Exception)
+		{
+			requests = Failures + 1;
+			Failures = requests;
+		}
+	}
+
+	public void LogError(Exception exception, string description)
+	{
+		string text = exception.Message.TrimEnd();
+		if (!text.EndsWith(":"))
+		{
+			text += ":";
+		}
+		LogError(text + " " + description);
+	}
 }
