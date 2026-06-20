@@ -56,25 +56,27 @@ namespace LoggerLite.xTest
         [Fact]
         public void DisposeStopsStartedTimer()
         {
-            using var callbackStarted = new ManualResetEventSlim(false);
-            using var releaseCallback = new ManualResetEventSlim(false);
+            // Volatile flags (no IDisposable) so the background timer thread can never
+            // touch a synchronization primitive that this method has already disposed.
+            var callbackRunning = false;
+            var release = false;
             // Long period so the single due-time-0 tick is the only one in the test window.
             var tested = new ActiveDebouncer { DebounceMilliseconds = 10000 };
 
             tested.Debounce(() =>
             {
-                callbackStarted.Set();
-                releaseCallback.Wait(TimeSpan.FromSeconds(5));
+                Volatile.Write(ref callbackRunning, true);
+                SpinWait.SpinUntil(() => Volatile.Read(ref release), TimeSpan.FromSeconds(5));
             });
 
             // Block until the debounced callback is actually running, so the timer is
-            // started when Dispose() runs - exercising the StopTimer + Dispose path.
-            Assert.True(callbackStarted.Wait(TimeSpan.FromSeconds(5)),
+            // still started when Dispose() runs - exercising the StopTimer + Dispose path.
+            Assert.True(SpinWait.SpinUntil(() => Volatile.Read(ref callbackRunning), TimeSpan.FromSeconds(5)),
                 "debounced callback never started");
 
             tested.Dispose();
 
-            releaseCallback.Set();
+            Volatile.Write(ref release, true);
         }
     }
 }
