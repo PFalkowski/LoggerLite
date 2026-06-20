@@ -204,6 +204,16 @@ namespace LoggerLite.xTest
             Assert.True(tested1.PathToLog.EndsWith(".log"), $"{tested1.PathToLog} does not end with \".log\"");
         }
 
+        [Fact]
+        public void FileNameWithoutExtensionGetsDefaultExtension()
+        {
+            var tested = new FileLoggerBase("logfilewithoutextension");
+
+            Assert.Contains("logfilewithoutextension", tested.PathToLog);
+            Assert.True(tested.PathToLog.EndsWith(".log"),
+                $"{tested.PathToLog} does not end with \".log\"");
+        }
+
         // TODO: Write possible multithreaded scenarios
 
         //private static void AssertFileFormedWell(string myPath)

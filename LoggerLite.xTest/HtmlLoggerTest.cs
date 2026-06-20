@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Linq;
 using Xunit;
 
@@ -86,6 +87,29 @@ namespace LoggerLite.xTest
             Assert.Contains(error, actual);
             Assert.Contains(info, actual);
             Assert.Contains(warning, actual);
+        }
+
+        [Fact]
+        public void HtmlLoggerLoadsStylesheetFromFileInfoAndSaves()
+        {
+            var stylesheetPath = Path.Combine(Path.GetTempPath(), $"loggerlite_{Guid.NewGuid():N}.xslt");
+            var outputPath = Path.Combine(Path.GetTempPath(), $"loggerlite_{Guid.NewGuid():N}.html");
+            File.WriteAllText(stylesheetPath, Xslt);
+            try
+            {
+                const string info = "loaded from file";
+                var tested = new HtmlLogger(new FileInfo(stylesheetPath));
+
+                tested.LogInfo(info);
+                tested.Save(new FileInfo(outputPath));
+
+                Assert.Contains(info, File.ReadAllText(outputPath));
+            }
+            finally
+            {
+                File.Delete(stylesheetPath);
+                File.Delete(outputPath);
+            }
         }
     }
 }

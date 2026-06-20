@@ -19,5 +19,19 @@ namespace LoggerLite.xTest
             Assert.Equal(3, tested.Successes);
             Assert.Equal(0, tested.Failures);
         }
+
+        [Fact]
+        public void LogSuccessUsesSuccessSeverityAndCountsSuccess()
+        {
+            // Exercises the MessageSeverity.Success branch (sets SuccessColor) which the
+            // other severities don't reach.
+            var tested = new ConsoleLogger();
+
+            tested.LogSuccess("operation completed");
+
+            Assert.Equal(1, tested.Requests);
+            Assert.Equal(1, tested.Successes);
+            Assert.Equal(0, tested.Failures);
+        }
     }
 }
