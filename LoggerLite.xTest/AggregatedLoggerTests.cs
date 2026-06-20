@@ -195,5 +195,36 @@ namespace LoggerLite.xTest
             tested.LogWarning("test");
             mockLogger1.VerifyAll();
         }
+        [Fact]
+        public void AggregatedLoggerLogSuccessTest()
+        {
+            var mockLogger1 = new Mock<ILoggerLite>(MockBehavior.Strict);
+            var mockLogger2 = new Mock<ILoggerLite>(MockBehavior.Strict);
+            mockLogger1.Setup(l => l.LogSuccess(It.IsAny<string>()));
+            mockLogger2.Setup(l => l.LogSuccess(It.IsAny<string>()));
+            var tested = new AggregateLogger(new List<ILoggerLite> { mockLogger1.Object, mockLogger2.Object });
+
+            tested.LogSuccess("done");
+
+            mockLogger1.Verify(l => l.LogSuccess("done"), Times.Once);
+            mockLogger2.Verify(l => l.LogSuccess("done"), Times.Once);
+        }
+        [Fact]
+        public void LogThrowsAggregateExceptionCollectingChildFailures()
+        {
+            var failing = new Mock<ILoggerLite>();
+            failing.Setup(l => l.LogError(It.IsAny<string>()))
+                .Throws(new InvalidOperationException("child failed"));
+            var working = new Mock<ILoggerLite>();
+            var tested = new AggregateLogger(failing.Object, working.Object);
+
+            var aggregate = Assert.Throws<AggregateException>(
+                () => tested.Log("oops", MessageSeverity.Error));
+
+            Assert.Single(aggregate.InnerExceptions);
+            Assert.IsType<InvalidOperationException>(aggregate.InnerExceptions[0]);
+            // A sibling logger is still invoked even though an earlier one threw.
+            working.Verify(l => l.LogError("oops"), Times.Once);
+        }
     }
 }

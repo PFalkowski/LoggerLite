@@ -27,6 +27,26 @@ namespace LoggerLite.xTest
             {
             }
         }
+        private class RecordingLogger : LoggerBase
+        {
+            public string LastMessage { get; private set; }
+
+            public MessageSeverity LastSeverity { get; private set; }
+
+            public override bool FlushAuto => true;
+
+            public override bool IsThreadSafe => true;
+
+            public override void Log(string message, MessageSeverity severity)
+            {
+                LastMessage = message;
+                LastSeverity = severity;
+            }
+
+            public string CallTrimExcess(string input) => TrimExcess(input);
+
+            public void SetMaxSingleMessageLength(int value) => MaxSingleMessageLength = value;
+        }
         [Fact]
         public void ExceptionWhileLogging()
         {
@@ -135,6 +155,73 @@ namespace LoggerLite.xTest
             Assert.Equal(2, tested.Requests);
             Assert.Equal(2, tested.Successes);
             Assert.Equal(0, tested.Failures);
+        }
+
+        [Fact]
+        public void LogSuccessCountsFailureWhenLogThrows()
+        {
+            var tested = new LoggerBaseThrowingExceptionInLog();
+
+            tested.LogSuccess("done");
+
+            Assert.Equal(1, tested.Requests);
+            Assert.Equal(1, tested.Failures);
+            Assert.Equal(0, tested.Successes);
+        }
+
+        [Fact]
+        public void LogErrorWithExceptionCountsFailureWhenLogThrows()
+        {
+            var tested = new LoggerBaseThrowingExceptionInLog();
+
+            tested.LogError(new InvalidOperationException("kaboom"));
+
+            Assert.Equal(1, tested.Requests);
+            Assert.Equal(1, tested.Failures);
+            Assert.Equal(0, tested.Successes);
+        }
+
+        [Fact]
+        public void LogErrorWithDescriptionAppendsColonBeforeDescription()
+        {
+            var tested = new RecordingLogger();
+
+            tested.LogError(new Exception("Disk failure"), "while writing log");
+
+            Assert.Equal("Disk failure: while writing log", tested.LastMessage);
+            Assert.Equal(MessageSeverity.Error, tested.LastSeverity);
+        }
+
+        [Fact]
+        public void LogErrorWithDescriptionDoesNotAddASecondColon()
+        {
+            var tested = new RecordingLogger();
+
+            tested.LogError(new Exception("Disk failure:"), "while writing log");
+
+            Assert.Equal("Disk failure: while writing log", tested.LastMessage);
+        }
+
+        [Fact]
+        public void TrimExcessReturnsInputUnchangedWhenNullOrEmpty()
+        {
+            var tested = new RecordingLogger();
+
+            Assert.Null(tested.CallTrimExcess(null));
+            Assert.Equal(string.Empty, tested.CallTrimExcess(string.Empty));
+        }
+
+        [Fact]
+        public void TrimExcessTruncatesMessagesLongerThanMax()
+        {
+            var tested = new RecordingLogger();
+            tested.SetMaxSingleMessageLength(20);
+            var input = new string('x', 50);
+
+            var actual = tested.CallTrimExcess(input);
+
+            Assert.Equal(20, actual.Length);
+            Assert.EndsWith(LoggerBase.TruncateInfo, actual);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using Xunit;
 
 namespace LoggerLite.xTest
@@ -50,6 +51,30 @@ namespace LoggerLite.xTest
             {
                 Assert.True(counter > 0);
             }
+        }
+
+        [Fact]
+        public void DisposeStopsStartedTimer()
+        {
+            using var callbackStarted = new ManualResetEventSlim(false);
+            using var releaseCallback = new ManualResetEventSlim(false);
+            // Long period so the single due-time-0 tick is the only one in the test window.
+            var tested = new ActiveDebouncer { DebounceMilliseconds = 10000 };
+
+            tested.Debounce(() =>
+            {
+                callbackStarted.Set();
+                releaseCallback.Wait(TimeSpan.FromSeconds(5));
+            });
+
+            // Block until the debounced callback is actually running, so the timer is
+            // started when Dispose() runs - exercising the StopTimer + Dispose path.
+            Assert.True(callbackStarted.Wait(TimeSpan.FromSeconds(5)),
+                "debounced callback never started");
+
+            tested.Dispose();
+
+            releaseCallback.Set();
         }
     }
 }
